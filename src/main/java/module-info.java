@@ -7,4 +7,5 @@ module com.example.projectaserradero {
     opens layout to javafx.fxml;
     exports controls;
     opens css;
+    opens controls;
 }
