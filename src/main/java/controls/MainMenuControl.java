@@ -3,9 +3,7 @@ package controls;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.SubScene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -26,10 +24,10 @@ public class MainMenuControl implements Initializable {
 
 
     /*
-    * carga cada la subScena y su controlador dentro de la scene principal
-    * */
+     * carga cada la subScena y su controlador dentro de la scene principal
+     * */
     private void loadSubScene(String name) throws IOException {
-        FXMLLoader loader = new FXMLLoader(main.class.getResource("/layout/"+name+".fxml"));
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/layout/" + name + ".fxml"));
         Pane view = loader.load();
         view.setPrefSize(subScene_container.getWidth(), subScene_container.getHeight());
         subScene_container.setCenter(view);
@@ -40,28 +38,33 @@ public class MainMenuControl implements Initializable {
         loadSubScene("subSceneModel");
     }
 
+    //carga la sub escena de las piezas de aserraderos
+    public void handleLoadSubScenePart() throws IOException {
+        loadSubScene("SubScenePieza");
+    }
+
 
     /*
-    * Estos métodos controlan el estado de la aplicación
-    *
-    * handleCloseButton terminará con la ejecución de la aplicación
-    *
-    * handleShrinkButton minimizará en la barra de tareas la aplicación
-    * */
-    public void handleCloseButton(){
+     * Estos métodos controlan el estado de la aplicación
+     *
+     * handleCloseButton terminará con la ejecución de la aplicación
+     *
+     * handleShrinkButton minimizará en la barra de tareas la aplicación
+     * */
+    public void handleCloseButton() {
         System.exit(0);
     }
 
-    public void handleShrinkButton(){
-      Stage stage = (Stage) shrink_button.getScene().getWindow();
-      stage.setIconified(true);
+    public void handleShrinkButton() {
+        Stage stage = (Stage) shrink_button.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     /*
-    * Este método es el primero que se ejecuta al cargar la escena
-    *
-    * en esta ocasión se carga la subSceneHome que muestra el logo de la empresa
-    * */
+     * Este método es el primero que se ejecuta al cargar la escena
+     *
+     * en esta ocasión se carga la subSceneHome que muestra el logo de la empresa
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
