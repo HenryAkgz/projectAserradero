@@ -1,6 +1,7 @@
 package controls;
 
 import clases.ItemModelo;
+import clases.ItemPiezaContador;
 import clases.Pieza;
 import clases.Util;
 import conexión.Conexión;
@@ -141,23 +142,30 @@ public class AddNewModelController implements Initializable {
         listaPiezasDelModelo = new ArrayList<>();
 
         for (Pieza item : listaPiezasFromDB) {
-            ItemModelo itemModelo = new ItemModelo(item.getNombrePieza(), "Piezas en inventario x" + item.getCantidadEnInvetario());
-            itemModelo.setOnMouseClicked(mouseEvent -> {
+            ItemPiezaContador itemPiezaContador = new ItemPiezaContador(item.getId_Pieza(), item.getNombrePieza());
 
-                ItemModelo modeloPart = new ItemModelo(item.getNombrePieza(), "Piezas en inventario x" + item.getCantidadEnInvetario());
+            itemPiezaContador.setOnMouseClicked(mouseEvent -> {
 
-                modeloPart.setOnMouseClicked(mouseEvent1 -> {
-                    vbListaAllModelPieces.getChildren().remove(modeloPart);
-                    listaPiezasDelModelo.removeIf(elemento -> elemento.getId_Pieza() == item.getId_Pieza());
+
+                if(!listaPiezasDelModelo.contains(item)){
+
+                    ItemPiezaContador modeloPart = new ItemPiezaContador(item.getId_Pieza(), item.getNombrePieza());
+
+                    modeloPart.setOnMouseClicked(mouseEvent1 -> {
+                        vbListaAllModelPieces.getChildren().remove(modeloPart);
+                        listaPiezasDelModelo.removeIf(elemento -> elemento.getId_Pieza() == item.getId_Pieza());
+                        contador_label.setText(listaPiezasDelModelo.size() + " Piezas añadidas");
+                    });
+
+
+                    vbListaAllModelPieces.getChildren().add(modeloPart);
+                    listaPiezasDelModelo.add(item);
                     contador_label.setText(listaPiezasDelModelo.size() + " Piezas añadidas");
-                });
+                }
 
 
-                vbListaAllModelPieces.getChildren().add(modeloPart);
-                listaPiezasDelModelo.add(new Pieza(item.getId_Pieza()));
-                contador_label.setText(listaPiezasDelModelo.size() + " Piezas añadidas");
             });
-            vbListaAllPieces.getChildren().add(itemModelo);
+            vbListaAllPieces.getChildren().add(itemPiezaContador);
         }
     }
 

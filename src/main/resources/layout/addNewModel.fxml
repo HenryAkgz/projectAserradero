@@ -163,14 +163,14 @@
                                                 </HBox>
                                                 <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
                                                     <content>
-                                                        <VBox fx:id="vbListaAllPieces" prefHeight="200.0" prefWidth="266.0" spacing="10.0" />
+                                                        <VBox fx:id="vbListaAllPieces" prefHeight="200.0" prefWidth="266.0" spacing="5.0" />
                                                     </content>
                                                 </ScrollPane>
                                             </children>
                                         </VBox>
                                         <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
                                             <content>
-                                                <VBox fx:id="vbListaAllModelPieces" prefHeight="244.0" prefWidth="278.0" spacing="10.0" />
+                                                <VBox fx:id="vbListaAllModelPieces" prefHeight="244.0" prefWidth="278.0" spacing="5.0" />
                                             </content>
                                         </ScrollPane>
                                     </items>

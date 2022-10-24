@@ -44,12 +44,6 @@ public class SubSceneModelController implements Initializable {
     private void getModelsDataToUI() {
        listaModelos = con.getModelosFromDB();
 
-      /* Modelo modelo = new Modelo();
-       modelo.setIdModelo("HM126-9.5");
-       modelo.setMotor("9.5 hp Kohler Command Pro");
-
-       listaModelos.add(modelo);*/
-
         for (Modelo item : listaModelos) {
             aaside_list_models.getChildren().add(new ItemModelo(item.getIdModelo(), item.getMotor()));
         }

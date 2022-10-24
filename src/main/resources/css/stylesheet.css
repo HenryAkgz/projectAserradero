@@ -46,7 +46,7 @@ amarillo_anaranjado: #fec701;
   }
 
 
-#menu_item_model_container{
+#menu_item_model_container, #menu_item_pieza_container{
 -fx-background-radius: 10px;
 -fx-padding: 10px;
 -fx-background-color: white;
