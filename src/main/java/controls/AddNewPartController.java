@@ -88,7 +88,7 @@ public class AddNewPartController implements Initializable {
 
         if (con.savePartInBD(nuevaPieza)) {
             mensaje_result_label.setText("La pieza se agrego correctamente");
-           //result_imageView.setImage(new Image(getClass().getResourceAsStream("/icons/saveOk.gif")));
+           result_imageView.setImage(new Image(getClass().getResourceAsStream("/icons/saveOk.gif")));
             mensaje_result_label.setStyle("-fx-text-fill: #4B21C3;");
         }else{
             mensaje_result_label.setText("Lo siento, algo salio mal...");

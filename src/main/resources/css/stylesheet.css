@@ -69,14 +69,26 @@ amarillo_anaranjado: #fec701;
 -fx-background-radius: 10px;
 }
 
-#btnAddUnitModel, #ButtonAgregarModeloEmptyContainer{
+#btnAddUnitModel, #ButtonAgregarModeloEmptyContainer, #updateDataModelButtonUpdate{
 -fx-background-color: white;
 -fx-background-radius: 10px;
 -fx-text-fill: #161925;
 }
 
-#btnAddUnitModel:hover, #ButtonAgregarModeloEmptyContainer:hover{
+#btnAddUnitModel:hover, #ButtonAgregarModeloEmptyContainer:hover, #updateDataModelButtonUpdate:hover{
 -fx-background-color: #fec701;
 -fx-background-radius: 10px;
 -fx-text-fill: white;
 }
+
+.vb_aside_container_right{
+-fx-background-color:  #1f2233;
+-fx-background-radius: 10px;
+-fx-spacing: 10;
+-fx-padding: 10px;
+}
+
+#peso_combobox_update .cell:selected {
+-fx-text-fill: white;
+}
+

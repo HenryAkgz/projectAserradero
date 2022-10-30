@@ -6,17 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.xml.transform.Result;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +22,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class SubScenePiezaController implements Initializable {
-
+    @FXML
+    private AnchorPane root;
     @FXML
     private Pane modelo_empty_data_container;
     @FXML
@@ -37,7 +35,7 @@ public class SubScenePiezaController implements Initializable {
     @FXML
     private VBox pane_waiting_clic;
     @FXML
-    private VBox pane_infoPieza;
+    private BorderPane pane_infoPieza;
     @FXML
     private ImageView photoPieza_imageView;
     @FXML
@@ -48,12 +46,19 @@ public class SubScenePiezaController implements Initializable {
     private HBox menu_item_pieza_container;
     @FXML
     private VBox form_aside_container;
-
-
+    @FXML
+    private ImageView update_photo_imageView;
+    @FXML
+    private TextField updateNombrePieza_textfield;
+    @FXML
+    private Button updatePhoto_button;
+    @FXML
+    private Spinner updateCantidadInventario_spinner;
     //variables de la subScene
     Conexión con;
     ArrayList<Pieza> listAllPiecesFromDB;
     ArrayList<ItemPieza> listaAllPiecesUI;
+    Pieza currentPieza;
 
     //abre el formulario para añadir una nueva pieza a la BD
     public void handleAddNewPart() throws IOException {
@@ -72,15 +77,32 @@ public class SubScenePiezaController implements Initializable {
     private void getPiecesDataToUI() {
         listAllPiecesFromDB = con.getAllPiecesFromDB();
 
-        for (Pieza item : listAllPiecesFromDB) {
-            ItemPieza itemPieza = new ItemPieza(item.getNombrePieza(), item.getCantidadEnInvetario());
+        if (listAllPiecesFromDB != null && listAllPiecesFromDB.size() > 0) {
+            for (Pieza item : listAllPiecesFromDB) {
+                ItemPieza itemPieza = new ItemPieza(item.getNombrePieza(), item.getCantidadEnInvetario());
 
-            itemPieza.setOnMouseClicked(mouseEvent -> {
-                mostrarInfoPieza(item);
-            });
+                itemPieza.setOnMouseClicked(mouseEvent -> {
+                    mostrarInfoPieza(item);
+                    currentPieza = item;
+                });
 
-            aaside_list_models.getChildren().add(itemPieza);
+                aaside_list_models.getChildren().add(itemPieza);
+            }
+
+
+            modelo_empty_data_container.setVisible(false);
+            pn_part_content.setVisible(true);
+            loadButtonsInfoMenu();
+            updateCantidadInventario_spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999999));
+            root.getChildren().remove(pane_infoPieza);
+            pn_part_content.getChildren().remove(form_aside_container);
+
+        } else {
+            modelo_empty_data_container.setVisible(true);
+            pn_part_content.setVisible(false);
         }
+
+
     }
 
 
@@ -88,10 +110,12 @@ public class SubScenePiezaController implements Initializable {
         if (!pn_part_content.getChildren().contains(pane_infoPieza)) {
             pane_waiting_clic.setVisible(false);
             pn_part_content.getChildren().remove(pane_waiting_clic);
-
-            pn_part_content.getChildren().add(pane_infoPieza);
+            pn_part_content.setCenter(pane_infoPieza);
             pane_infoPieza.setVisible(true);
-          
+        }
+
+        if (pn_part_content.getChildren().contains(form_aside_container)) {
+            pn_part_content.getChildren().remove(form_aside_container);
         }
 
         photoPieza_imageView.setImage(new Image(new ByteArrayInputStream(pieza.getPhotoPieza())));
@@ -116,8 +140,44 @@ public class SubScenePiezaController implements Initializable {
             if (pn_part_content.getChildren().contains(form_aside_container)) {
                 pn_part_content.getChildren().remove(form_aside_container);
             } else {
-                pn_part_content.getChildren().add(form_aside_container);
+                pn_part_content.setRight(form_aside_container);
+                update_photo_imageView.setImage(new Image(new ByteArrayInputStream(currentPieza.getPhotoPieza())));
+                updateNombrePieza_textfield.setText(currentPieza.getNombrePieza());
+                updateCantidadInventario_spinner.getValueFactory().setValue((int) currentPieza.getCantidadEnInvetario());
             }
+        });
+
+        btnDeletePieza.setOnMouseClicked(mouseEvent -> {
+            Alert mensaje = new Alert(Alert.AlertType.CONFIRMATION);
+            mensaje.setTitle("Eliminar pieza");
+            mensaje.setContentText("¿Desea eliminar la siguiente pieza? \n"+currentPieza.getNombrePieza());
+            mensaje.showAndWait();
+
+            if(mensaje.getResult() == ButtonType.OK){
+                Alert aviso;
+
+                if(con.deletePartFromBD(currentPieza.getId_Pieza())){
+                    aviso = new Alert(Alert.AlertType.INFORMATION);
+                    aviso.setTitle("Elemento eliminado!");
+                    aviso.setContentText("La pieza se elimino correctamente");
+                    listAllPiecesFromDB = new ArrayList<>();
+                    aaside_list_models.getChildren().clear();
+                    pn_part_content.getChildren().remove(pane_infoPieza);
+                    pn_part_content.setCenter(pane_waiting_clic);
+                    pane_infoPieza.setVisible(true);
+                    getPiecesDataToUI();
+                }else{
+                   aviso = new Alert(Alert.AlertType.ERROR);
+                    aviso.setTitle("Error!");
+                    aviso.setContentText("Algo salio mal y no pudimos eliminar la pieza");
+                }
+
+                aviso.show();
+
+
+            }
+
+
         });
 
 
@@ -146,16 +206,5 @@ public class SubScenePiezaController implements Initializable {
 
         getPiecesDataToUI();
 
-        if (listAllPiecesFromDB.size() > 0) {
-            modelo_empty_data_container.setVisible(false);
-            pn_part_content.setVisible(true);
-            loadButtonsInfoMenu();
-            pane_infoPieza.setVisible(false);
-            pn_part_content.getChildren().remove(form_aside_container);
-            pn_part_content.getChildren().remove(pane_infoPieza);
-        } else {
-            modelo_empty_data_container.setVisible(true);
-            pn_part_content.setVisible(false);
-        }
     }
 }

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="665.0" prefWidth="600.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddNewModelController">
+<AnchorPane prefHeight="665.0" prefWidth="600.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddNewModelController">
     <children>
         <BorderPane prefHeight="665.0" prefWidth="600.0">
             <top>
@@ -67,7 +67,7 @@
                                     </image>
                                 </ImageView>
                                 <Button fx:id="addPhoto_button" layoutX="223.0" layoutY="220.0" mnemonicParsing="false" onAction="#hanndleAddPhotoModel" text="Añadir foto del modelo" />
-                                <TextField fx:id="modelo_textField" layoutX="20.0" layoutY="297.0" onKeyTyped="#handleValidarCampos" prefHeight="25.0" prefWidth="183.0" promptText="Nombre de la unidad" />
+                                <TextField fx:id="modelo_textField" layoutX="20.0" layoutY="297.0" onKeyTyped="#handleValidarID" prefHeight="25.0" prefWidth="183.0" promptText="Nombre de la unidad" />
                                 <Label fx:id="model_exist_label" layoutX="22.0" layoutY="331.0" text="Este modelo ya se encuentra agregado." textFill="#a81212" visible="false">
                                     <font>
                                         <Font size="14.0" />
@@ -178,6 +178,20 @@
                                 <Label fx:id="contador_label" layoutX="453.0" layoutY="286.0" text="0 Piezas añadidas" />
                             </children>
                         </Pane>
+                  <Pane fx:id="pn_done" layoutX="10.0" layoutY="10.0" prefHeight="537.0" prefWidth="581.0" visible="false">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="538.0" prefWidth="584.0" spacing="15.0">
+                           <children>
+                              <ImageView fx:id="done_imv" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="done_lbl" text="El modelo se agrego correctamente">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
                     </children>
                 </Pane>
             </center>

@@ -1,9 +1,6 @@
 package controls;
 
-import clases.ItemModelo;
-import clases.ItemPiezaContador;
-import clases.Pieza;
-import clases.Util;
+import clases.*;
 import conexión.Conexión;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.controlsfx.tools.Utils;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,8 +26,6 @@ public class AddNewModelController implements Initializable {
     private Button back_button;
     @FXML
     private Button next_button;
-    @FXML
-    private Button addPhoto_button;
     @FXML
     private ImageView model_photo_imageView;
     @FXML
@@ -68,6 +64,12 @@ public class AddNewModelController implements Initializable {
     private Label contador_label;
     @FXML
     private TextField txtBusqueda;
+    @FXML
+    private ImageView done_imv;
+    @FXML
+    private Label done_lbl;
+    @FXML
+    private Pane pn_done;
 
 
     //Variables del stage
@@ -75,7 +77,13 @@ public class AddNewModelController implements Initializable {
     Conexión con;
     ArrayList<Pieza> listaPiezasFromDB;
     ArrayList<Pieza> listaPiezasDelModelo;
+    boolean idExist = true;
 
+    SubSceneModelController parentWindow;
+
+    public void setParentModel(SubSceneModelController parent){
+        parentWindow = parent;
+    }
 
     /*
      * Estos métodos controlan el estado de la aplicación
@@ -111,7 +119,7 @@ public class AddNewModelController implements Initializable {
     //handleValidarCampos: si todos los campos del formulario estan rellenos entonces muestra el botón de continuar, de no ser asi lo oculta
     public void handleValidarCampos() {
         if (pn_data_general.isVisible()) {
-            next_button.setVisible(!(modelo_textField.getText().isBlank() || motor_textField.getText().isBlank() || peso_textField.getText().isBlank() || diametroMaximo_textField.getText().isBlank() || anchoTablero_textField.getText().isBlank() || grosorPlaca_textField.getText().isBlank() || tamanoHoja_textField.getText().isBlank() || longitudPista_textField.getText().isBlank() || anchoPista_textField.getText().isBlank() || ajustabilidad_textField.getText().isBlank() || pathPhoto == null || unidadPeso_comboBox.getSelectionModel().isEmpty()));
+            next_button.setVisible(!(modelo_textField.getText().isBlank() || motor_textField.getText().isBlank() || peso_textField.getText().isBlank() || diametroMaximo_textField.getText().isBlank() || anchoTablero_textField.getText().isBlank() || grosorPlaca_textField.getText().isBlank() || tamanoHoja_textField.getText().isBlank() || longitudPista_textField.getText().isBlank() || anchoPista_textField.getText().isBlank() || ajustabilidad_textField.getText().isBlank() || pathPhoto == null || unidadPeso_comboBox.getSelectionModel().isEmpty() || idExist));
         }
     }
 
@@ -122,7 +130,45 @@ public class AddNewModelController implements Initializable {
             pn_data_general.setVisible(false);
             pnPieces.setVisible(true);
             back_button.setVisible(true);
+            next_button.setText("Terminar");
             loadPiecesFromDB();
+        } else if (pnPieces.isVisible()) {
+
+            Modelo modelo = new Modelo();
+            modelo.setIdModelo(modelo_textField.getText());
+            modelo.setPeso(peso_textField.getText()+ " " + unidadPeso_comboBox.getSelectionModel().getSelectedItem().toString());
+            modelo.setMotor(motor_textField.getText());
+            modelo.setMaxLogDiameter(diametroMaximo_textField.getText());
+            modelo.setMaxBoardWidth(anchoTablero_textField.getText());
+            modelo.setMaxBoardThickness(grosorPlaca_textField.getText());
+            modelo.setBladeSize(tamanoHoja_textField.getText());
+            modelo.setTrackLength(longitudPista_textField.getText());
+            modelo.setTrackWidth(anchoPista_textField.getText());
+            modelo.setTrackHeightAdjustability(ajustabilidad_textField.getText());
+            modelo.setFoto_modelo(Util.readFile(pathPhoto));
+
+            boolean isSaveModelo = con.saveModeloInDB(modelo);
+
+            if (isSaveModelo && listaPiezasDelModelo.size() > 0) {
+                con.addPiecesToModel(listaPiezasDelModelo, modelo.getIdModelo());
+            }
+
+            pnPieces.setVisible(false);
+
+            if (isSaveModelo) {
+                done_imv.setImage(new Image(getClass().getResourceAsStream("/icons/saveOk.gif")));
+                done_lbl.setText("Modelo agregado correctamente.");
+                done_lbl.setStyle("-fx-text-fill: green;");
+            } else {
+                done_imv.setImage(new Image(getClass().getResourceAsStream("/icons/saveError.gif")));
+                done_lbl.setText("Lo siento, algo salio mal...");
+                done_lbl.setStyle("-fx-text-fill: red;");
+            }
+
+            pn_done.setVisible(true);
+            next_button.setVisible(false);
+            back_button.setVisible(false);
+            parentWindow.getAllModelsFromDB();
         }
     }
 
@@ -132,41 +178,46 @@ public class AddNewModelController implements Initializable {
             pn_data_general.setVisible(true);
             pnPieces.setVisible(false);
             back_button.setVisible(false);
+            next_button.setText("Siguiente");
         }
     }
 
 
     //muestra todas las piezas disponibles en la base de datos
     private void loadPiecesFromDB() {
+        vbListaAllPieces.getChildren().clear();
         listaPiezasFromDB = con.getAllPiecesFromDB();
         listaPiezasDelModelo = new ArrayList<>();
 
         for (Pieza item : listaPiezasFromDB) {
-            ItemPiezaContador itemPiezaContador = new ItemPiezaContador(item.getId_Pieza(), item.getNombrePieza());
-
-            itemPiezaContador.setOnMouseClicked(mouseEvent -> {
-
-
-                if(!listaPiezasDelModelo.contains(item)){
-
-                    ItemPiezaContador modeloPart = new ItemPiezaContador(item.getId_Pieza(), item.getNombrePieza());
-
-                    modeloPart.setOnMouseClicked(mouseEvent1 -> {
-                        vbListaAllModelPieces.getChildren().remove(modeloPart);
-                        listaPiezasDelModelo.removeIf(elemento -> elemento.getId_Pieza() == item.getId_Pieza());
-                        contador_label.setText(listaPiezasDelModelo.size() + " Piezas añadidas");
-                    });
-
-
-                    vbListaAllModelPieces.getChildren().add(modeloPart);
-                    listaPiezasDelModelo.add(item);
-                    contador_label.setText(listaPiezasDelModelo.size() + " Piezas añadidas");
-                }
-
-
-            });
-            vbListaAllPieces.getChildren().add(itemPiezaContador);
+            actionItemPart(item);
         }
+    }
+
+    private void actionItemPart(Pieza item) {
+        ItemPiezaContador itemPiezaContador = new ItemPiezaContador(item, false);
+
+        itemPiezaContador.setOnMouseClicked(mouseEvent -> {
+
+
+            if (!listaPiezasDelModelo.contains(item)) {
+
+                ItemPiezaContador modeloPart = new ItemPiezaContador(item, true);
+
+                modeloPart.setOnMouseClicked(mouseEvent1 -> {
+                    vbListaAllModelPieces.getChildren().remove(modeloPart);
+                    listaPiezasDelModelo.removeIf(elemento -> elemento.getId_Pieza() == item.getId_Pieza());
+                    contador_label.setText(listaPiezasDelModelo.size() + " Piezas añadidas");
+                });
+
+
+                vbListaAllModelPieces.getChildren().add(modeloPart);
+                listaPiezasDelModelo.add(item);
+                contador_label.setText(listaPiezasDelModelo.size() + " Piezas añadidas");
+            }
+
+        });
+        vbListaAllPieces.getChildren().add(itemPiezaContador);
     }
 
 
@@ -178,16 +229,32 @@ public class AddNewModelController implements Initializable {
         List<Pieza> listaFiltrada = listaPiezasFromDB.stream().filter(item -> item.getNombrePieza().contains(txtBusqueda.getText())).toList();
 
         for (Pieza item : listaFiltrada) {
-            vbListaAllPieces.getChildren().add(new ItemModelo(item.getNombrePieza(), "Piezas en inventario x" + item.getCantidadEnInvetario()));
+            actionItemPart(item);
         }
 
+
     }
+
+    public void handleValidarID() {
+        if (!modelo_textField.getText().isBlank()) {
+            idExist = con.existModel(modelo_textField.getText());
+
+            if (idExist) {
+                model_exist_label.setVisible(true);
+            } else {
+                model_exist_label.setVisible(false);
+            }
+
+        }
+        handleValidarCampos();
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         con = new Conexión();
         con.connectWidthDB();
 
-        unidadPeso_comboBox.getItems().addAll("lb", "kg");
+        unidadPeso_comboBox.getItems().addAll("lb" , "kg", "ton");
     }
 }

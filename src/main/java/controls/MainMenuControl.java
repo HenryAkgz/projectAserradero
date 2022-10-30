@@ -43,6 +43,11 @@ public class MainMenuControl implements Initializable {
         loadSubScene("SubScenePieza");
     }
 
+    //carga la sub escena de las unidades de aserraderos
+    public void handleLoadSubSceneUnit() throws IOException {
+        loadSubScene("SubSceneUnit");
+    }
+
 
     /*
      * Estos métodos controlan el estado de la aplicación

@@ -5,6 +5,7 @@ public class Unidad {
     private String id_modelo;
     private String estado;
     private String notas_de_la_unidad;
+    private byte[] photoUnidad;
 
     public Unidad() {
     }
@@ -39,5 +40,13 @@ public class Unidad {
 
     public void setNotas_de_la_unidad(String notas_de_la_unidad) {
         this.notas_de_la_unidad = notas_de_la_unidad;
+    }
+
+    public byte[] getPhotoUnidad() {
+        return photoUnidad;
+    }
+
+    public void setPhotoUnidad(byte[] photoUnidad) {
+        this.photoUnidad = photoUnidad;
     }
 }
