@@ -66,7 +66,7 @@
                                         <Image url="@../icons/selectPhoto.gif" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="addPhoto_button" layoutX="223.0" layoutY="220.0" mnemonicParsing="false" onAction="#hanndleAddPhotoModel" text="Añadir foto del modelo" />
+                                <Button fx:id="addPhoto_button" layoutX="223.0" layoutY="220.0" mnemonicParsing="false" onAction="#handleAddPhotoModel" text="Añadir foto del modelo" />
                                 <TextField fx:id="modelo_textField" layoutX="20.0" layoutY="297.0" onKeyTyped="#handleValidarID" prefHeight="25.0" prefWidth="183.0" promptText="Nombre de la unidad" />
                                 <Label fx:id="model_exist_label" layoutX="22.0" layoutY="331.0" text="Este modelo ya se encuentra agregado." textFill="#a81212" visible="false">
                                     <font>

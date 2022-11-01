@@ -301,6 +301,7 @@ Conexión {
              ps.setInt(2, idPieza);
              ps.setInt(3, cantidad);
              ps.execute();
+             ps.close();
              con.close();
             return true;
         }catch (SQLException e){
@@ -392,6 +393,67 @@ Conexión {
             return 0;
         }
 
+    }
+
+
+    public boolean existUnit(String idUnit){
+        try{
+            Connection con = connectWidthDB();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT estado FROM unidades WHERE id_unit = '"+idUnit+"'");
+
+            boolean resultado = rs.next();
+
+            st.close();
+            con.close();
+            return resultado;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return true;
+        }
+    }
+    
+    public boolean saveUnit(Unidad u){
+        
+        try{
+            Connection con = connectWidthDB();
+            String query = "INSERT INTO unidades (id_unit, id_modelo, estado, notas_unidad, foto_unidad) VALUES ( ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, u.getId_unidad());
+            ps.setString(2, u.getId_modelo());
+            ps.setString(3, u.getEstado());
+            ps.setString(4, u.getNotas_de_la_unidad());
+            ps.setBytes(5, u.getPhotoUnidad());
+
+            ps.execute();
+            ps.close();
+            con.close();
+            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean saveMantenimientoProgramado(String idUnidad, String fechaMantenimiento, String notas){
+        try{
+            Connection con = connectWidthDB();
+            String query = "INSERT INTO mantenimiento_programado (id_unit, fecha_mantenimiento, nota_mantenimiento) VALUES ( ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, idUnidad);
+            ps.setString(2, fechaMantenimiento);
+            ps.setString(3, notas);
+
+            ps.execute();
+            ps.close();
+            con.close();
+         return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

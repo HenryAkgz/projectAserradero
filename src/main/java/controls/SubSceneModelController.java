@@ -22,9 +22,11 @@ import java.util.ResourceBundle;
 
 public class SubSceneModelController implements Initializable {
     @FXML
-    private TextField txtBusqueda;
+    private HBox layoutBox_container;
     @FXML
-    private VBox aaside_list_models;
+    private TextField txtBúsqueda;
+    @FXML
+    private VBox aside_list_models;
     @FXML
     private BorderPane pn_part_content;
     @FXML
@@ -56,29 +58,29 @@ public class SubSceneModelController implements Initializable {
     @FXML
     private Label diametroMaximoTronco_label_showdetails;
     @FXML
-    private Label anchoMaximoTablero_label_showdetails;
+    private Label anchoMáximoTablero_label_showDetails;
     @FXML
-    private Label grosorPlaca_label_showdetails;
+    private Label grosorPlaca_label_showDetails;
     @FXML
-    private Label tamanoHoja_label_showdetails;
+    private Label tamañoHoja_label_showDetails;
     @FXML
     private Label longitudPista_label_showdetails;
     @FXML
-    private Label anchoPista_label_showdetails;
+    private Label anchoPista_label_showDetails;
     @FXML
-    private Label ajustabilidadAltura_label_showdetails;
+    private Label ajustabilidadAltura_label_showDetails;
     @FXML
     private TextField peso_textField_update;
     @FXML
     private TextField motor_textField_update;
     @FXML
-    private TextField diametroMaximoTronco_textField_update;
+    private TextField diámetroMáximoTronco_textField_update;
     @FXML
-    private TextField anchoMaximoTablero_textField_update;
+    private TextField anchoMáximoTablero_textField_update;
     @FXML
     private TextField grosorPlaca_textField_update;
     @FXML
-    private TextField tamanoHoja_textField_update;
+    private TextField tamañoHoja_textField_update;
     @FXML
     private TextField longitudPista_textField_update;
     @FXML
@@ -88,9 +90,9 @@ public class SubSceneModelController implements Initializable {
     @FXML
     private BorderPane pn_update;
     @FXML
-    private VBox pn_showdetails;
+    private VBox pn_showDetails;
     @FXML
-    private ComboBox peso_combobox_update;
+    private ComboBox peso_comboBox_update;
     @FXML
     private Button changePhoto_button_update;
     @FXML
@@ -130,12 +132,12 @@ public class SubSceneModelController implements Initializable {
     //########## métodos de la interfaz ##########
 
     /*
-     * Este método busca entre la lista de modelos, algun elemento que
+     * Este método busca entre la lista de modelos, algún elemento que
      * coincida con la búsqueda
      * */
     public void handleSearch() {
-        aaside_list_models.getChildren().clear();
-        List<Modelo> listaFiltrada = listAllModelsFromDB.stream().filter(item -> item.getIdModelo().contains(txtBusqueda.getText())).toList();
+        aside_list_models.getChildren().clear();
+        List<Modelo> listaFiltrada = listAllModelsFromDB.stream().filter(item -> item.getIdModelo().contains(txtBúsqueda.getText())).toList();
         showModelsInUI(listaFiltrada);
     }
 
@@ -150,7 +152,7 @@ public class SubSceneModelController implements Initializable {
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
 
-        AddNewModelController modelController = (AddNewModelController) loader.getController();
+        AddNewModelController modelController = loader.getController();
         modelController.setParentModel(this);
 
         stage.showAndWait();
@@ -167,23 +169,17 @@ public class SubSceneModelController implements Initializable {
     private void showModelsInUI(List<Modelo> lista) {
 
         if (lista != null && lista.size() > 0) {
-            if (root.getChildren().contains(modelo_empty_data_container)) {
-                modelo_empty_data_container.setVisible(false);
-                root.getChildren().remove(modelo_empty_data_container);
-                root.getChildren().remove(form_aside_container);
-                root.getChildren().remove(pane_infoPieza);
-                root.getChildren().remove(pn_update);
-                root.getChildren().remove(formGeneralDataModelUpdate);
-                root.getChildren().remove(formPiecesModelUpdate);
-                root.getChildren().remove(formMensajeModelUpdate);
-                pn_part_content.setVisible(true);
+            root.getChildren().remove(modelo_empty_data_container);
+
+            if(!root.getChildren().contains(pn_part_content)){
+                root.getChildren().add(pn_part_content);
                 loadOptionButtonItemModel();
             }
 
             lista.forEach(item -> {
                 ItemModelo modeloUI = new ItemModelo(item.getIdModelo(), item.getMotor());
                 modeloUI.setOnMouseClicked(mouseEvent -> itemModelUIAction(item));
-                aaside_list_models.getChildren().add(modeloUI);
+                aside_list_models.getChildren().add(modeloUI);
             });
 
         } else {
@@ -238,7 +234,7 @@ public class SubSceneModelController implements Initializable {
 
         if (isVisibleFormContainer()) {
 
-            if (form_aside_container.getChildren().contains(pn_showdetails)) {
+            if (form_aside_container.getChildren().contains(pn_showDetails)) {
                 pn_part_content.getChildren().remove(form_aside_container);
             }
 
@@ -247,7 +243,7 @@ public class SubSceneModelController implements Initializable {
         }
 
         form_aside_container.getChildren().clear();
-        form_aside_container.getChildren().add(pn_showdetails);
+        form_aside_container.getChildren().add(pn_showDetails);
 
         name_imv_showdetails.setImage(new Image(new ByteArrayInputStream(currentModelo.getFoto_modelo())));
         name_label_showdetails.setText(currentModelo.getIdModelo());
@@ -256,12 +252,12 @@ public class SubSceneModelController implements Initializable {
         peso_label_showdetails.setText(currentModelo.getPeso());
         motor_label_showdetails.setText(currentModelo.getMotor());
         diametroMaximoTronco_label_showdetails.setText(currentModelo.getMaxLogDiameter());
-        anchoMaximoTablero_label_showdetails.setText(currentModelo.getMaxBoardWidth());
-        grosorPlaca_label_showdetails.setText(currentModelo.getMaxBoardThickness());
-        tamanoHoja_label_showdetails.setText(currentModelo.getBladeSize());
+        anchoMáximoTablero_label_showDetails.setText(currentModelo.getMaxBoardWidth());
+        grosorPlaca_label_showDetails.setText(currentModelo.getMaxBoardThickness());
+        tamañoHoja_label_showDetails.setText(currentModelo.getBladeSize());
         longitudPista_label_showdetails.setText(currentModelo.getTrackLength());
-        anchoPista_label_showdetails.setText(currentModelo.getTrackWidth());
-        ajustabilidadAltura_label_showdetails.setText(currentModelo.getTrackHeightAdjustability());
+        anchoPista_label_showDetails.setText(currentModelo.getTrackWidth());
+        ajustabilidadAltura_label_showDetails.setText(currentModelo.getTrackHeightAdjustability());
 
 
     }
@@ -291,10 +287,10 @@ public class SubSceneModelController implements Initializable {
         nameModel_label_update.setText(currentModelo.getIdModelo());
         showPrecioUpdate(currentModelo.getPeso());
         motor_textField_update.setText(currentModelo.getMotor());
-        diametroMaximoTronco_textField_update.setText(currentModelo.getMaxLogDiameter());
-        anchoMaximoTablero_textField_update.setText(currentModelo.getMaxBoardWidth());
+        diámetroMáximoTronco_textField_update.setText(currentModelo.getMaxLogDiameter());
+        anchoMáximoTablero_textField_update.setText(currentModelo.getMaxBoardWidth());
         grosorPlaca_textField_update.setText(currentModelo.getMaxBoardThickness());
-        tamanoHoja_textField_update.setText(currentModelo.getBladeSize());
+        tamañoHoja_textField_update.setText(currentModelo.getBladeSize());
         longitudPista_textField_update.setText(currentModelo.getTrackLength());
         anchoPista_textField_update.setText(currentModelo.getTrackWidth());
         ajustabilidadAltura_textField_update.setText(currentModelo.getTrackHeightAdjustability());
@@ -307,10 +303,10 @@ public class SubSceneModelController implements Initializable {
     }
 
     private void showPrecioUpdate(String peso) {
-        String unidad = peso.substring(peso.length() - 3, peso.length());
+        String unidad = peso.substring(peso.length() - 3);
         String pesoTemp = peso.substring(0, peso.length() - 3);
         peso_textField_update.setText(pesoTemp);
-        peso_combobox_update.setValue(unidad.trim());
+        peso_comboBox_update.setValue(unidad.trim());
     }
 
     public void handleChangeModelPhoto() {
@@ -324,12 +320,12 @@ public class SubSceneModelController implements Initializable {
 
             currentModeloUpdate = new Modelo();
             currentModeloUpdate.setIdModelo(currentModelo.getIdModelo());
-            currentModeloUpdate.setPeso(peso_textField_update.getText().trim() + " " + peso_combobox_update.getSelectionModel().getSelectedItem().toString());
+            currentModeloUpdate.setPeso(peso_textField_update.getText().trim() + " " + peso_comboBox_update.getSelectionModel().getSelectedItem().toString());
             currentModeloUpdate.setMotor(motor_textField_update.getText().trim());
-            currentModeloUpdate.setMaxLogDiameter(diametroMaximoTronco_textField_update.getText().trim());
-            currentModeloUpdate.setMaxBoardWidth(anchoMaximoTablero_textField_update.getText().trim());
+            currentModeloUpdate.setMaxLogDiameter(diámetroMáximoTronco_textField_update.getText().trim());
+            currentModeloUpdate.setMaxBoardWidth(anchoMáximoTablero_textField_update.getText().trim());
             currentModeloUpdate.setMaxBoardThickness(grosorPlaca_textField_update.getText().trim());
-            currentModeloUpdate.setBladeSize(tamanoHoja_textField_update.getText().trim());
+            currentModeloUpdate.setBladeSize(tamañoHoja_textField_update.getText().trim());
             currentModeloUpdate.setTrackLength(longitudPista_textField_update.getText().trim());
             currentModeloUpdate.setTrackWidth(anchoPista_textField_update.getText().trim());
             currentModeloUpdate.setTrackHeightAdjustability(ajustabilidadAltura_textField_update.getText().trim());
@@ -447,7 +443,8 @@ public class SubSceneModelController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         con = new Conexión();
         con.connectWidthDB();
+        root.getChildren().remove(layoutBox_container);
         getAllModelsFromDB();
-        peso_combobox_update.getItems().addAll("lb", "kg", "ton");
+        peso_comboBox_update.getItems().addAll("lb", "kg", "ton");
     }
 }

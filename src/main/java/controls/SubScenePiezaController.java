@@ -114,9 +114,7 @@ public class SubScenePiezaController implements Initializable {
             pane_infoPieza.setVisible(true);
         }
 
-        if (pn_part_content.getChildren().contains(form_aside_container)) {
-            pn_part_content.getChildren().remove(form_aside_container);
-        }
+        pn_part_content.getChildren().remove(form_aside_container);
 
         photoPieza_imageView.setImage(new Image(new ByteArrayInputStream(pieza.getPhotoPieza())));
         nombrePieza_label.setText(pieza.getNombrePieza());
@@ -143,7 +141,7 @@ public class SubScenePiezaController implements Initializable {
                 pn_part_content.setRight(form_aside_container);
                 update_photo_imageView.setImage(new Image(new ByteArrayInputStream(currentPieza.getPhotoPieza())));
                 updateNombrePieza_textfield.setText(currentPieza.getNombrePieza());
-                updateCantidadInventario_spinner.getValueFactory().setValue((int) currentPieza.getCantidadEnInvetario());
+                updateCantidadInventario_spinner.getValueFactory().setValue(currentPieza.getCantidadEnInvetario());
             }
         });
 

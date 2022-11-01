@@ -5,8 +5,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -18,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="665.0" prefWidth="600.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddNewUnitController">
+<AnchorPane prefHeight="665.0" prefWidth="600.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddNewUnitController">
    <children>
       <BorderPane prefHeight="665.0" prefWidth="600.0">
          <top>
@@ -39,12 +37,12 @@
                <children>
                   <HBox alignment="BOTTOM_LEFT" prefHeight="47.0" prefWidth="319.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Atras" />
+                        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#handleBackButton" text="Atras" visible="false" />
                      </children>
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="47.0" prefWidth="282.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Siguiente" />
+                        <Button fx:id="btnNext" mnemonicParsing="false" onAction="#handleNextAction" text="Siguiente" visible="false" />
                      </children>
                   </HBox>
                </children>
@@ -56,21 +54,21 @@
          <center>
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="pn_data_general" prefHeight="558.0" prefWidth="600.0" visible="false">
+                  <Pane fx:id="pn_data_general" prefHeight="558.0" prefWidth="600.0">
                      <children>
                         <Label layoutX="21.0" layoutY="269.0" text="Unidad:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="194.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imvUnit" fitHeight="200.0" fitWidth="200.0" layoutX="194.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../icons/selectPhoto.gif" />
                            </image>
                         </ImageView>
-                        <Button layoutX="222.0" layoutY="219.0" mnemonicParsing="false" text="Añadir foto de la unidad" />
-                        <TextField layoutX="20.0" layoutY="297.0" prefHeight="25.0" prefWidth="183.0" promptText="Nombre de la unidad" />
-                        <Label layoutX="22.0" layoutY="331.0" text="Ya existe una unidad con este nombre." textFill="#a81212">
+                        <Button layoutX="222.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleGetUnitPhoto" text="Añadir foto de la unidad" />
+                        <TextField fx:id="txtIDUnit" layoutX="20.0" layoutY="297.0" onKeyTyped="#handleValidateID" prefHeight="25.0" prefWidth="183.0" promptText="Nombre de la unidad" />
+                        <Label fx:id="lblMensaje" layoutX="22.0" layoutY="331.0" text="Ya existe una unidad con este nombre." textFill="#a81212" visible="false">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -80,68 +78,21 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox editable="true" layoutX="219.0" layoutY="297.0" prefWidth="150.0" promptText="Seleccionar estado" />
+                        <ComboBox fx:id="cbxEstado" layoutX="219.0" layoutY="297.0" onAction="#handleChangeEstado" prefWidth="150.0" promptText="Seleccionar estado" />
                         <Label layoutX="22.0" layoutY="369.0" text="Notas de la unidad:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextArea layoutX="22.0" layoutY="400.0" prefHeight="143.0" prefWidth="557.0" promptText="Escriba aqui las notas sobre la unidad (opcional)." />
-                     </children>
-                  </Pane>
-                  <Pane fx:id="pnPieces" prefHeight="559.0" prefWidth="600.0" visible="false">
-                     <children>
-                        <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="200.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/gears.gif" />
-                           </image></ImageView>
-                        <Label layoutX="146.0" layoutY="214.0" text="Añade las piezas que utilia esta unidad">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="180.0" layoutY="251.0" text="Si lo deseas puedes hacerlo mas tarde.">
+                        <TextArea fx:id="txtNotadDeLaUnidad" layoutX="22.0" layoutY="400.0" prefHeight="143.0" prefWidth="557.0" promptText="Escriba aqui las notas sobre la unidad (opcional)." />
+                        <Label layoutX="386.0" layoutY="272.0" text="Modelo de la unidad:">
                            <font>
                               <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="14.0" layoutY="286.0" text="Todas las piezas disponibles" />
-                        <Label layoutX="300.0" layoutY="286.0" text="Piezas de la unidad" />
-                        <SplitPane dividerPositions="0.5" layoutX="14.0" layoutY="308.0" prefHeight="244.0" prefWidth="564.0">
-                           <items>
-                              <VBox prefHeight="242.0" prefWidth="233.0">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="278.0" spacing="5.0">
-                                       <children>
-                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../icons/search.png" />
-                                             </image>
-                                          </ImageView>
-                                          <TextField promptText="Buscar piezas" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </HBox>
-                                    <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
-                                       <content>
-                                          <VBox prefHeight="200.0" prefWidth="266.0" />
-                                       </content>
-                                    </ScrollPane>
-                                 </children>
-                              </VBox>
-                              <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
-                                 <content>
-                                    <VBox prefHeight="244.0" prefWidth="278.0" />
-                                 </content>
-                              </ScrollPane>
-                           </items>
-                        </SplitPane>
-                        <Label layoutX="453.0" layoutY="286.0" text="0 Piezas añadidas" />
+                           </font></Label>
+                        <ComboBox fx:id="cbxModelo" layoutX="386.0" layoutY="298.0" onAction="#handleChangeModelo" prefHeight="25.0" prefWidth="181.0" promptText="Seleccionar modelo" />
                      </children>
                   </Pane>
-                  <Pane layoutX="-2.0" layoutY="-3.0" prefHeight="564.0" prefWidth="600.0">
+                  <Pane fx:id="pnMantenimiento" layoutX="-2.0" layoutY="-3.0" prefHeight="564.0" prefWidth="600.0" visible="false">
                      <children>
                         <Label layoutX="181.0" layoutY="262.0" text="Si lo deseas puedes hacerlo mas tarde.">
                            <font>
@@ -157,7 +108,35 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="picker_programarMantenimiento" layoutX="213.0" layoutY="301.0" promptText="Seleccione una fecha" />
+                        <DatePicker fx:id="picker_programarMantenimiento" layoutX="213.0" layoutY="301.0" promptText="Seleccione una fecha" showWeekNumbers="true" />
+                        <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="23.0" layoutY="336.0" prefHeight="43.0" prefWidth="554.0">
+                           <children>
+                              <Label fx:id="lblFechaEstablecida" text="Label" textAlignment="CENTER" visible="false" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
+                        <Label layoutX="21.0" layoutY="380.0" text="Notas del Mantenimiento:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="txtNotasMantenimiento" layoutX="21.0" layoutY="411.0" prefHeight="143.0" prefWidth="557.0" promptText="Escriba aqui las notas sobre el mantenimiento (opcional)." />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="pnResultado" layoutX="8.0" layoutY="7.0" prefHeight="559.0" prefWidth="584.0" visible="false">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="559.0" prefWidth="581.0" spacing="10.0">
+                           <children>
+                              <ImageView fx:id="imvResult" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="lblResultMensaje" text="Programa el primer mantenimiento">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
                      </children>
                   </Pane>
                </children>

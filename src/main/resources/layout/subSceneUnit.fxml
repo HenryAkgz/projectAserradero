@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="651.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.SubSceneUnitController">
+<AnchorPane fx:id="root" prefHeight="651.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.SubSceneUnitController">
     <children>
         <Pane fx:id="empty_data_container" layoutX="14.0" layoutY="14.0" prefHeight="625.0" prefWidth="1254.0">
             <children>
@@ -36,7 +36,7 @@
                 </Label>
                 <Button fx:id="ButtonAgregarModeloEmptyContainer" layoutX="566.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleNewUnit" text="Agregar una unidad" />
             </children></Pane>
-      <HBox fx:id="layoutBox_container" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="layoutBox_container" prefHeight="100.0" prefWidth="200.0" visible="false">
          <children>
               <BorderPane fx:id="pn_part_content" prefHeight="651.0" prefWidth="1279.0">
                   <left>
@@ -62,7 +62,7 @@
                                       </HBox>
                                       <ScrollPane hbarPolicy="NEVER" prefHeight="489.0" prefWidth="244.0" style="-fx-background-color: #1f2233;">
                                           <content>
-                                              <VBox fx:id="aaside_list_models" prefHeight="477.0" prefWidth="244.0" spacing="10.0" style="-fx-padding: 5; -fx-background-color: #1f2233;" />
+                                              <VBox fx:id="aside_list_units" prefHeight="477.0" prefWidth="244.0" spacing="10.0" style="-fx-padding: 5; -fx-background-color: #1f2233;" />
                                           </content>
                                       </ScrollPane>
                                       <HBox alignment="BOTTOM_CENTER" prefHeight="62.0" prefWidth="244.0" style="-fx-padding: 20 0;">
@@ -95,7 +95,7 @@
                       </VBox>
                   </center>
               </BorderPane>
-              <BorderPane fx:id="pane_infoPieza" prefHeight="200.0" prefWidth="200.0">
+              <BorderPane fx:id="pane_infoUnidad" prefHeight="200.0" prefWidth="200.0">
                   <center>
                       <VBox alignment="CENTER" prefHeight="651.0" spacing="15.0" BorderPane.alignment="CENTER">
                           <children>

@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.controlsfx.tools.Utils;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -106,8 +105,8 @@ public class AddNewModelController implements Initializable {
      * métodos del stage
      * */
 
-    //hanndleAddPhotoModel: abre un filechooser para seleccionar la imagen del modelo y mostrarla en el imageView model_photo_imageView
-    public void hanndleAddPhotoModel() {
+    //handleAddPhotoModel: abre un filechooser para seleccionar la imagen del modelo y mostrarla en el imageView model_photo_imageView
+    public void handleAddPhotoModel() {
         pathPhoto = Util.getPhotoFromStorage("Selecciona la foto del modelo");
 
         if (pathPhoto != null) {
@@ -116,7 +115,7 @@ public class AddNewModelController implements Initializable {
         handleValidarCampos();
     }
 
-    //handleValidarCampos: si todos los campos del formulario estan rellenos entonces muestra el botón de continuar, de no ser asi lo oculta
+    //handleValidarCampos: si todos los campos del formulario están rellenos entonces muestra el botón de continuar, de no ser asi lo oculta
     public void handleValidarCampos() {
         if (pn_data_general.isVisible()) {
             next_button.setVisible(!(modelo_textField.getText().isBlank() || motor_textField.getText().isBlank() || peso_textField.getText().isBlank() || diametroMaximo_textField.getText().isBlank() || anchoTablero_textField.getText().isBlank() || grosorPlaca_textField.getText().isBlank() || tamanoHoja_textField.getText().isBlank() || longitudPista_textField.getText().isBlank() || anchoPista_textField.getText().isBlank() || ajustabilidad_textField.getText().isBlank() || pathPhoto == null || unidadPeso_comboBox.getSelectionModel().isEmpty() || idExist));
@@ -222,7 +221,7 @@ public class AddNewModelController implements Initializable {
 
 
     /*
-     * Filtra las unidades que coincidan con la búsqueda y las muestra en la lista de unidades
+     * Filtra las unidades que coincidan con la búsqueda y las muestra en la lista
      * */
     public void handleSearch() {
         vbListaAllPieces.getChildren().clear();
@@ -239,11 +238,7 @@ public class AddNewModelController implements Initializable {
         if (!modelo_textField.getText().isBlank()) {
             idExist = con.existModel(modelo_textField.getText());
 
-            if (idExist) {
-                model_exist_label.setVisible(true);
-            } else {
-                model_exist_label.setVisible(false);
-            }
+            model_exist_label.setVisible(idExist);
 
         }
         handleValidarCampos();

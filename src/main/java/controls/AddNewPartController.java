@@ -61,7 +61,7 @@ public class AddNewPartController implements Initializable {
         stage.setIconified(true);
     }
 
-    //hanndleAddPhotoModel: abre un filechooser para seleccionar la imagen del modelo y mostrarla en el imageView model_photo_imageView
+    //handleAddPhotoModel: abre un filechooser para seleccionar la imagen del modelo y mostrarla en el imageView model_photo_imageView
     public void hanndleAddPhotoModel() {
         pathPhoto = Util.getPhotoFromStorage("Selecciona la foto del modelo");
 

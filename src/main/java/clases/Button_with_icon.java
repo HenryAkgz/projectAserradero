@@ -12,7 +12,7 @@ public class Button_with_icon extends HBox {
     Pane icono = new Pane();
     Label textLabel = new Label();
 
-    //varaibles del contendor
+    //variables del contendor
     String borderRadius = "0px";
     String backgroundColor= "red";
     String padding= "0px";
@@ -23,7 +23,7 @@ public class Button_with_icon extends HBox {
     Double iconSize = 10.0;
 
     String textColor= "white";
-    String textoBotón = "Text Exapmple";
+    String textoBotón = "Text Example";
 
 
 
@@ -50,7 +50,7 @@ public class Button_with_icon extends HBox {
 
     public void createButton(){
 
-        //creamos el contenedor del boton
+        //creamos el contenedor del botón
         setStyle("-fx-background-color: "+backgroundColor+"; -fx-background-radius: "+borderRadius+"; -fx-padding: "+padding+";");
         setSpacing(spacing);
         //agregamos el icono
