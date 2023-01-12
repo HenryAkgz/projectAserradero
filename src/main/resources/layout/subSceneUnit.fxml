@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="651.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.SubSceneUnitController">
+    <children>
+        <Pane fx:id="empty_data_container" layoutX="14.0" layoutY="14.0" prefHeight="625.0" prefWidth="1254.0">
+            <children>
+                <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="477.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/empty.gif" />
+                    </image>
+                </ImageView>
+                <Label layoutX="274.0" layoutY="380.0" text="Ops! Parece que aun no has guardado ninguna unidad" textFill="#fec701">
+                    <font>
+                        <Font name="System Bold" size="28.0" />
+                    </font>
+                </Label>
+                <Label layoutX="388.0" layoutY="431.0" text="Clic en 'Agregar una unidad' para agregar una nueva unidad" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Button fx:id="ButtonAgregarModeloEmptyContainer" layoutX="566.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleNewUnit" text="Agregar una unidad" />
+            </children></Pane>
+      <HBox fx:id="layoutBox_container" prefHeight="100.0" prefWidth="200.0" visible="false">
+         <children>
+              <BorderPane fx:id="pn_part_content" prefHeight="651.0" prefWidth="1279.0">
+                  <left>
+                      <Pane prefHeight="651.0" prefWidth="271.0" BorderPane.alignment="CENTER">
+                          <BorderPane.margin>
+                              <Insets />
+                          </BorderPane.margin>
+                          <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                          </padding>
+                          <children>
+                              <VBox fx:id="item_list_aside_container" layoutX="14.0" layoutY="14.0" prefHeight="625.0" prefWidth="244.0">
+                                  <children>
+                                      <HBox alignment="TOP_CENTER" prefHeight="92.0" prefWidth="244.0" spacing="10.0" style="-fx-padding: 20;">
+                                          <children>
+                                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                  <image>
+                                                      <Image url="@../icons/search.png" />
+                                                  </image>
+                                              </ImageView>
+                                              <TextField fx:id="txtBúsqueda" onAction="#handleSearch" onKeyTyped="#handleSearch" prefHeight="25.0" prefWidth="162.0" promptText="Buscar modelo" />
+                                          </children>
+                                      </HBox>
+                                      <ScrollPane hbarPolicy="NEVER" prefHeight="489.0" prefWidth="244.0" style="-fx-background-color: #1f2233;">
+                                          <content>
+                                              <VBox fx:id="aside_list_units" prefHeight="477.0" prefWidth="244.0" spacing="10.0" style="-fx-padding: 5; -fx-background-color: #1f2233;" />
+                                          </content>
+                                      </ScrollPane>
+                                      <HBox alignment="BOTTOM_CENTER" prefHeight="62.0" prefWidth="244.0" style="-fx-padding: 20 0;">
+                                          <children>
+                                              <Button fx:id="btnAddUnitModel" mnemonicParsing="false" onAction="#handleNewUnit" text="Agregar modelo" />
+                                          </children>
+                                          <opaqueInsets>
+                                              <Insets />
+                                          </opaqueInsets>
+                                      </HBox>
+                                  </children>
+                              </VBox>
+                          </children>
+                      </Pane>
+                  </left>
+                  <center>
+                      <VBox fx:id="pane_waiting_clic" alignment="CENTER" prefHeight="651.0" spacing="20.0" BorderPane.alignment="CENTER">
+                          <children>
+                              <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../icons/cat.gif" />
+                                  </image>
+                              </ImageView>
+                              <Label text="Selecciona una unidad de la lista para continuar" textFill="#fec701">
+                                  <font>
+                                      <Font size="28.0" />
+                                  </font>
+                              </Label>
+                          </children>
+                      </VBox>
+                  </center>
+              </BorderPane>
+              <BorderPane fx:id="pane_infoUnidad" prefHeight="200.0" prefWidth="200.0">
+                  <center>
+                      <VBox alignment="CENTER" prefHeight="651.0" spacing="15.0" BorderPane.alignment="CENTER">
+                          <children>
+                              <ImageView fx:id="imvFotoUnidad" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="lblNombreUnidad" text="Label" textFill="#fec701">
+                                  <font>
+                                      <Font name="System Bold" size="18.0" />
+                                  </font>
+                              </Label>
+                              <Label fx:id="lblModeloUnidad" text="0 unidades" textFill="WHITE">
+                                  <font>
+                                      <Font size="18.0" />
+                                  </font>
+                              </Label>
+                        <Label fx:id="lblEstadoUnidad" layoutX="167.0" layoutY="467.0" text="0 unidades" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                          </children>
+                      </VBox>
+                  </center>
+                  <bottom>
+                      <HBox fx:id="menu_item_container_bottom" alignment="CENTER" prefHeight="82.0" prefWidth="1009.0" BorderPane.alignment="CENTER">
+                          <children>
+                              <HBox fx:id="menu_item_unit_container" />
+                          </children>
+                          <padding>
+                              <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
+                          </padding>
+                      </HBox>
+                  </bottom>
+              </BorderPane>
+              <VBox fx:id="form_aside_container" prefHeight="651.0" prefWidth="300.0">
+                  <padding>
+                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </padding>
+              </VBox>
+              <BorderPane fx:id="pn_update" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+                  <bottom>
+                      <HBox alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="249.0" BorderPane.alignment="CENTER">
+                          <children>
+                              <Button fx:id="updateDataButtonUpdate" mnemonicParsing="false" onAction="#handleUpdateUnit" text="Siguiente" />
+                          </children>
+                          <opaqueInsets>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                          </opaqueInsets>
+                      </HBox>
+                  </bottom>
+                  <top>
+                      <VBox alignment="TOP_CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+                          <children>
+                              <Label text="Actualizar Unidad" textFill="WHITE">
+                                  <font>
+                                      <Font name="System Bold" size="18.0" />
+                                  </font>
+                              </Label>
+                          </children>
+                      </VBox>
+                  </top>
+               <center>
+                  <VBox fx:id="formUpdateData" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fx:id="imvFotoUpdate" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="changePhotoButtonUpdate" mnemonicParsing="false" onAction="#handleChangeUnitPhoto" text="Seleccionar foto" />
+                        <Label fx:id="labelNameUpdate" text="Label" textFill="#fec701">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Modelo:" textFill="#0f4c5c">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="comboBoxModeloUpdate" prefWidth="150.0" styleClass="comboNode" />
+                        <Label text="Estado:" textFill="#0f4c5c">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="comboBoxEstadoUpdate" prefWidth="150.0" styleClass="comboNode" />
+                        <Label text="Notas de la unidad:" textFill="#0f4c5c">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="textAreaNotasUpdate" prefHeight="200.0" prefWidth="200.0" promptText="Escriba aqui las notas sobre la unidad (opcional)." style="-fx-text-fill: white;" styleClass="textAreaUpdate" wrapText="true" />
+                     </children>
+                  </VBox>
+               </center>
+              </BorderPane>
+            <BorderPane fx:id="formDeleteUnit" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+               <top>
+                  <VBox alignment="TOP_CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Eliminar unidad" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </top>
+               <center>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/delete.gif" />
+                           </image>
+                        </ImageView>
+                        <Label text="¿Quieres eliminar la siguiente unidad?" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="nombreDeleteLabel" text="Label" textAlignment="CENTER" textFill="#fec701" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </center>
+               <bottom>
+                  <HBox BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox alignment="BOTTOM_LEFT" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Button fx:id="btnDeleteCancel" mnemonicParsing="false" onAction="#handleDeleteCancel" styleClass="whiteButtons" text="Cancelar" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Button fx:id="btnDeleteOk" mnemonicParsing="false" onAction="#handleDeleteOk" styleClass="whiteButtons" text="Eliminar" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+            <BorderPane fx:id="formMensaje" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+               <center>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fx:id="imvMensaje" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  </ImageView>
+                        <Label fx:id="lblMensaje" />
+                     </children>
+                  </VBox>
+               </center>
+               <bottom>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnCerrarMensaje" mnemonicParsing="false" onAction="#handleCloseMessage" styleClass="whiteButtons" text="Cerrar" />
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+            <BorderPane fx:id="pn_showDetails" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+               <top>
+                  <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Detalles" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </top>
+               <center>
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #1f2233;" BorderPane.alignment="CENTER">
+                            <content>
+                                <VBox alignment="TOP_CENTER" minHeight="580.0" spacing="10.0" style="-fx-background-color: #1f2233;">
+                                    <children>
+                                        <ImageView fx:id="foto_imv_showDetails" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                        <Label fx:id="name_label_showDetails" text="Label" textFill="#fec701">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="modelo_label_showDetails" text="Label" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Estado:" textFill="#00bbff">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="estado_label_showDetails" text="Label" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Proximo mantenimiento:" textFill="#00bbff">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                              <Label fx:id="próximoMantenimiento_label_showDetails" layoutX="127.0" layoutY="357.0" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="61.0" layoutY="327.0" text="Ultimo mantenimiento:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                                        <Label fx:id="ultimoMantenimiento_label_showDetails" text="Label" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Notas de la unidad:" textFill="#00bbff">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="notasUnidad_label_showDetail" text="Label" textFill="WHITE" wrapText="true">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </content>
+                        </ScrollPane>
+               </center>
+            </BorderPane>
+         </children>
+      </HBox>
+    </children>
+</AnchorPane>

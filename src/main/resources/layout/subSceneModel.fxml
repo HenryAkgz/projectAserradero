@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="root" prefHeight="651.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.SubSceneModelController">
+   <children>
+      <Pane fx:id="empty_data_container" layoutX="14.0" layoutY="14.0" prefHeight="625.0" prefWidth="1254.0">
+         <children>
+            <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="477.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/empty.gif" />
+               </image>
+            </ImageView>
+            <Label layoutX="274.0" layoutY="380.0" text="Ops! Parece que aun no has guardado ningun modelo" textFill="#fec701">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="392.0" layoutY="429.0" text="Clic en 'Agregar un  modelo' para agregar un nuevo modelo" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="ButtonAgregarModeloEmptyContainer" layoutX="567.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleAddNewModel" text="Agregar un modelo" />
+         </children></Pane>
+      <HBox fx:id="layoutBox_container" prefHeight="100.0" prefWidth="200.0" visible="false">
+         <children>
+            <BorderPane fx:id="pn_part_content" prefHeight="651.0" prefWidth="1279.0">
+               <left>
+                  <Pane prefHeight="651.0" prefWidth="271.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <VBox fx:id="item_list_aside_container" layoutX="14.0" layoutY="14.0" prefHeight="625.0" prefWidth="244.0">
+                           <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="92.0" prefWidth="244.0" spacing="10.0" style="-fx-padding: 20;">
+                                 <children>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/search.png" />
+                                       </image>
+                                    </ImageView>
+                                    <TextField fx:id="txtBúsqueda" onKeyTyped="#handleSearch" prefHeight="25.0" prefWidth="162.0" promptText="Buscar modelo" />
+                                 </children>
+                              </HBox>
+                              <ScrollPane hbarPolicy="NEVER" prefHeight="489.0" prefWidth="244.0" style="-fx-background-color: #1f2233;">
+                                 <content>
+                                    <VBox fx:id="aside_list_models" prefHeight="477.0" prefWidth="244.0" spacing="10.0" style="-fx-padding: 5; -fx-background-color: #1f2233;" />
+                                 </content>
+                              </ScrollPane>
+                              <HBox alignment="BOTTOM_CENTER" prefHeight="62.0" prefWidth="244.0" style="-fx-padding: 20 0;">
+                                 <children>
+                                    <Button fx:id="btnAddUnitModel" mnemonicParsing="false" onAction="#handleAddNewModel" text="Agregar modelo" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </left>
+               <center>
+                  <VBox fx:id="pane_waiting_clic" alignment="CENTER" prefHeight="651.0" spacing="20.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/cat.gif" />
+                           </image>
+                        </ImageView>
+                        <Label text="Selecciona un modelo de la lista para continuar" textFill="#fec701">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="pane_infoPieza" prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <VBox alignment="CENTER" prefHeight="651.0" spacing="15.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fx:id="photoModel_imageView" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="nombreModel_label" text="Label" textFill="#fec701">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="cantidadUnidades_label" text="0 unidades" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </center>
+               <bottom>
+                  <HBox fx:id="menu_item_container_bottom" alignment="CENTER" prefHeight="82.0" prefWidth="1009.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox fx:id="menu_item_model_container" />
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+            <VBox fx:id="form_aside_container" prefHeight="651.0" prefWidth="300.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <BorderPane fx:id="formDataUpdateModel" prefHeight="649.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+               <bottom>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="249.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleNextDataUpdateButton" styleClass="whiteButtons" text="Siguiente" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
+                  </HBox>
+               </bottom>
+               <top>
+                  <VBox alignment="TOP_CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Actualizar modelo" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </top>
+               <center>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1f2233; -fx-border-color: #1f2233;" BorderPane.alignment="CENTER">
+                     <content>
+                        <VBox alignment="TOP_CENTER" prefWidth="247.0" spacing="10.0" style="-fx-background-color: #1f2233;">
+                           <children>
+                              <ImageView fx:id="fotoModelo_imv_update" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                              <Button fx:id="changePhoto_button_update" mnemonicParsing="false" onAction="#handleChangePhotoUpdate" styleClass="whiteButtons" text="Cambiar foto" />
+                              <Label fx:id="nameModel_label_update" text="Label" textFill="#fec701">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Peso:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <HBox prefWidth="200.0" spacing="5.0">
+                                 <children>
+                                    <TextField fx:id="peso_textField_update" alignment="CENTER" style="-fx-background-color: #161925; -fx-text-fill: white;" />
+                                    <ComboBox fx:id="peso_comboBox_update" prefWidth="150.0" style="-fx-background-color: #161925;" />
+                                 </children>
+                              </HBox>
+                              <Label text="Motor:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="motor_textField_update" alignment="CENTER" style="-fx-text-fill: white; -fx-background-color: #161925;" />
+                              <Label text="Diámetro máximo del tronco:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="diámetroMáximoTronco_textField_update" alignment="CENTER" style="-fx-text-fill: white; -fx-background-color: #161925;" />
+                              <Label text="Ancho máximo de tablero:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="anchoMáximoTablero_textField_update" alignment="CENTER" style="-fx-text-fill: white; -fx-background-color: #161925;" />
+                              <Label text="Grosor máximo de la placa:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="grosorPlaca_textField_update" alignment="CENTER" style="-fx-text-fill: white; -fx-background-color: #161925;" />
+                              <Label text="Tamaño de la hoja:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tamañoHoja_textField_update" alignment="CENTER" style="-fx-text-fill: white; -fx-background-color: #161925;" />
+                              <Label text="Longitud de la pista:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="longitudPista_textField_update" alignment="CENTER" style="-fx-text-fill: white; -fx-background-color: #161925;" />
+                              <Label text="Ancho de pista:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="anchoPista_textField_update" alignment="CENTER" style="-fx-text-fill: white; -fx-background-color: #161925;" />
+                              <Label text="Ajustabilidad de la altura de la pista:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="ajustabilidadAltura_textField_update" alignment="CENTER" style="-fx-text-fill: white; -fx-background-color: #161925;" />
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="formPiecesModelUpdate" layoutX="1037.0" layoutY="10.0" prefHeight="649.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+               <bottom>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="249.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleNextPiecesUpdateButton" styleClass="whiteButtons" text="Actualizar modelo" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
+                  </HBox>
+               </bottom>
+               <top>
+                  <VBox alignment="TOP_CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Actualizar modelo" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </top>
+               <center>
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefWidth="200.0" style="-fx-background: #1f2233; -fx-border-color: #1f2233;" BorderPane.alignment="CENTER">
+                     <content>
+                        <VBox alignment="TOP_CENTER" minWidth="249.0" prefWidth="260.0" spacing="10.0" style="-fx-background-color: #1f2233;">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/gears.gif" />
+                                 </image>
+                              </ImageView>
+                              <Label text="Piezas del modelo" textFill="#fec701" />
+                              <Label text="Para eliminar una pieza del modelo solo haga clic sobre la pieza en la lista de piezas del modelo." textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+                              <ScrollPane hbarPolicy="NEVER" maxHeight="500.0" minWidth="248.0" prefWidth="260.0" style="-fx-background-color: #1f2233;">
+                                 <content>
+                                    <VBox fx:id="piecesItemModelContainerUpdate" minWidth="248.0" prefWidth="260.0" spacing="5.0" style="-fx-background-color: #1f2233;" />
+                                 </content>
+                              </ScrollPane>
+                              <Label text="Lista global de piezas" textFill="#fec701" />
+                              <Label text="Para añadir una pieza al modelo seleccione una de la siguiente lista." textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+                              <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
+                                 <children>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/search.png" />
+                                       </image>
+                                    </ImageView>
+                                    <TextField fx:id="txtSearchUpdatePieces" promptText="Buscar Pieza" onKeyTyped="#handleSearchUpdate"/>
+                                 </children>
+                              </HBox>
+                              <ScrollPane hbarPolicy="NEVER" maxHeight="500.0" minWidth="248.0" prefWidth="260.0" style="-fx-background-color: #1f2233;">
+                                 <content>
+                                    <VBox fx:id="piecesGlobalContainerUpdate" minWidth="248.0" prefWidth="260.0" spacing="5.0" style="-fx-background-color: #1f2233;" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="formShowDetails" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+               <top>
+                  <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Detalles" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </top>
+               <center>
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefWidth="249.0" style="-fx-background-color: #1f2233;" BorderPane.alignment="CENTER">
+                     <content>
+                        <VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: #1f2233;">
+                           <children>
+                              <ImageView fx:id="name_imv_showdetails" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="name_label_showdetails" text="Label" textFill="#fec701">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="unidadesactivas_label_showdetais" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Peso:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="peso_label_showdetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Motor:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="motor_label_showdetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Diámetro máximo del tronco:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="diametroMaximoTronco_label_showdetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Ancho máximo de tablero:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="anchoMáximoTablero_label_showDetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Grosor máximo de la placa:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="grosorPlaca_label_showDetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Tamaño de la hoja:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="tamañoHoja_label_showDetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Longitud de la pista:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="longitudPista_label_showdetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Ancho de pista:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="anchoPista_label_showDetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Ajustabilidad de la altura de la pista:" textFill="#00bbff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="ajustabilidadAltura_label_showDetails" text="Label" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="formDeleteModel" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+               <top>
+                  <VBox alignment="TOP_CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Eliminar unidad" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </top>
+               <center>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/delete.gif" />
+                           </image>
+                        </ImageView>
+                        <Label text="¿Quieres eliminar la siguiente pieza?" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="nombreDeleteLabel" text="Label" textAlignment="CENTER" textFill="#fec701" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </center>
+               <bottom>
+                  <HBox BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox alignment="BOTTOM_LEFT" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Button fx:id="btnDeleteCancel" mnemonicParsing="false" onAction="#handleDeleteCancel" styleClass="whiteButtons" text="Cancelar" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Button fx:id="btnDeleteOk" mnemonicParsing="false" onAction="#handleDeleteOk" styleClass="whiteButtons" text="Eliminar" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+            <BorderPane fx:id="formMensaje" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+               <center>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fx:id="imvMensaje" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="lblMensaje" />
+                     </children>
+                  </VBox>
+               </center>
+               <bottom>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnCerrarMensaje" mnemonicParsing="false" onAction="#handleCloseMessage" styleClass="whiteButtons" text="Cerrar" />
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

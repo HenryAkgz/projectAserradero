@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="476.0" prefWidth="442.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddNewPartController">
+    <children>
+        <BorderPane prefHeight="476.0" prefWidth="464.0">
+            <top>
+                <Pane prefHeight="61.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="shrink_button" layoutX="383.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleShrinkButton" prefHeight="27.0" prefWidth="27.0" />
+                        <Button fx:id="close_button" layoutX="423.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="27.0" prefWidth="27.0" />
+                        <Label layoutX="14.0" layoutY="15.0" text="Añade una pieza nueva" textFill="#161925">
+                            <font>
+                                <Font name="System Bold" size="22.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+            </top>
+            <bottom>
+                <HBox alignment="CENTER_RIGHT" fillHeight="false" prefHeight="47.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                    <children>
+                          <Button fx:id="next_button" mnemonicParsing="false" onAction="#handleSavePartInBD" text="Agregar pieza" visible="false" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="5.0" />
+                    </padding>
+                </HBox>
+            </bottom>
+            <center>
+                <Pane prefHeight="470.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Pane fx:id="part_pane" prefHeight="361.0" prefWidth="464.0">
+                            <children>
+                                <Label layoutX="26.0" layoutY="267.0" text="Pieza:">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fx:id="model_photo_imageView" fitHeight="200.0" fitWidth="200.0" layoutX="132.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../icons/selectPhoto.gif" />
+                                    </image>
+                                </ImageView>
+                                <Button fx:id="addPhoto_button" layoutX="161.0" layoutY="220.0" mnemonicParsing="false" onAction="#hanndleAddPhotoModel" text="Añadir foto de la pieza" />
+                                <TextField fx:id="nombrePieza_textField" layoutX="25.0" layoutY="295.0" onKeyTyped="#handleValidarDatos" prefHeight="25.0" prefWidth="232.0" promptText="Nombre de pieza" />
+                                <Label fx:id="model_exist_label" layoutX="22.0" layoutY="331.0" text="Este pieza ya se encuentra agregado." textFill="#a81212" visible="false">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                        <Label layoutX="291.0" layoutY="269.0" text="Piezas en Inventario:" />
+                        <Spinner fx:id="piezasInventario_spinner" editable="true" layoutX="290.0" layoutY="295.0" onInputMethodTextChanged="#handleValidarDatos" />
+                            </children>
+                        </Pane>
+                        <Pane fx:id="pn_result" prefHeight="368.0" prefWidth="464.0" visible="false">
+                            <children>
+                                <ImageView fx:id="result_imageView" fitHeight="200.0" fitWidth="200.0" layoutX="132.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../icons/gears.gif" />
+                                    </image></ImageView>
+                        <VBox alignment="CENTER" layoutX="11.0" layoutY="237.0" prefHeight="93.0" prefWidth="443.0">
+                           <children>
+                                      <Label fx:id="mensaje_result_label" text="Añade las piezas que utilia esta unidad">
+                                          <font>
+                                              <Font size="18.0" />
+                                          </font>
+                                      </Label>
+                           </children>
+                        </VBox>
+                            </children>
+                        </Pane>
+                    </children>
+                </Pane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
