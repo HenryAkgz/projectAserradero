@@ -68,8 +68,6 @@ public class SubSceneModelController implements Initializable {
     @FXML
     private Label tamañoHoja_label_showDetails;
     @FXML
-    private Label longitudPista_label_showdetails;
-    @FXML
     private Label anchoPista_label_showDetails;
     @FXML
     private Label ajustabilidadAltura_label_showDetails;
@@ -261,7 +259,6 @@ public class SubSceneModelController implements Initializable {
         anchoMáximoTablero_label_showDetails.setText(currentModelo.getMaxBoardWidth());
         grosorPlaca_label_showDetails.setText(currentModelo.getMaxBoardThickness());
         tamañoHoja_label_showDetails.setText(currentModelo.getBladeSize());
-        longitudPista_label_showdetails.setText(currentModelo.getTrackLength());
         anchoPista_label_showDetails.setText(currentModelo.getTrackWidth());
         ajustabilidadAltura_label_showDetails.setText(currentModelo.getTrackHeightAdjustability());
     }

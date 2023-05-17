@@ -51,13 +51,11 @@ public class AddNewModelController implements Initializable, DraggedScene {
     @FXML
     private TextField tamanoHoja_textField;
     @FXML
-    private TextField longitudPista_textField;
-    @FXML
     private TextField anchoPista_textField;
     @FXML
     private TextField ajustabilidad_textField;
     @FXML
-    private ComboBox unidadPeso_comboBox;
+    private ComboBox tipoCombustible_comboBox;
     @FXML
     private VBox vbListaAllPieces;
     @FXML
@@ -115,7 +113,7 @@ public class AddNewModelController implements Initializable, DraggedScene {
     //handleValidarCampos: si todos los campos del formulario están rellenos entonces muestra el botón de continuar, de no ser asi lo oculta
     public void handleValidarCampos() {
         if (pn_data_general.isVisible()) {
-            next_button.setVisible(!(modelo_textField.getText().isBlank() || motor_textField.getText().isBlank() || peso_textField.getText().isBlank() || diametroMaximo_textField.getText().isBlank() || anchoTablero_textField.getText().isBlank() || grosorPlaca_textField.getText().isBlank() || tamanoHoja_textField.getText().isBlank() || longitudPista_textField.getText().isBlank() || anchoPista_textField.getText().isBlank() || ajustabilidad_textField.getText().isBlank() || pathPhoto == null || unidadPeso_comboBox.getSelectionModel().isEmpty() || idExist));
+            next_button.setVisible(!(modelo_textField.getText().isBlank() || motor_textField.getText().isBlank() || peso_textField.getText().isBlank() || diametroMaximo_textField.getText().isBlank() || anchoTablero_textField.getText().isBlank() || grosorPlaca_textField.getText().isBlank() || tamanoHoja_textField.getText().isBlank() || anchoPista_textField.getText().isBlank() || ajustabilidad_textField.getText().isBlank() || pathPhoto == null || tipoCombustible_comboBox.getSelectionModel().isEmpty() || idExist));
         }
     }
 
@@ -132,13 +130,13 @@ public class AddNewModelController implements Initializable, DraggedScene {
 
             Modelo modelo = new Modelo();
             modelo.setIdModelo(modelo_textField.getText());
-            modelo.setPeso(peso_textField.getText()+ " " + unidadPeso_comboBox.getSelectionModel().getSelectedItem().toString());
+            modelo.setPeso(peso_textField.getText()+ " kg");
             modelo.setMotor(motor_textField.getText());
             modelo.setMaxLogDiameter(diametroMaximo_textField.getText());
             modelo.setMaxBoardWidth(anchoTablero_textField.getText());
             modelo.setMaxBoardThickness(grosorPlaca_textField.getText());
             modelo.setBladeSize(tamanoHoja_textField.getText());
-            modelo.setTrackLength(longitudPista_textField.getText());
+            modelo.setTrackLength("disable");
             modelo.setTrackWidth(anchoPista_textField.getText());
             modelo.setTrackHeightAdjustability(ajustabilidad_textField.getText());
             modelo.setFoto_modelo(Util.readFile(pathPhoto));
@@ -245,6 +243,6 @@ public class AddNewModelController implements Initializable, DraggedScene {
         con = new Conexión();
        this.onDraggedScene(this.root);
 
-        unidadPeso_comboBox.getItems().addAll("lb" , "kg", "ton");
+        tipoCombustible_comboBox.getItems().addAll("Diésel" , "Gasolina", "Híbridos", "Eléctrico");
     }
 }
