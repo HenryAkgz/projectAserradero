@@ -1,13 +1,14 @@
 package clases;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public interface DraggedScene {
 
-    default void onDraggedScene(AnchorPane panelFather) {
+    default void onDraggedScene(Pane panelFather) {
         AtomicReference<Double> xOffset = new AtomicReference<>((double) 0);
         AtomicReference<Double> yOffset = new AtomicReference<>((double) 0);
 

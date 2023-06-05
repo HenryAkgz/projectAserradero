@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="window_root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="247.0" style="-fx-background-radius: 50;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.windowLayoutController">
+    <center>
+        <AnchorPane minHeight="0.0" minWidth="0.0" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane fx:id="anchorContent" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                </AnchorPane>
+                <HBox fx:id="button_window_controller_container" style="-fx-background-radius: 5;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                    <children>
+                        <AnchorPane fx:id="shrink_button" prefHeight="27.0" prefWidth="27.0">
+                            <children>
+                                <Label fx:id="shrink_label" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                            </children></AnchorPane>
+                        <AnchorPane fx:id="maximize_button" prefHeight="27.0" prefWidth="27.0">
+                            <children>
+                                <Label fx:id="maximize_label" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                            </children></AnchorPane>
+                        <AnchorPane fx:id="close_button" prefHeight="27.0" prefWidth="27.0">
+                            <children>
+                                <Label fx:id="close_label" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                            </children></AnchorPane>
+                    </children>
+                </HBox>
+            </children></AnchorPane>
+    </center>
+</BorderPane>

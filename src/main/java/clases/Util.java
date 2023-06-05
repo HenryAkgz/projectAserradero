@@ -1,11 +1,48 @@
 package clases;
 
+import controls.windowLayoutController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.*;
 
 public class Util {
 
+    public static void newStageWindow(FXMLLoader content, double width, double height, String style, boolean showAndWait) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(windowLayoutController.class.getResource(Constants.WINDOW_FRAME_PATH));
+            Scene scene = new Scene(fxmlLoader.load(), width, height);
+            scene.getStylesheets().add(style);
+            windowLayoutController controller = fxmlLoader.getController();
+            controller.setContent(content);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.UNDECORATED);
+            if(showAndWait){
+                stage.showAndWait();
+            }else{
+                stage.show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void setHover(AnchorPane pane, Label label, String paneNormalStyle, String paneHoverStyle, String labelNormalStyle, String labelHoverStyle) {
+        pane.setOnMouseEntered(action -> {
+            pane.setStyle(paneHoverStyle);
+            label.setStyle(labelHoverStyle);
+        });
+        pane.setOnMouseExited(action -> {
+            pane.setStyle(paneNormalStyle);
+            label.setStyle(labelNormalStyle);
+        });
+    }
     public static String getPhotoFromStorage(String title){
 
         FileChooser chooser = new FileChooser();

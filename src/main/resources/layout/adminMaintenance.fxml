@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" styleClass="root" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AdminMaintenanceController">
+<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" styleClass="root" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AdminMaintenanceController">
    <children>
       <BorderPane prefHeight="720.0" prefWidth="1280.0">
          <bottom>
@@ -53,7 +66,7 @@
                      <content>
                         <BorderPane fx:id="mantenimientoProgramado_borderPane" prefHeight="200.0" prefWidth="200.0">
                            <center>
-                              <VBox fx:id="emptyView" alignment="CENTER" prefHeight="580.0" prefWidth="956.0" spacing="10.0" BorderPane.alignment="CENTER">
+                               <VBox fx:id="emptyView" alignment="CENTER" prefHeight="580.0" prefWidth="956.0" spacing="10.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -73,723 +86,734 @@
                                     <Button fx:id="empty_button" mnemonicParsing="false" onAction="#handleAddNewNextMaintenance" styleClass="whiteButtons" text="Button" />
                                  </children>
                               </VBox>
-                           </center>
-                        </BorderPane>
-                     </content>
-                  </Tab>
-                  <Tab onSelectionChanged="#loadViewDataMaintenanceHistory" text="Historial">
-                     <content>
-                        <BorderPane fx:id="mantenimientoHistorialBorderPane" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </Tab>
-               </tabs>
-               <BorderPane.margin>
-                  <Insets left="10.0" right="10.0" />
-               </BorderPane.margin>
-            </TabPane>
-         </center>
-         <top>
-            <HBox spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="40.0" prefWidth="1206.0" spacing="5.0" style="-fx-padding: 10;">
-                     <children>
-                        <Label text="Mantenimiento de la unidad:" textFill="WHITE">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="IDUnidad_lbl" text="Label" textFill="#fec701">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT" spacing="10.0">
-                     <children>
-                        <Button fx:id="shrink_button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="27.0" minWidth="27.0" mnemonicParsing="false" onAction="#handleShrinkButton" style="-fx-border-radius: 5;" />
-                        <Button fx:id="close_button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="27.0" minWidth="27.0" mnemonicParsing="false" onAction="#handleCloseButton" style="-fx-border-radius: 5;" />
-                     </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </HBox>
-         </top>
-      </BorderPane>
-      <VBox fx:id="contentForms" prefHeight="200.0" prefWidth="100.0" visible="false">
-         <children>
-            <BorderPane fx:id="nextMaintenance_borderPane" prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <VBox fx:id="waiting_clic" alignment="CENTER" prefHeight="651.0" spacing="20.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/cat.gif" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="mensaje_waiting_clic" text="Selecciona una unidad de la lista para continuar" textFill="#fec701">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </center>
-               <left>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="item_list_aside_container" BorderPane.alignment="CENTER">
-                     <top>
-                        <HBox alignment="TOP_CENTER" fillHeight="false" prefWidth="180.0" spacing="10.0" style="-fx-padding: 10;" BorderPane.alignment="CENTER">
-                           <children>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/search.png" />
-                                 </image>
-                              </ImageView>
-                              <TextField fx:id="txtBúsquedaNextDate" onKeyTyped="#handleSearchNextDate" prefHeight="25.0" prefWidth="162.0" promptText="Buscar mantenimiento" />
-                           </children>
-                        </HBox>
-                     </top>
-                     <center>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <content>
-                              <VBox fx:id="list_asidde_next_date" spacing="10.0" />
-                           </content>
-                        </ScrollPane>
-                     </center>
-                     <bottom>
-                        <HBox alignment="BOTTOM_CENTER" style="-fx-padding: 20 0;" BorderPane.alignment="CENTER">
-                           <children>
-                              <Button fx:id="btnAddUnitMaintenance" mnemonicParsing="false" onAction="#handleAddNewNextMaintenance" styleClass="whiteButtons" text="Agregar mantenimiento" />
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </HBox>
-                     </bottom>
-                     <BorderPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </BorderPane.margin>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </BorderPane>
-               </left>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </VBox.margin></BorderPane>
-            <BorderPane fx:id="form_info_nextMaintenance" prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <BorderPane fx:id="infoContent" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <bottom>
-                        <HBox alignment="CENTER" prefHeight="82.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <HBox fx:id="buttons_options_container" style="-fx-background-color: white; -fx-background-radius: 10;">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
-                           </padding>
-                        </HBox>
-                     </bottom>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <center>
-                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <content>
-                              <VBox alignment="CENTER" minHeight="480.0" spacing="10.0">
-                                 <children>
-                                    <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/mantenimiento.gif" />
-                                       </image>
-                                    </ImageView>
-                                    <VBox alignment="CENTER">
-                                       <children>
-                                          <Label text="Fecha del mantenimiento:" textAlignment="CENTER" textFill="WHITE">
-                                             <font>
-                                                <Font name="System Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="date_nextDate_label" text="Label" textFill="#00bbff">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="CENTER">
-                                       <children>
-                                          <Label text="Notas del mantenimiento:" textAlignment="CENTER" textFill="WHITE">
-                                             <font>
-                                                <Font name="System Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="notaMantenimiento_nextDate_label" text="Label" textAlignment="CENTER" textFill="#00bbff" wrapText="true">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </VBox>
-                           </content></ScrollPane>
-                     </center></BorderPane>
-               </center>
-            </BorderPane>
-            <VBox fx:id="form_aside_container" prefHeight="651.0" prefWidth="300.0">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </VBox>
-            <BorderPane fx:id="formDeleteUnit" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
-               <top>
-                  <VBox alignment="TOP_CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label text="Eliminar mantenimiento" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </top>
-               <center>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/delete.gif" />
-                           </image>
-                        </ImageView>
-                        <Label text="¿Quieres eliminar la siguiente fecha de mantenimiento?" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="nombreDeleteLabel" text="Label" textAlignment="CENTER" textFill="#fec701" wrapText="true">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </center>
-               <bottom>
-                  <HBox BorderPane.alignment="CENTER">
-                     <children>
-                        <HBox alignment="BOTTOM_LEFT" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Button fx:id="btnDeleteCancel" mnemonicParsing="false" onAction="#handleDeleteCancel" styleClass="whiteButtons" text="Cancelar" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Button fx:id="btnDeleteOk" mnemonicParsing="false" onAction="#handleDeleteOk" styleClass="whiteButtons" text="Eliminar" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-               </bottom>
-            </BorderPane>
-            <BorderPane fx:id="formMensaje" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
-               <center>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fx:id="imvMensaje" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="lblMensaje" />
-                     </children>
-                  </VBox>
-               </center>
-               <bottom>
-                  <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button fx:id="btnCerrarMensaje" mnemonicParsing="false" onAction="#handleCloseMessage" styleClass="whiteButtons" text="Cerrar" />
-                     </children>
-                  </HBox>
-               </bottom>
-            </BorderPane>
-            <BorderPane fx:id="formUpdateMaintenance" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
-               <top>
-                  <VBox alignment="CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label text="Editar mantenimiento" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </top>
-               <center>
-                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/calendar.gif" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER" prefWidth="100.0" spacing="5.0">
-                           <children>
-                              <Label text="Cambiar fecha del mantenimiento:" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="picker_programarMantenimiento" />
-                           </children>
-                        </VBox>
-                        <Label fx:id="lblFechaEstablecida" text="Label" textAlignment="CENTER" textFill="#00bbff" wrapText="true">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Label>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
-                           <children>
-                              <Label text="Notas de la unidad:" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextArea fx:id="txtNotasMantenimientoUpdate" prefHeight="200.0" prefWidth="200.0" promptText="Escribe aqui las notasdel mantenimiento (opcional)." style="-fx-text-fill: #00bbff;" styleClass="textAreaUpdate" wrapText="true" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </center>
-               <bottom>
-                  <HBox alignment="CENTER" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleUpdateMaintenance" styleClass="whiteButtons" text="Actualizar mantenimiento" />
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
-                     </padding>
-                  </HBox>
-               </bottom></BorderPane>
-            <BorderPane fx:id="formChangeState" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
-               <top>
-                  <VBox alignment="CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label text="Realizar mantenimiento" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </top>
-               <center>
-                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/fix.gif" />
-                           </image>
-                        </ImageView>
-                        <TextFlow textAlignment="CENTER">
-                           <children>
-                              <Label text="La unidad " textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="nombreUnidad_label_change_state" text="Label" textFill="#00bbff">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label text=" cambiara su estado " textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="estado_unidad_label" text="Label">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font></Label>
-                              <Label text=" al estado " textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font></Label>
-                              <Label text="&quot;En mantenimiento&quot;" textFill="#fec701">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font></Label>
-                           </children>
-                        </TextFlow>
-                        <Label text="Nota: Antes de continuar asegurese de que la información de este mantenimiento es correcta. Una vez comenzado el mantenimiento no se podran modificar la fecha ni las notas del mantenimiento programado." textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                     </children></VBox>
-               </center>
-               <bottom>
-                  <HBox BorderPane.alignment="CENTER">
-                     <children>
-                        <HBox alignment="BOTTOM_LEFT" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Button fx:id="btnChangeCancel" mnemonicParsing="false" onAction="#handleChangeCancel" styleClass="whiteButtons" text="Cancelar" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Button fx:id="btnChangeOk" mnemonicParsing="false" onAction="#handleChangeOk" styleClass="whiteButtons" text="Continuar" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-               </bottom>
-            </BorderPane>
-            <BorderPane fx:id="maintenanceHistory_borderPane" layoutX="20.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <VBox fx:id="waiting_clic1" alignment="CENTER" prefHeight="651.0" spacing="20.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/cat.gif" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="mensaje_waiting_clic1" text="Selecciona una unidad de la lista para continuar" textFill="#fec701">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </center>
-               <left>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="item_list_aside_container" BorderPane.alignment="CENTER">
-                     <top>
-                        <HBox alignment="TOP_CENTER" fillHeight="false" prefWidth="180.0" spacing="10.0" style="-fx-padding: 10;" BorderPane.alignment="CENTER">
-                           <children>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/search.png" />
-                                 </image>
-                              </ImageView>
-                              <TextField fx:id="txtBúsquedaHistory" onKeyTyped="#handleSearchHistory" prefHeight="25.0" prefWidth="162.0" promptText="Buscar mantenimiento" />
-                           </children>
-                        </HBox>
-                     </top>
-                     <center>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <content>
-                              <VBox fx:id="list_aside_history_date" spacing="10.0" />
-                           </content>
-                        </ScrollPane>
-                     </center>
-                     <bottom>
-                        <HBox alignment="BOTTOM_CENTER" style="-fx-padding: 20 0;" BorderPane.alignment="CENTER">
-                           <children>
-                              <Button fx:id="btnAddUnitMaintenance1" mnemonicParsing="false" onAction="#handleAddNewNextMaintenance" styleClass="whiteButtons" text="Agregar mantenimiento" />
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </HBox>
-                     </bottom>
-                     <BorderPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </BorderPane.margin>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </BorderPane>
-               </left>
-            </BorderPane>
-            <BorderPane fx:id="form_info_maintenance_history" prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <content>
-                        <VBox alignment="CENTER" spacing="20.0">
-                           <children>
-                              <VBox alignment="TOP_CENTER">
-                                 <children>
-                                    <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/maintenanceOk.gif" />
-                                       </image>
-                                    </ImageView>
-                                    <Label fx:id="lbl_mensaje_estate_maintenance_info_form_history" text="Mantenimiento terminado" textFill="#91c499" wrapText="true">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER">
-                                 <children>
-                                    <Label text="Encargado del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_encargado_view_change" text="Label" textAlignment="CENTER" textFill="WHITE">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <HBox alignment="TOP_CENTER" spacing="20.0">
-                                 <children>
-                                    <VBox alignment="TOP_CENTER">
-                                       <children>
-                                          <Label text="Fecha programada:" textAlignment="CENTER" textFill="#fec701">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbl_fecha_programada_view_change" text="Label" textAlignment="CENTER" textFill="WHITE">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0">
-                                       <children>
-                                          <Label text="Fecha de inicio:" textAlignment="CENTER" textFill="#fec701">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbl_fecha_inicio_view_change" text="Label" textAlignment="CENTER" textFill="WHITE">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="TOP_CENTER" layoutX="110.0" layoutY="10.0">
-                                       <children>
-                                          <Label text="Fecha de finalización:" textAlignment="CENTER" textFill="#fec701">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbl_fecha_finalizacion_view_change" text="Label" textAlignment="CENTER" textFill="WHITE">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0">
-                                       <children>
-                                          <Label text="Estado:" textAlignment="CENTER" textFill="#fec701">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbl_estado_view_change" textAlignment="CENTER" textFill="WHITE">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                              <VBox alignment="TOP_CENTER">
-                                 <children>
-                                    <Label text="Notas del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_notas_mantenimiento_view_change" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font></Label>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER">
-                                 <children>
-                                    <Label text="Observasiones finales del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_notas_encargado_view_change" textFill="WHITE">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children></VBox>
-                           </children>
-                        </VBox>
-                     </content></ScrollPane>
-               </center>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding></BorderPane>
-            <BorderPane fx:id="form_change_maintenance_history" prefHeight="200.0" prefWidth="200.0">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-               <center>
-                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <content>
-                        <VBox alignment="TOP_CENTER" spacing="15.0">
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                           <children>
-                              <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/mantenimiento_en_progreso.gif" />
-                                 </image>
-                              </ImageView>
-                              <VBox alignment="CENTER">
-                                 <children>
-                                    <Label text="Este mantenimiento se encuentra en progreso" textAlignment="CENTER" textFill="#fec701">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <TextFlow textAlignment="CENTER">
-                                       <children>
-                                          <Label text="Al cambiar el estado del mantenimiento a " textFill="WHITE">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="&quot;Terminado&quot;" textFill="#91c499">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="hara que los datos no puedan ser editados una vez guardados." textFill="WHITE" wrapText="true">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </TextFlow>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" fillWidth="false">
-                                 <children>
-                                    <Label text="Fecha programada para el mantenimiento:" textAlignment="CENTER" textFill="#fec701">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_fecha_programada_change_change" text="Label" textAlignment="CENTER" textFill="WHITE">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER">
-                                 <children>
-                                    <Label text="Notas del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_notas_mantenimiento_change_change" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </VBox>
-                              <HBox alignment="CENTER" maxWidth="700.0" spacing="20.0">
-                                 <children>
-                                    <VBox alignment="TOP_CENTER">
-                                       <children>
-                                          <Label text="Inicio del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
-                                             <font>
-                                                <Font name="System Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbl_finiicio_change_change" text="Label" textAlignment="CENTER" textFill="WHITE">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="TOP_CENTER">
-                                       <children>
-                                          <Label text="Encargado del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
-                                             <font>
-                                                <Font name="System Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField fx:id="txt_encargado_change_change" onKeyTyped="#handleValidarChangeState" promptText="Sin encargado" style="-fx-background-color: #1f2233; -fx-text-fill: #00bbff;" />
-                                       </children>
-                                    </VBox>
-                                    <VBox alignment="TOP_CENTER" fillWidth="false">
-                                       <children>
-                                          <Label text="Estado del mantenimiento" textAlignment="CENTER" textFill="#fec701">
-                                             <font>
-                                                <Font name="System Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <ComboBox fx:id="cbx_estado_change_change" onAction="#handleValidarChangeState" prefWidth="150.0" styleClass="comboNode" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <VBox alignment="CENTER">
-                                 <children>
-                                    <Label text="Observaciones del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextArea fx:id="txt_notas_encargado_change_change" maxHeight="80.0" maxWidth="700.0" onKeyTyped="#handleValidarChangeState" prefHeight="80.0" promptText="Escriba aqui sus observaciones, notas o problemas encontrados dureante el mantenimiento (opcional)" style="-fx-text-fill: #00bbff;" styleClass="textAreaUpdate" wrapText="true">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </padding>
-                                    </TextArea>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                        </VBox>
-                     </content></ScrollPane>
-               </center></BorderPane>
-            <VBox fx:id="vb_container_saver_button_change" alignment="CENTER">
-               <children>
-                  <Button fx:id="btn_save_data_change_change" mnemonicParsing="false" onAction="#handleSaveChangeState" styleClass="whiteButtons" text="Guardar datos del mantenimiento" textAlignment="CENTER">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </VBox>
-         </children></VBox>
-   </children>
-</AnchorPane>
+                              <BorderPane fx:id="nextMaintenance_borderPane" prefHeight="200.0" prefWidth="200.0">
+                                 <center>
+                                    <VBox fx:id="waiting_clic" alignment="CENTER" prefHeight="651.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                        <children>
+                                           <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                                              <image>
+                                                 <Image url="@../icons/cat.gif" />
+                                              </image>
+                                           </ImageView>
+                                           <Label fx:id="mensaje_waiting_clic" text="Selecciona una unidad de la lista para continuar" textFill="#fec701">
+                                              <font>
+                                                 <Font size="18.0" />
+                                              </font>
+                                           </Label>
+                                        </children>
+                                     </VBox>
+                                  </center>
+                                  <VBox.margin>
+                                     <Insets bottom="10.0" left="10.0" right="10.0" />
+                                  </VBox.margin>
+                                 <left>
+                                     <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="item_list_aside_container" BorderPane.alignment="CENTER">
+                                        <top>
+                                           <HBox alignment="TOP_CENTER" fillHeight="false" prefWidth="180.0" spacing="10.0" style="-fx-padding: 10;" BorderPane.alignment="CENTER">
+                                              <children>
+                                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                       <Image url="@../icons/search.png" />
+                                                    </image>
+                                                 </ImageView>
+                                                 <TextField fx:id="txtBúsquedaNextDate" onKeyTyped="#handleSearchNextDate" prefHeight="25.0" prefWidth="162.0" promptText="Buscar mantenimiento" />
+                                              </children>
+                                           </HBox>
+                                        </top>
+                                        <center>
+                                           <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                              <content>
+                                                 <VBox fx:id="list_asidde_next_date" spacing="10.0" />
+                                              </content>
+                                           </ScrollPane>
+                                        </center>
+                                        <bottom>
+                                           <HBox alignment="BOTTOM_CENTER" style="-fx-padding: 20 0;" BorderPane.alignment="CENTER">
+                                              <children>
+                                                 <Button fx:id="btnAddUnitMaintenance" mnemonicParsing="false" onAction="#handleAddNewNextMaintenance" styleClass="whiteButtons" text="Agregar mantenimiento" />
+                                              </children>
+                                              <opaqueInsets>
+                                                 <Insets />
+                                              </opaqueInsets>
+                                           </HBox>
+                                        </bottom>
+                                        <BorderPane.margin>
+                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </BorderPane.margin>
+                                        <padding>
+                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        </padding>
+                                     </BorderPane>
+                                 </left></BorderPane>
+                            </center>
+                         </BorderPane>
+                      </content>
+                   </Tab>
+                   <Tab onSelectionChanged="#loadViewDataMaintenanceHistory" text="Historial">
+                      <content>
+                         <BorderPane fx:id="mantenimientoHistorialBorderPane" prefHeight="200.0" prefWidth="200.0" />
+                      </content>
+                   </Tab>
+                </tabs>
+                <BorderPane.margin>
+                   <Insets left="10.0" right="10.0" />
+                </BorderPane.margin>
+             </TabPane>
+          </center>
+          <top>
+             <HBox spacing="10.0" BorderPane.alignment="CENTER">
+                <children>
+                   <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="40.0" prefWidth="1206.0" spacing="5.0" style="-fx-padding: 10;">
+                      <children>
+                         <Label text="Mantenimiento de la unidad:" textFill="WHITE">
+                            <font>
+                               <Font size="14.0" />
+                            </font>
+                         </Label>
+                         <Label fx:id="IDUnidad_lbl" text="Label" textFill="#fec701">
+                            <font>
+                               <Font size="14.0" />
+                            </font>
+                         </Label>
+                      </children>
+                   </HBox>
+                   <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                      <children>
+                         <Button fx:id="shrink_button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="27.0" minWidth="27.0" mnemonicParsing="false" onAction="#handleShrinkButton" style="-fx-border-radius: 5;" />
+                         <Button fx:id="close_button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="27.0" minWidth="27.0" mnemonicParsing="false" onAction="#handleCloseButton" style="-fx-border-radius: 5;" />
+                      </children>
+                   </HBox>
+                </children>
+                <padding>
+                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+             </HBox>
+          </top>
+       </BorderPane>
+       <VBox fx:id="contentForms" prefHeight="200.0" prefWidth="100.0" visible="false">
+          <children>
+
+             <BorderPane fx:id="form_info_nextMaintenance" prefHeight="200.0" prefWidth="200.0">
+                <center>
+                   <BorderPane fx:id="infoContent" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                      <bottom>
+                         <HBox alignment="CENTER" prefHeight="82.0" BorderPane.alignment="CENTER">
+                            <children>
+                               <HBox fx:id="buttons_options_container" style="-fx-background-color: white; -fx-background-radius: 10;">
+                                  <padding>
+                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                  </padding>
+                               </HBox>
+                            </children>
+                            <padding>
+                               <Insets bottom="20.0" left="15.0" right="15.0" top="15.0" />
+                            </padding>
+                         </HBox>
+                      </bottom>
+                      <padding>
+                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                      </padding>
+                      <center>
+                         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <content>
+                               <VBox alignment="CENTER" minHeight="480.0" spacing="10.0">
+                                  <children>
+                                     <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                           <Image url="@../icons/mantenimiento.gif" />
+                                        </image>
+                                     </ImageView>
+                                     <VBox alignment="CENTER">
+                                        <children>
+                                           <Label text="Fecha del mantenimiento:" textAlignment="CENTER" textFill="WHITE">
+                                              <font>
+                                                 <Font name="System Bold" size="18.0" />
+                                              </font>
+                                           </Label>
+                                           <Label fx:id="date_nextDate_label" text="Label" textFill="#00bbff">
+                                              <font>
+                                                 <Font size="16.0" />
+                                              </font>
+                                           </Label>
+                                        </children>
+                                     </VBox>
+                                     <VBox alignment="CENTER">
+                                        <children>
+                                           <Label text="Notas del mantenimiento:" textAlignment="CENTER" textFill="WHITE">
+                                              <font>
+                                                 <Font name="System Bold" size="18.0" />
+                                              </font>
+                                           </Label>
+                                           <Label fx:id="notaMantenimiento_nextDate_label" text="Label" textAlignment="CENTER" textFill="#00bbff" wrapText="true">
+                                              <font>
+                                                 <Font size="16.0" />
+                                              </font>
+                                           </Label>
+                                        </children>
+                                     </VBox>
+                                  </children>
+                               </VBox>
+                            </content></ScrollPane>
+                      </center></BorderPane>
+                </center>
+             </BorderPane>
+             <VBox fx:id="form_aside_container" prefHeight="651.0" prefWidth="300.0">
+                <padding>
+                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+             </VBox>
+             <BorderPane fx:id="formDeleteUnit" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+                <top>
+                   <VBox alignment="TOP_CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <Label text="Eliminar mantenimiento" textFill="WHITE">
+                            <font>
+                               <Font name="System Bold" size="18.0" />
+                            </font>
+                         </Label>
+                      </children>
+                   </VBox>
+                </top>
+                <center>
+                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                               <Image url="@../icons/delete.gif" />
+                            </image>
+                         </ImageView>
+                         <Label text="¿Quieres eliminar la siguiente fecha de mantenimiento?" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                            <font>
+                               <Font size="18.0" />
+                            </font>
+                         </Label>
+                         <Label fx:id="nombreDeleteLabel" text="Label" textAlignment="CENTER" textFill="#fec701" wrapText="true">
+                            <font>
+                               <Font name="System Bold" size="16.0" />
+                            </font>
+                         </Label>
+                      </children>
+                   </VBox>
+                </center>
+                <bottom>
+                   <HBox BorderPane.alignment="CENTER">
+                      <children>
+                         <HBox alignment="BOTTOM_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                               <Button fx:id="btnDeleteCancel" mnemonicParsing="false" onAction="#handleDeleteCancel" styleClass="whiteButtons" text="Cancelar" />
+                            </children>
+                         </HBox>
+                         <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
+                            <children>
+                               <Button fx:id="btnDeleteOk" mnemonicParsing="false" onAction="#handleDeleteOk" styleClass="whiteButtons" text="Eliminar" />
+                            </children>
+                         </HBox>
+                      </children>
+                   </HBox>
+                </bottom>
+             </BorderPane>
+             <BorderPane fx:id="formMensaje" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+                <center>
+                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <ImageView fx:id="imvMensaje" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                         <Label fx:id="lblMensaje" />
+                      </children>
+                   </VBox>
+                </center>
+                <bottom>
+                   <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <Button fx:id="btnCerrarMensaje" mnemonicParsing="false" onAction="#handleCloseMessage" styleClass="whiteButtons" text="Cerrar" />
+                      </children>
+                   </HBox>
+                </bottom>
+             </BorderPane>
+             <BorderPane fx:id="formUpdateMaintenance" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+                <top>
+                   <VBox alignment="CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <Label text="Editar mantenimiento" textFill="WHITE">
+                            <font>
+                               <Font name="System Bold" size="18.0" />
+                            </font>
+                         </Label>
+                      </children>
+                   </VBox>
+                </top>
+                <center>
+                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                               <Image url="@../icons/calendar.gif" />
+                            </image>
+                         </ImageView>
+                         <VBox alignment="CENTER" prefWidth="100.0" spacing="5.0">
+                            <children>
+                               <Label text="Cambiar fecha del mantenimiento:" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                  <font>
+                                     <Font name="System Bold" size="14.0" />
+                                  </font>
+                               </Label>
+                               <DatePicker fx:id="picker_programarMantenimiento" />
+                            </children>
+                         </VBox>
+                         <Label fx:id="lblFechaEstablecida" text="Label" textAlignment="CENTER" textFill="#00bbff" wrapText="true">
+                            <font>
+                               <Font size="14.0" />
+                            </font></Label>
+                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                            <children>
+                               <Label text="Notas de la unidad:" textFill="WHITE">
+                                  <font>
+                                     <Font name="System Bold" size="14.0" />
+                                  </font>
+                               </Label>
+                               <TextArea fx:id="txtNotasMantenimientoUpdate" prefHeight="200.0" prefWidth="200.0" promptText="Escribe aqui las notasdel mantenimiento (opcional)." style="-fx-text-fill: #00bbff;" styleClass="textAreaUpdate" wrapText="true" />
+                            </children>
+                         </VBox>
+                      </children>
+                   </VBox>
+                </center>
+                <bottom>
+                   <HBox alignment="CENTER" prefWidth="200.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <Button mnemonicParsing="false" onAction="#handleUpdateMaintenance" styleClass="whiteButtons" text="Actualizar mantenimiento" />
+                      </children>
+                      <padding>
+                         <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                      </padding>
+                   </HBox>
+                </bottom></BorderPane>
+             <BorderPane fx:id="formChangeState" prefHeight="629.0" prefWidth="249.0" styleClass="vb_aside_container_right">
+                <top>
+                   <VBox alignment="CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <Label text="Realizar mantenimiento" textFill="WHITE">
+                            <font>
+                               <Font name="System Bold" size="18.0" />
+                            </font>
+                         </Label>
+                      </children>
+                   </VBox>
+                </top>
+                <center>
+                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                               <Image url="@../icons/fix.gif" />
+                            </image>
+                         </ImageView>
+                         <TextFlow textAlignment="CENTER">
+                            <children>
+                               <Label text="La unidad " textFill="WHITE">
+                                  <font>
+                                     <Font size="16.0" />
+                                  </font>
+                               </Label>
+                               <Label fx:id="nombreUnidad_label_change_state" text="Label" textFill="#00bbff">
+                                  <font>
+                                     <Font size="14.0" />
+                                  </font>
+                               </Label>
+                               <Label text=" cambiara su estado " textFill="WHITE">
+                                  <font>
+                                     <Font size="16.0" />
+                                  </font>
+                               </Label>
+                               <Label fx:id="estado_unidad_label" text="Label">
+                                  <font>
+                                     <Font size="16.0" />
+                                  </font></Label>
+                               <Label text=" al estado " textFill="WHITE">
+                                  <font>
+                                     <Font size="16.0" />
+                                  </font></Label>
+                               <Label text="&quot;En mantenimiento&quot;" textFill="#fec701">
+                                  <font>
+                                     <Font size="16.0" />
+                                  </font></Label>
+                            </children>
+                         </TextFlow>
+                         <Label text="Nota: Antes de continuar asegurese de que la información de este mantenimiento es correcta. Una vez comenzado el mantenimiento no se podran modificar la fecha ni las notas del mantenimiento programado." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                            <VBox.margin>
+                               <Insets top="10.0" />
+                            </VBox.margin>
+                            <font>
+                               <Font size="13.0" />
+                            </font>
+                         </Label>
+                      </children></VBox>
+                </center>
+                <bottom>
+                   <HBox BorderPane.alignment="CENTER">
+                      <children>
+                         <HBox alignment="BOTTOM_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                               <Button fx:id="btnChangeCancel" mnemonicParsing="false" onAction="#handleChangeCancel" styleClass="whiteButtons" text="Cancelar" />
+                            </children>
+                         </HBox>
+                         <HBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
+                            <children>
+                               <Button fx:id="btnChangeOk" mnemonicParsing="false" onAction="#handleChangeOk" styleClass="whiteButtons" text="Continuar" />
+                            </children>
+                         </HBox>
+                      </children>
+                   </HBox>
+                </bottom>
+             </BorderPane>
+             <BorderPane fx:id="maintenanceHistory_borderPane" layoutX="20.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
+                <center>
+                   <VBox fx:id="waiting_clic1" alignment="CENTER" prefHeight="651.0" spacing="20.0" BorderPane.alignment="CENTER">
+                      <children>
+                         <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                               <Image url="@../icons/cat.gif" />
+                            </image>
+                         </ImageView>
+                         <Label fx:id="mensaje_waiting_clic1" text="Selecciona una unidad de la lista para continuar" textFill="#fec701">
+                            <font>
+                               <Font size="18.0" />
+                            </font>
+                         </Label>
+                      </children>
+                   </VBox>
+                </center>
+                <left>
+                   <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="item_list_aside_container" BorderPane.alignment="CENTER">
+                      <top>
+                         <HBox alignment="TOP_CENTER" fillHeight="false" prefWidth="180.0" spacing="10.0" style="-fx-padding: 10;" BorderPane.alignment="CENTER">
+                            <children>
+                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                     <Image url="@../icons/search.png" />
+                                  </image>
+                               </ImageView>
+                               <TextField fx:id="txtBúsquedaHistory" onKeyTyped="#handleSearchHistory" prefHeight="25.0" prefWidth="162.0" promptText="Buscar mantenimiento" />
+                            </children>
+                         </HBox>
+                      </top>
+                      <center>
+                         <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <content>
+                               <VBox fx:id="list_aside_history_date" spacing="10.0" />
+                            </content>
+                         </ScrollPane>
+                      </center>
+                      <bottom>
+                         <HBox alignment="BOTTOM_CENTER" style="-fx-padding: 20 0;" BorderPane.alignment="CENTER">
+                            <children>
+                               <Button fx:id="btnAddUnitMaintenance1" mnemonicParsing="false" onAction="#handleAddNewNextMaintenance" styleClass="whiteButtons" text="Agregar mantenimiento" />
+                            </children>
+                            <opaqueInsets>
+                               <Insets />
+                            </opaqueInsets>
+                         </HBox>
+                      </bottom>
+                      <BorderPane.margin>
+                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                      </BorderPane.margin>
+                      <padding>
+                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                      </padding>
+                   </BorderPane>
+                </left>
+             </BorderPane>
+             <BorderPane fx:id="form_info_maintenance_history" prefHeight="200.0" prefWidth="200.0">
+                <center>
+                   <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                      <content>
+                         <VBox alignment="CENTER" spacing="20.0">
+                            <children>
+                               <VBox alignment="TOP_CENTER">
+                                  <children>
+                                     <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                           <Image url="@../icons/maintenanceOk.gif" />
+                                        </image>
+                                     </ImageView>
+                                     <Label fx:id="lbl_mensaje_estate_maintenance_info_form_history" text="Mantenimiento terminado" textFill="#91c499" wrapText="true">
+                                        <font>
+                                           <Font name="System Bold" size="24.0" />
+                                        </font>
+                                     </Label>
+                                  </children>
+                               </VBox>
+                               <VBox alignment="TOP_CENTER">
+                                  <children>
+                                     <Label text="Encargado del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
+                                        <font>
+                                           <Font size="18.0" />
+                                        </font>
+                                     </Label>
+                                     <Label fx:id="lbl_encargado_view_change" text="Label" textAlignment="CENTER" textFill="WHITE">
+                                        <font>
+                                           <Font size="16.0" />
+                                        </font>
+                                     </Label>
+                                  </children>
+                               </VBox>
+                               <HBox alignment="TOP_CENTER" spacing="20.0">
+                                  <children>
+                                     <VBox alignment="TOP_CENTER">
+                                        <children>
+                                           <Label text="Fecha programada:" textAlignment="CENTER" textFill="#fec701">
+                                              <font>
+                                                 <Font size="18.0" />
+                                              </font>
+                                           </Label>
+                                           <Label fx:id="lbl_fecha_programada_view_change" text="Label" textAlignment="CENTER" textFill="WHITE">
+                                              <font>
+                                                 <Font size="16.0" />
+                                              </font>
+                                           </Label>
+                                        </children>
+                                     </VBox>
+                                     <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0">
+                                        <children>
+                                           <Label text="Fecha de inicio:" textAlignment="CENTER" textFill="#fec701">
+                                              <font>
+                                                 <Font size="18.0" />
+                                              </font>
+                                           </Label>
+                                           <Label fx:id="lbl_fecha_inicio_view_change" text="Label" textAlignment="CENTER" textFill="WHITE">
+                                              <font>
+                                                 <Font size="16.0" />
+                                              </font>
+                                           </Label>
+                                        </children>
+                                     </VBox>
+                                     <VBox alignment="TOP_CENTER" layoutX="110.0" layoutY="10.0">
+                                        <children>
+                                           <Label text="Fecha de finalización:" textAlignment="CENTER" textFill="#fec701">
+                                              <font>
+                                                 <Font size="18.0" />
+                                              </font>
+                                           </Label>
+                                           <Label fx:id="lbl_fecha_finalizacion_view_change" text="Label" textAlignment="CENTER" textFill="WHITE">
+                                              <font>
+                                                 <Font size="16.0" />
+                                              </font>
+                                           </Label>
+                                        </children>
+                                     </VBox>
+                                     <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0">
+                                        <children>
+                                           <Label text="Estado:" textAlignment="CENTER" textFill="#fec701">
+                                              <font>
+                                                 <Font size="18.0" />
+                                              </font>
+                                           </Label>
+                                           <Label fx:id="lbl_estado_view_change" textAlignment="CENTER" textFill="WHITE">
+                                              <font>
+                                                 <Font size="16.0" />
+                                              </font>
+                                           </Label>
+                                        </children>
+                                     </VBox>
+                                  </children>
+                               </HBox>
+                               <VBox alignment="TOP_CENTER">
+                                  <children>
+                                     <Label text="Notas del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
+                                        <font>
+                                           <Font size="16.0" />
+                                        </font>
+                                     </Label>
+                                     <Label fx:id="lbl_notas_mantenimiento_view_change" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                        <font>
+                                           <Font size="16.0" />
+                                        </font></Label>
+                                  </children>
+                               </VBox>
+                               <VBox alignment="TOP_CENTER">
+                                  <children>
+                                     <Label text="Observasiones finales del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
+                                        <font>
+                                           <Font size="16.0" />
+                                        </font>
+                                     </Label>
+                                     <Label fx:id="lbl_notas_encargado_view_change" textFill="WHITE">
+                                        <font>
+                                           <Font size="16.0" />
+                                        </font>
+                                     </Label>
+                                  </children></VBox>
+                            </children>
+                         </VBox>
+                      </content></ScrollPane>
+                </center>
+                <padding>
+                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding></BorderPane>
+             <BorderPane fx:id="form_change_maintenance_history" prefHeight="200.0" prefWidth="200.0">
+                <padding>
+                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+                <center>
+                   <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                      <content>
+                         <VBox alignment="TOP_CENTER" spacing="15.0">
+                            <padding>
+                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <children>
+                               <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                  <left>
+                                     <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                        <image>
+                                           <Image url="@../icons/mantenimiento_en_progreso.gif" />
+                                        </image>
+                                     </ImageView>
+                                  </left>
+                                  <center>
+                                     <VBox alignment="CENTER">
+                                        <children>
+                                           <Label text="Este mantenimiento se encuentra en progreso" textAlignment="CENTER" textFill="#fec701">
+                                              <font>
+                                                 <Font name="System Bold" size="24.0" />
+                                              </font>
+                                           </Label>
+                                           <TextFlow textAlignment="CENTER">
+                                              <children>
+                                                 <Label text="Al cambiar el estado del mantenimiento a " textFill="WHITE">
+                                                    <font>
+                                                       <Font size="16.0" />
+                                                    </font>
+                                                 </Label>
+                                                 <Label text="&quot;Terminado&quot;" textFill="#91c499">
+                                                    <font>
+                                                       <Font size="16.0" />
+                                                    </font>
+                                                 </Label>
+                                                 <Label text="hara que los datos no puedan ser editados una vez guardados." textFill="WHITE" wrapText="true">
+                                                    <font>
+                                                       <Font size="16.0" />
+                                                    </font>
+                                                 </Label>
+                                              </children>
+                                           </TextFlow>
+                                        </children>
+                                     </VBox>
+                                  </center>
+                               </BorderPane>
+
+                               <VBox alignment="CENTER" fillWidth="false">
+                                  <children>
+                                     <Label text="Fecha programada para el mantenimiento:" textAlignment="CENTER" textFill="#fec701">
+                                        <font>
+                                           <Font name="System Bold" size="16.0" />
+                                        </font>
+                                     </Label>
+                                     <Label fx:id="lbl_fecha_programada_change_change" text="Label" textAlignment="CENTER" textFill="WHITE">
+                                        <font>
+                                           <Font size="16.0" />
+                                        </font>
+                                     </Label>
+                                  </children>
+                                  <VBox.margin>
+                                     <Insets top="10.0" />
+                                  </VBox.margin>
+                               </VBox>
+                               <VBox alignment="TOP_CENTER">
+                                  <children>
+                                     <Label text="Notas del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
+                                        <font>
+                                           <Font name="System Bold" size="16.0" />
+                                        </font>
+                                     </Label>
+                                     <Label fx:id="lbl_notas_mantenimiento_change_change" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                        <font>
+                                           <Font size="16.0" />
+                                        </font>
+                                     </Label>
+                                  </children>
+                                  <VBox.margin>
+                                     <Insets />
+                                  </VBox.margin>
+                               </VBox>
+                               <HBox alignment="CENTER" maxWidth="700.0" spacing="20.0">
+                                  <children>
+                                     <VBox alignment="TOP_CENTER">
+                                        <children>
+                                           <Label text="Inicio del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
+                                              <font>
+                                                 <Font name="System Bold" size="16.0" />
+                                              </font>
+                                           </Label>
+                                           <Label fx:id="lbl_finiicio_change_change" text="Label" textAlignment="CENTER" textFill="WHITE">
+                                              <font>
+                                                 <Font size="16.0" />
+                                              </font>
+                                           </Label>
+                                        </children>
+                                     </VBox>
+                                     <VBox alignment="TOP_CENTER">
+                                        <children>
+                                           <Label text="Encargado del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
+                                              <font>
+                                                 <Font name="System Bold" size="16.0" />
+                                              </font>
+                                           </Label>
+                                           <TextField fx:id="txt_encargado_change_change" onKeyTyped="#handleValidarChangeState" promptText="Sin encargado" style="-fx-background-color: #1f2233; -fx-text-fill: #00bbff;">
+                                              <font>
+                                                 <Font size="16.0" />
+                                              </font></TextField>
+                                        </children>
+                                     </VBox>
+                                     <VBox alignment="TOP_CENTER" fillWidth="false">
+                                        <children>
+                                           <Label text="Estado del mantenimiento" textAlignment="CENTER" textFill="#fec701">
+                                              <font>
+                                                 <Font name="System Bold" size="16.0" />
+                                              </font>
+                                           </Label>
+                                           <ComboBox fx:id="cbx_estado_change_change" onAction="#handleValidarChangeState" prefWidth="150.0" styleClass="comboNode" />
+                                        </children>
+                                     </VBox>
+                                  </children>
+                                  <VBox.margin>
+                                     <Insets />
+                                  </VBox.margin>
+                               </HBox>
+                               <VBox alignment="CENTER">
+                                  <children>
+                                     <Label text="Observaciones del mantenimiento:" textAlignment="CENTER" textFill="#fec701">
+                                        <font>
+                                           <Font name="System Bold" size="16.0" />
+                                        </font>
+                                     </Label>
+                                     <TextArea fx:id="txt_notas_encargado_change_change" maxHeight="80.0" maxWidth="700.0" onKeyTyped="#handleValidarChangeState" prefHeight="80.0" promptText="Escriba aqui sus observaciones, notas o problemas encontrados dureante el mantenimiento (opcional)" style="-fx-text-fill: #00bbff;" styleClass="textAreaUpdate" wrapText="true">
+                                        <font>
+                                           <Font size="16.0" />
+                                        </font>
+                                        <padding>
+                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </padding>
+                                     </TextArea>
+                                  </children>
+                                  <VBox.margin>
+                                     <Insets />
+                                  </VBox.margin>
+                               </VBox>
+                            </children>
+                         </VBox>
+                      </content></ScrollPane>
+                </center></BorderPane>
+             <VBox fx:id="vb_container_saver_button_change" alignment="CENTER">
+                <children>
+                   <Button fx:id="btn_save_data_change_change" mnemonicParsing="false" onAction="#handleSaveChangeState" styleClass="whiteButtons" text="Guardar datos del mantenimiento" textAlignment="CENTER">
+                      <VBox.margin>
+                         <Insets />
+                      </VBox.margin>
+                   </Button>
+                </children>
+                <padding>
+                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+             </VBox>
+          </children></VBox>
+    </children>
+ </AnchorPane>

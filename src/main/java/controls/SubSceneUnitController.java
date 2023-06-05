@@ -191,6 +191,7 @@ public class SubSceneUnitController implements Initializable {
         unitButtonShowHistory.setOnMouseClicked(mouseEvent -> {
             try{
                 showMaintenance();
+                //showAlternativeMaintenance();
             }catch(OutOfMemoryError e){
                 System.out.println("Error de memoria: "+e.getMessage());
             }
@@ -320,6 +321,28 @@ public class SubSceneUnitController implements Initializable {
         };
 
         openAdminMaintenanceThread.run();
+    }
+
+    public void  showAlternativeMaintenance(){
+        Runnable openNewMaintenanceWindowThread = new Runnable() {
+            @Override
+            public void run() {
+
+                FXMLLoader loader = new FXMLLoader(AlternativeMaintenanceController.class.getResource(Constants.ALTERNATIVE_MAINTENANCE_PATH));
+                AlternativeMaintenanceController controller = loader.getController();
+                //controller.setIdUnidad(currentUnidad.getId_unidad());
+                Util.newStageWindow(loader, 1280, 720, getClass().getResource("/css/alternativeMaintenance.css").toExternalForm(), true);
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        getAllUnitsFromDB();
+                    }
+                });
+            }
+        };
+
+        openNewMaintenanceWindowThread.run();
     }
 
     /* ##############################################  Métodos handle  ############################################### */
