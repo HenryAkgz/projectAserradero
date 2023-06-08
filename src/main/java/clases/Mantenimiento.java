@@ -1,10 +1,15 @@
 package clases;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Mantenimiento {
 
     private String idUnit;
     private String maintenanceDate;
+    private String maintenanceType;
     private String maintenanceNotes;
+    private ArrayList<String> maintenanceImagesPaths = new ArrayList<>();
 
     public Mantenimiento() {
     }
@@ -31,5 +36,21 @@ public class Mantenimiento {
 
     public void setMaintenanceNotes(String maintenanceNotes) {
         this.maintenanceNotes = maintenanceNotes;
+    }
+
+    public String getMaintenanceType() {
+        return maintenanceType;
+    }
+
+    public void setMaintenanceType(String maintenanceType) {
+        this.maintenanceType = maintenanceType;
+    }
+
+    public List<String> getMaintenanceImagesPaths() {
+        return maintenanceImagesPaths;
+    }
+
+    public void setMaintenanceImagesPaths(ArrayList<String> maintenanceImagesPaths) {
+        this.maintenanceImagesPaths = maintenanceImagesPaths;
     }
 }

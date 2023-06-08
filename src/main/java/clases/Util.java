@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -13,13 +14,18 @@ import java.io.*;
 
 public class Util {
 
-    public static void newStageWindow(FXMLLoader content, double width, double height, String style, boolean showAndWait) {
+    // Interfaz funcional con un método abstracto
+    public static interface MiFuncion {
+        void ejecutar(FXMLLoader content);
+    }
+
+    public static void newStageWindow(FXMLLoader content, double width, double height, String style, boolean showAndWait, MiFuncion funcion) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(windowLayoutController.class.getResource(Constants.WINDOW_FRAME_PATH));
             Scene scene = new Scene(fxmlLoader.load(), width, height);
             scene.getStylesheets().add(style);
             windowLayoutController controller = fxmlLoader.getController();
-            controller.setContent(content);
+            controller.setContent(content, funcion);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initStyle(StageStyle.UNDECORATED);
@@ -33,6 +39,7 @@ public class Util {
             e.printStackTrace();
         }
     }
+
     public static void setHover(AnchorPane pane, Label label, String paneNormalStyle, String paneHoverStyle, String labelNormalStyle, String labelHoverStyle) {
         pane.setOnMouseEntered(action -> {
             pane.setStyle(paneHoverStyle);

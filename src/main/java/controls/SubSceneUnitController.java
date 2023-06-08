@@ -190,8 +190,8 @@ public class SubSceneUnitController implements Initializable {
         unitButtonShowHistory.createButton();
         unitButtonShowHistory.setOnMouseClicked(mouseEvent -> {
             try{
-                showMaintenance();
-                //showAlternativeMaintenance();
+                //showMaintenance();
+                showAlternativeMaintenance();
             }catch(OutOfMemoryError e){
                 System.out.println("Error de memoria: "+e.getMessage());
             }
@@ -327,12 +327,18 @@ public class SubSceneUnitController implements Initializable {
         Runnable openNewMaintenanceWindowThread = new Runnable() {
             @Override
             public void run() {
+                 try{
 
-                FXMLLoader loader = new FXMLLoader(AlternativeMaintenanceController.class.getResource(Constants.ALTERNATIVE_MAINTENANCE_PATH));
-                AlternativeMaintenanceController controller = loader.getController();
-                //controller.setIdUnidad(currentUnidad.getId_unidad());
-                Util.newStageWindow(loader, 1280, 720, getClass().getResource("/css/alternativeMaintenance.css").toExternalForm(), true);
+                     FXMLLoader loader = new FXMLLoader();
+                     loader.setLocation(getClass().getResource(Constants.ALTERNATIVE_MAINTENANCE_PATH));
+                     Util.newStageWindow(loader, 1280, 720, getClass().getResource("/css/alternativeMaintenance.css").toExternalForm(), true, (FXMLLoader content)-> {
+                         AlternativeMaintenanceController controller = content.getController();
+                         controller.setIdUnidad(currentUnidad.getId_unidad());
+                     });
 
+                 }catch (Exception e){
+                     e.printStackTrace();
+                 }
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {

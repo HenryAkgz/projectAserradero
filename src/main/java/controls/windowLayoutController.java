@@ -38,7 +38,7 @@ public class windowLayoutController implements Initializable, DraggedScene {
     @FXML
     private AnchorPane anchorContent;
 
-    FXMLLoader fxmlContentLoader =new FXMLLoader();
+    FXMLLoader fxmlContentLoader = new FXMLLoader();
 
     private void loadWindowStyle() {
         button_window_controller_container.setStyle(Constants.WINDOW_CONTROLLER_CONTAINER_STYLE);
@@ -58,7 +58,6 @@ public class windowLayoutController implements Initializable, DraggedScene {
     }
 
 
-
     private void handleCloseApp() {
         System.exit(0);
     }
@@ -73,14 +72,20 @@ public class windowLayoutController implements Initializable, DraggedScene {
         stage.setMaximized(!stage.isMaximized());
     }
 
-    public void setContent(FXMLLoader loader) {
-        loadContent(loader);
+    public void setContent(FXMLLoader loader, Util.MiFuncion fun) {
+
+        loadContent(loader, fun);
+
     }
 
-    private void loadContent(FXMLLoader loader) {
+    private void loadContent(FXMLLoader loader, Util.MiFuncion fun) {
         Pane view = null;
         try {
             view = loader.load();
+
+            if(fun != null) {
+                fun.ejecutar(loader);
+            }
             view.setPrefSize(anchorContent.getWidth(), anchorContent.getHeight());
 
             anchorContent.getChildren().add(view);
@@ -89,6 +94,7 @@ public class windowLayoutController implements Initializable, DraggedScene {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
