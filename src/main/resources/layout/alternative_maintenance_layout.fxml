@@ -282,14 +282,14 @@
                         <Image url="@../icons/selectPhoto.gif" />
                      </image>
                   </ImageView>
-                  <Label text="Agrega una o mas fotos, que consideres que podrian ayudarnos entender y resolver tu problema. (Opcional)" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
                   <Label text="Una foto puede ayudarnos a solucionar mas rapido tu problema." textFill="#34e7ff">
                      <font>
                         <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label text="Agrega una o mas fotos, que consideres que podrian ayudarnos entender y resolver tu problema. (Opcional)" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
                      </font>
                   </Label>
                   <BorderPane maxWidth="800.0">

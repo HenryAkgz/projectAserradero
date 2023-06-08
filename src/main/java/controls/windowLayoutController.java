@@ -59,7 +59,8 @@ public class windowLayoutController implements Initializable, DraggedScene {
 
 
     private void handleCloseApp() {
-        System.exit(0);
+        Stage stage = (Stage) shrink_button.getScene().getWindow();
+        stage.close();
     }
 
     private void handleShrinkApp() {
@@ -73,9 +74,7 @@ public class windowLayoutController implements Initializable, DraggedScene {
     }
 
     public void setContent(FXMLLoader loader, Util.MiFuncion fun) {
-
         loadContent(loader, fun);
-
     }
 
     private void loadContent(FXMLLoader loader, Util.MiFuncion fun) {
