@@ -3,20 +3,16 @@ package controls;
 import clases.DraggedScene;
 import clases.Pieza;
 import clases.Util;
-import conexión.Conexión;
+import conexión.Conexión_old;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -46,7 +42,7 @@ public class AddNewPartController implements Initializable, DraggedScene {
 
     //variables del stage
     String pathPhoto;
-    Conexión con;
+    Conexión_old con;
 
     /*
      * Estos métodos controlan el estado de la aplicación
@@ -82,7 +78,7 @@ public class AddNewPartController implements Initializable, DraggedScene {
 
     //agrega la pieza a la base de datos
     public void handleSavePartInBD() {
-        con = new Conexión();
+        con = new Conexión_old();
         con.connectWidthDB();
 
         Pieza nuevaPieza = new Pieza();

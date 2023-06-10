@@ -37,3 +37,25 @@
   .scroll-pane > .corner {
       -fx-background-color: transparent;
   }
+
+.chart-content .chart-plot-background {
+   -fx-background-color: transparent;
+ }
+
+
+.default-color0.chart-bar{
+-fx-bar-fill: #7FD1B9;
+}
+
+.default-color1.chart-bar{
+-fx-bar-fill: #D72483;
+}
+
+.chart-legend {
+   -fx-background-color:  transparent;
+   -fx-padding: 20px;
+}
+
+.chart-legend-item{
+    -fx-text-fill: white;
+}

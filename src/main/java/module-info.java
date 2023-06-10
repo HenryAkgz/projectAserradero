@@ -2,6 +2,7 @@ module com.example.projectaserradero {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires org.json;
 
     requires org.controlsfx.controls;
 

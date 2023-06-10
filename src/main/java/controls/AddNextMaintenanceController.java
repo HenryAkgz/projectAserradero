@@ -1,15 +1,12 @@
 package controls;
 
 import clases.DraggedScene;
-import conexión.Conexión;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import conexión.Conexión_old;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -48,7 +45,7 @@ public class AddNextMaintenanceController implements Initializable, DraggedScene
     private Pane pnResultado;
 
     String idUnidad;
-    Conexión con = new Conexión();
+    Conexión_old con = new Conexión_old();
     public void setUnitID(String idUnidad){
         this.idUnidad = idUnidad;
     }

@@ -1,7 +1,7 @@
 package controls;
 
 import clases.*;
-import conexión.Conexión;
+import conexión.Conexión_old;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 public class SubSceneModelController implements Initializable {
     @FXML
@@ -115,7 +114,7 @@ public class SubSceneModelController implements Initializable {
 
 
     //variables de la subScene
-    Conexión con;
+    Conexión_old con;
     ArrayList<Modelo> listAllModelsFromDB;
     Modelo currentModelo;
     Modelo currentModeloUpdate;
@@ -133,7 +132,7 @@ public class SubSceneModelController implements Initializable {
      * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        con = new Conexión();
+        con = new Conexión_old();
         root.getChildren().remove(layoutBox_container);
         getAllModelsFromDB();
         peso_comboBox_update.getItems().addAll("lb", "kg", "ton");

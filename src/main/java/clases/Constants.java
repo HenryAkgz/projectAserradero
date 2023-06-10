@@ -13,6 +13,9 @@ public class Constants {
     public static final String ESTADO_MANTENIMIENTO_OK = "Terminado";
     public static final String ESTADO_MANTENIMIENTO_STOP = "No se termino";
     public static final String ESTADO_MANTENIMIENTO_PENDIENTE = "Pendiente";
+    public static final String TIPO_DE_MANTENIMIENTO_PREVENTIVO = "Preventivo";
+    public static final String TIPO_DE_MANTENIMIENTO_CORRECTIVO = "Correctivo";
+
 
     //###################### window style #################################
     public static final String WINDOW_CONTROLLER_CONTAINER_STYLE = "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-border-radius: 10px; -fx-spacing: 0px;";

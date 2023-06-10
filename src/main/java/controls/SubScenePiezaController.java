@@ -4,7 +4,7 @@ import clases.Button_with_icon;
 import clases.ItemPieza;
 import clases.Pieza;
 import clases.Util;
-import conexión.Conexión;
+import conexión.Conexión_old;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 
 public class SubScenePiezaController implements Initializable {
     //variables de la subScene
-    Conexión con;
+    Conexión_old con;
     ArrayList<Pieza> listAllPiecesFromDB;
     Pieza currentPieza;
     Pieza piezaActualizada;
@@ -91,7 +91,7 @@ public class SubScenePiezaController implements Initializable {
      * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        con = new Conexión();
+        con = new Conexión_old();
         root.getChildren().remove(layoutBox_container);
         getAllPiecesFromDB();
     }

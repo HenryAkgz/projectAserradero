@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -12,152 +15,249 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="root" minHeight="720.0" minWidth="1280.0" style="-fx-background-color: #1f2233;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AlternativeMaintenanceController">
+<AnchorPane fx:id="root" minHeight="720.0" minWidth="1280.0" style="-fx-background-color: #161925;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AlternativeMaintenanceController">
    <children>
       <BorderPane fx:id="content_pane" layoutX="14.0" layoutY="14.0" prefHeight="700.0" prefWidth="1254.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <center>
-            <AnchorPane fx:id="add_new_date_view" BorderPane.alignment="TOP_CENTER">
+            <AnchorPane fx:id="main_menu_view" BorderPane.alignment="CENTER">
                <children>
                   <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <left>
-                        <VBox prefHeight="258.0" prefWidth="246.0" BorderPane.alignment="TOP_CENTER">
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
+                        <AnchorPane prefHeight="3320.0" prefWidth="246.0" BorderPane.alignment="CENTER">
                            <padding>
-                              <Insets top="20.0" />
+                              <Insets bottom="5.0" right="10.0" top="5.0" />
                            </padding>
                            <children>
-                              <AnchorPane prefHeight="484.0" prefWidth="246.0">
-                                 <children>
-                                    <ProgressBar fx:id="progres_bar_new_date" layoutX="-162.0" layoutY="213.0" prefWidth="400.0" progress="0.71" rotate="90.0" style="-fx-accent: #8367C7;" AnchorPane.leftAnchor="-162.0" AnchorPane.topAnchor="207.0">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets></ProgressBar>
-                                    <Label fx:id="lbl_counter_1" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="12.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #8367C7; -fx-background-radius: 100;" text="1" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_counter_2" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="96.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="2" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_counter_4" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="281.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="4" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_1" layoutX="71.0" layoutY="19.0" text="Informacón general" textFill="#8367c7">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_2" layoutX="72.0" layoutY="103.0" text="Detalles" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_counter_3" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="189.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="3" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_3" layoutX="70.0" layoutY="194.0" text="Evidencias" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_4" layoutX="67.0" layoutY="288.0" text="Confirmación" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_counter_5" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="381.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="5" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_5" layoutX="67.0" layoutY="388.0" text="Terminado" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </VBox>
-                     </left>
-                     <center>
-                        <AnchorPane fx:id="add_new_date_content_container" BorderPane.alignment="CENTER">
-                           <children>
-                              <VBox fx:id="result_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <ImageView fx:id="img_result_add_new_date" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/saveOk.gif" />
-                                       </image>
-                                    </ImageView>
-                                    <Label fx:id="lblResultMensaje" text="Mantenimiento programado correctamente." textAlignment="CENTER" textFill="#1dae83">
-                                       <font>
-                                          <Font name="System Bold" size="28.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Presiona &quot;Regresar al Inicio&quot; para ir al menu principal del administrador de mantenimienrto" textAlignment="CENTER" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Button mnemonicParsing="false" styleClass="whiteButtons" text="Regresar al Inicio">
-                                       <VBox.margin>
-                                          <Insets top="15.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                 </children>
-                              </VBox>
+                              <BorderPane style="-fx-background-color: #1f2233; -fx-background-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <top>
+                                    <VBox alignment="CENTER" fillWidth="false" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <ImageView fx:id="main_menu_unit_photo" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true">
+                                             <image>
+                                                <Image url="@../icons/imagen.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label fx:id="main_menu_id_label" text="Label" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                       <BorderPane.margin>
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                       </BorderPane.margin>
+                                    </VBox>
+                                 </top>
+                                 <center>
+                                    <VBox spacing="40.0" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="40.0" />
+                                       </BorderPane.margin>
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                             <children>
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icons/casa.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="Inicio" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="22.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                             <children>
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icons/gestion-del-tiempo.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="Historial" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="22.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                             <children>
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../icons/proximos.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label text="Proximos" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="22.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </center></BorderPane>
                            </children>
                         </AnchorPane>
-                     </center>
-                     <top>
-                        <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+                     </left>
+                     <center>
+                        <AnchorPane fx:id="main_menu_inicio_view" BorderPane.alignment="CENTER">
                            <children>
-                              <Label text="Añadir una fecha de mantenimiento:" textFill="WHITE">
-                                 <HBox.margin>
-                                    <Insets right="5.0" top="5.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                              <Label fx:id="idUnit_add_new_date" text="Label" textFill="#fec701">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                           </children>
-                        </HBox>
-                     </top>
-                  </BorderPane>
-                  <AnchorPane fx:id="btn_back_setp_addNewData" style="-fx-border-radius: 10;" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="35.0">
-                     <children>
-                        <Pane fx:id="icon_btn_back" layoutX="2.0" layoutY="7.0" prefHeight="22.0" prefWidth="22.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                        <Label fx:id="lbl_back_button" layoutX="50.0" layoutY="34.0" text="Atras" textFill="#e4d9d9" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="4.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
+                              <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <top>
+                                    <TextFlow BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label style="-fx-font-weight: 900;" text="Unidad " textFill="#d7d6d2">
+                                             <font>
+                                                <Font size="27.0" />
+                                             </font></Label>
+                                          <Label fx:id="main_menu_inicio_unidad_label" style="-fx-font-weight: 900;" text="Label" textFill="#fffffd">
+                                             <font>
+                                                <Font size="27.0" />
+                                             </font></Label>
+                                       </children>
+                                       <BorderPane.margin>
+                                          <Insets left="10.0" top="10.0" />
+                                       </BorderPane.margin>
+                                    </TextFlow>
+                                 </top>
+                                 <center>
+                                    <AnchorPane BorderPane.alignment="CENTER">
+                                       <children>
+                                          <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <GridPane gridLinesVisible="true">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints vgrow="SOMETIMES" />
+                                                    <RowConstraints vgrow="SOMETIMES" />
+                                                    <RowConstraints vgrow="SOMETIMES" />
+                                                      <RowConstraints vgrow="SOMETIMES" />
+                                                      <RowConstraints vgrow="SOMETIMES" />
+                                                      <RowConstraints vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <HBox alignment="CENTER" spacing="10.0">
+                                                         <children>
+                                                            <VBox alignment="CENTER" fillWidth="false" spacing="5.0" style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
+                                                               <children>
+                                                                  <Label fx:id="lbl_main_menu_counter_programados" text="1234" textFill="#d3cdcd">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="29.0" />
+                                                                     </font></Label>
+                                                                  <Label text="Programados" textFill="#bfbdbd">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font></Label>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox alignment="CENTER" fillWidth="false" spacing="5.0" style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
+                                                               <children>
+                                                                  <Label fx:id="lbl_main_menu_counter_en_progreso" text="1234" textFill="#d3cdcd">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="29.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label text="En progreso" textFill="#bfbdbd">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox alignment="CENTER" fillWidth="false" spacing="5.0" style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
+                                                               <children>
+                                                                  <Label fx:id="lbl_main_menu_counter_terminados" text="1234" textFill="#d3cdcd">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="29.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label text="Terminados" textFill="#bfbdbd">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                         </children>
+                                                         <GridPane.margin>
+                                                            <Insets top="20.0" />
+                                                         </GridPane.margin>
+                                                      </HBox>
+                                                      <BorderPane prefHeight="300.0" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10;" GridPane.rowIndex="5">
+                                                         <top>
+                                                            <BorderPane BorderPane.alignment="CENTER">
+                                                               <left>
+                                                                  <HBox BorderPane.alignment="CENTER">
+                                                                     <children>
+                                                                        <Label fx:id="lbl_main_menu_title_ultimos_meses" text="Ultimos 3 meses" textFill="#d3cdcd">
+                                                                           <font>
+                                                                              <Font size="19.0" />
+                                                                           </font>
+                                                                        </Label>
+                                                                     </children></HBox>
+                                                               </left>
+                                                               <right>
+                                                                  <HBox BorderPane.alignment="CENTER">
+                                                                     <children>
+                                                                        <ChoiceBox fx:id="cbx_main_menu_inicio_tiempo_ultimos_meses" prefWidth="100.0" />
+                                                                     </children></HBox>
+                                                               </right>
+                                                            </BorderPane>
+                                                         </top>
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                         <GridPane.margin>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                                                         </GridPane.margin>
+                                                         <center>
+                                                            <BarChart fx:id="bc_main_menu_inicio_ultmimos_meses" style="-fx-background-color: transparent;" styleClass="chart-bar" BorderPane.alignment="CENTER">
+                                                              <xAxis>
+                                                                <CategoryAxis fx:id="ultimos_meses_category_axis" side="BOTTOM" tickLabelFill="#d3cdcd" />
+                                                              </xAxis>
+                                                              <yAxis>
+                                                                <NumberAxis fx:id="ultimos_meses_values_axis" side="LEFT" tickLabelFill="#d3cdcd" />
+                                                              </yAxis>
+                                                            </BarChart>
+                                                         </center>
+                                                      </BorderPane>
+                                                   </children>
+                                                </GridPane>
+                                             </children></VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </center></BorderPane>
+                           </children></AnchorPane>
+                     </center></BorderPane>
+               </children></AnchorPane>
          </center>
       </BorderPane>
       <VBox fx:id="extra_nodes" prefHeight="200.0" prefWidth="100.0" visible="false">
@@ -472,6 +572,139 @@
                         </ScrollPane>
                      </center>
                   </BorderPane>
+               </children>
+            </AnchorPane>
+            <VBox fx:id="result_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fx:id="img_result_add_new_date" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/saveOk.gif" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lblResultMensaje" text="Mantenimiento programado correctamente." textAlignment="CENTER" textFill="#1dae83">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                  </Label>
+                  <Label text="Presiona &quot;Regresar al Inicio&quot; para ir al menu principal del administrador de mantenimienrto" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#handleGotoMainView" styleClass="whiteButtons" text="Regresar al Inicio">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <AnchorPane fx:id="add_new_date_view">
+               <children>
+                  <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <left>
+                        <VBox prefHeight="258.0" prefWidth="246.0" BorderPane.alignment="TOP_CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                           <children>
+                              <AnchorPane prefHeight="484.0" prefWidth="246.0">
+                                 <children>
+                                    <ProgressBar fx:id="progres_bar_new_date" layoutX="-162.0" layoutY="213.0" prefWidth="400.0" progress="0.71" rotate="90.0" style="-fx-accent: #8367C7;" AnchorPane.leftAnchor="-162.0" AnchorPane.topAnchor="207.0">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets></ProgressBar>
+                                    <Label fx:id="lbl_counter_1" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="12.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #8367C7; -fx-background-radius: 100;" text="1" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_counter_2" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="96.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="2" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_counter_4" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="281.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="4" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_step_1" layoutX="71.0" layoutY="19.0" text="Informacón general" textFill="#8367c7">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_step_2" layoutX="72.0" layoutY="103.0" text="Detalles" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_counter_3" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="189.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="3" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_step_3" layoutX="70.0" layoutY="194.0" text="Evidencias" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_step_4" layoutX="67.0" layoutY="288.0" text="Confirmación" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_counter_5" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="381.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="5" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_step_5" layoutX="67.0" layoutY="388.0" text="Terminado" textFill="WHITE">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </left>
+                     <center>
+                        <AnchorPane fx:id="add_new_date_content_container" BorderPane.alignment="CENTER" />
+                     </center>
+                     <top>
+                        <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label text="Añadir una fecha de mantenimiento:" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <Label fx:id="idUnit_add_new_date" text="Label" textFill="#fec701">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </HBox>
+                     </top>
+                  </BorderPane>
+                  <AnchorPane fx:id="btn_back_setp_addNewData" style="-fx-border-radius: 10;" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="35.0">
+                     <children>
+                        <Pane fx:id="icon_btn_back" layoutX="2.0" layoutY="7.0" prefHeight="22.0" prefWidth="22.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                        <Label fx:id="lbl_back_button" layoutX="50.0" layoutY="34.0" text="Atras" textFill="#e4d9d9" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="4.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>

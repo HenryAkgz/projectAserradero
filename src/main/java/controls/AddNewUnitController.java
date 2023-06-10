@@ -2,6 +2,7 @@ package controls;
 
 import clases.*;
 import conexión.Conexión;
+import conexión.Conexión_old;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,6 +19,7 @@ import javafx.util.Callback;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -65,8 +67,9 @@ public class AddNewUnitController implements Initializable, DraggedScene {
     private TextArea txtNotasMantenimiento;
     //variables
     String pathPhoto = "";
-    Conexión con = new Conexión();
+    Conexión con = Conexión.getInstancia();
     Unidad currentUnidad = new Unidad();
+    Mantenimiento currentMantenimiento = new Mantenimiento();
 
 
     /*
@@ -100,14 +103,18 @@ public class AddNewUnitController implements Initializable, DraggedScene {
     //Comprueba que no exista otra unidad con el mismo nombre
     public void handleValidateID() {
         lblMensaje.setVisible(true);
-        if (!txtIDUnit.getText().isBlank()) {
-            if (con.existUnit(txtIDUnit.getText().trim())) {
+
+        String mysteriousId = txtIDUnit.getText();
+
+        if (!mysteriousId.isBlank()) {
+            if (con.existeUnidad(mysteriousId.trim())) {
                 lblMensaje.setText("Ya existe una Unidad con este ID.");
                 lblMensaje.setStyle("-fx-text-fill: red;");
             } else {
                 lblMensaje.setText("ID Disponible.");
                 lblMensaje.setStyle("-fx-text-fill: green;");
-                currentUnidad.setId_unidad(txtIDUnit.getText().trim());
+                currentUnidad.setId_unidad(mysteriousId.trim());
+                currentMantenimiento.setIdUnit(mysteriousId.trim());
             }
         } else {
             lblMensaje.setText("El ID de la unidad es obligatorio.");
@@ -121,7 +128,9 @@ public class AddNewUnitController implements Initializable, DraggedScene {
     public void handleNextAction() {
 
         if (pn_data_general.isVisible()) {
-            currentUnidad.setNotas_de_la_unidad(txtNotadDeLaUnidad.getText().trim());
+            if(!txtNotadDeLaUnidad.getText().isBlank()){
+                currentUnidad.setNotas_de_la_unidad(txtNotadDeLaUnidad.getText().trim());
+            }
             pn_data_general.setVisible(false);
             pnMantenimiento.setVisible(true);
             btnBack.setVisible(true);
@@ -142,18 +151,26 @@ public class AddNewUnitController implements Initializable, DraggedScene {
     }
 
     public void handleValidarDatos() {
-        btnNext.setVisible(!(currentUnidad.getPhotoUnidad() == null || cbxEstado.getSelectionModel().isEmpty() || txtIDUnit.getText().isBlank() || con.existUnit(txtIDUnit.getText().trim()) || cbxModelo.getSelectionModel().isEmpty()));
+        btnNext.setVisible(!(currentUnidad.getPhotoUnidad() == null || cbxEstado.getSelectionModel().isEmpty() || txtIDUnit.getText().isBlank() || con.existeUnidad(txtIDUnit.getText().trim()) || cbxModelo.getSelectionModel().isEmpty()));
     }
 
     public void saveDataUnitInBD() {
         pnMantenimiento.setVisible(false);
         pnResultado.setVisible(true);
 
-        if (con.saveUnit(currentUnidad)) {
+        if(picker_programarMantenimiento.getValue() != null){
 
-            if (picker_programarMantenimiento.getValue() != null) {
+           String strDate = LocalDate.parse(picker_programarMantenimiento.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).toString();;
+            currentMantenimiento.setMaintenanceDate(strDate);
+            currentMantenimiento.setMaintenanceType(Constants.TIPO_DE_MANTENIMIENTO_PREVENTIVO);
+            currentMantenimiento.setMaintenanceNotes(txtNotasMantenimiento.getText() != null ? "" : txtNotasMantenimiento.getText().trim());
+        }
 
-                if (con.saveMantenimientoProgramado(currentUnidad.getId_unidad(), picker_programarMantenimiento.getValue().toString(), txtNotasMantenimiento.getText().isBlank() ? "" : txtNotasMantenimiento.getText())) {
+        if (con.agregarUnidad(currentUnidad)) {
+
+            if (currentMantenimiento.getMaintenanceDate() != null) {
+
+                if (con.agregarMantenimientoProgramado(currentMantenimiento)) {
                     imvResult.setImage(new Image(getClass().getResourceAsStream("/icons/saveOk.gif")));
                     lblResultMensaje.setText("Modelo y mantenimiento agregado correctamente.");
                     lblResultMensaje.setStyle("-fx-text-fill: green;");
@@ -188,8 +205,6 @@ public class AddNewUnitController implements Initializable, DraggedScene {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        con.connectWidthDB();
-
         this.onDraggedScene(this.root);
 
         cbxEstado.getItems().addAll(Constants.ESTADO_UNIDAD_ACTIVO, Constants.ESTADO_UNIDAD_INACTIVO);
@@ -226,11 +241,11 @@ public class AddNewUnitController implements Initializable, DraggedScene {
             lblFechaEstablecida.setText("Próximo mantenimiento: \n" + picker_programarMantenimiento.getValue().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
         });
 
-        ArrayList<Modelo> listaModelos = con.getModelosFromDB();
+       /* ArrayList<Modelo> listaModelos = con.getModelosFromDB();
         listaModelos.forEach(item -> {
             cbxModelo.getItems().add(item.getIdModelo());
-        });
+        });*/
 
-
+        cbxModelo.getItems().addAll("UNIDI", "SORO");
     }
 }

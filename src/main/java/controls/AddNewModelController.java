@@ -1,7 +1,7 @@
 package controls;
 
 import clases.*;
-import conexión.Conexión;
+import conexión.Conexión_old;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -74,7 +74,7 @@ public class AddNewModelController implements Initializable, DraggedScene {
 
     //Variables del stage
     String pathPhoto;
-    Conexión con;
+    Conexión_old con;
     ArrayList<Pieza> listaPiezasFromDB;
     ArrayList<Pieza> listaPiezasDelModelo;
     boolean idExist = true;
@@ -240,7 +240,7 @@ public class AddNewModelController implements Initializable, DraggedScene {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        con = new Conexión();
+        con = new Conexión_old();
        this.onDraggedScene(this.root);
 
         tipoCombustible_comboBox.getItems().addAll("Diésel" , "Gasolina", "Híbridos", "Eléctrico");

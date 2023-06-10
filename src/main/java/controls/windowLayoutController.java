@@ -83,8 +83,9 @@ public class windowLayoutController implements Initializable, DraggedScene {
             view = loader.load();
 
             if(fun != null) {
-                fun.ejecutar(loader);
+              fun.ejecutar(loader);
             }
+
             view.setPrefSize(anchorContent.getWidth(), anchorContent.getHeight());
 
             anchorContent.getChildren().add(view);

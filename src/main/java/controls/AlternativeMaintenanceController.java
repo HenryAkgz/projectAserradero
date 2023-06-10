@@ -1,32 +1,40 @@
 package controls;
 
-import clases.ItemMantenimientoHistorial;
-import clases.Mantenimiento;
-import clases.MantenimientoHistorial;
-import conexión.Conexión;
+import clases.*;
+import conexión.Conexión_old;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AlternativeMaintenanceController implements Initializable {
     @FXML
@@ -77,38 +85,83 @@ public class AlternativeMaintenanceController implements Initializable {
     private HBox contenodr_imagenes_result;
     @FXML
     private ImageView img_result_add_new_date;
+    @FXML
+    private AnchorPane main_menu_view;
+    @FXML
+    private Label main_menu_id_label;
+    @FXML
+    private ImageView main_menu_unit_photo;
+    @FXML
+    private Label main_menu_inicio_unidad_label, lbl_main_menu_counter_programados, lbl_main_menu_counter_en_progreso, lbl_main_menu_counter_terminados, lbl_main_menu_title_ultimos_meses;
+    @FXML
+    private BarChart<String, Number> bc_main_menu_inicio_ultmimos_meses;
+    @FXML
+    private ChoiceBox<String> cbx_main_menu_inicio_tiempo_ultimos_meses;
+    @FXML
+    private CategoryAxis ultimos_meses_category_axis;
+    @FXML
+    private NumberAxis ultimos_meses_values_axis;
+    Conexión_old con = new Conexión_old();
 
+    //ArrayList<Mantenimiento> listaMantenimientosProgrmados = new ArrayList<Mantenimiento>();
+    //ArrayList<MantenimientoHistorial> listaMantenimientoHistorial = new ArrayList<MantenimientoHistorial>();
 
-    Conexión con = new Conexión();
-    ArrayList<Mantenimiento> listaMantenimientosProgrmados = new ArrayList<Mantenimiento>();
-    ArrayList<MantenimientoHistorial> listaMantenimientoHistorial = new ArrayList<MantenimientoHistorial>();
+    ObservableList<Mantenimiento> listaMantenimientosProgrmados = FXCollections.observableArrayList();
+    ObservableList<MantenimientoHistorial> listaMantenimientoHistorial = FXCollections.observableArrayList();
+    String ultimo_mantenimiento_programado;
+    String ultimo_mantenimiento_realizado;
+
 
     // variables para añadir una nueva fecha de mantenimiento
-    Mantenimiento mantenimientoTemporal;
+    private Mantenimiento mantenimientoTemporal;
+    private Unidad unidad;
 
-    private String id_unidad = "";
+    private StringProperty id_unidad = new SimpleStringProperty("");
 
 
     private void getDataFromDataBase() {
-        listaMantenimientosProgrmados = con.getAllNextMaintenanceData(id_unidad);
-        listaMantenimientoHistorial = con.getAllMaintenanceHistoryDataByUnit(id_unidad);
+        System.out.println("buscando datos de la unidad:" + id_unidad.get());
+        listaMantenimientosProgrmados.addAll(con.getAllNextMaintenanceData(id_unidad.get()));
+        listaMantenimientoHistorial.addAll(con.getAllMaintenanceHistoryDataByUnit(id_unidad.get()));
+        System.out.println("Resultados..... programmados: " + listaMantenimientosProgrmados.size() + " elementos encontrados    \n historial: " + listaMantenimientoHistorial.size());
     }
 
     public void initContent() {
         //elimina de la ventana los contenedor de los forms extras
+        System.out.println("entrando en init unit");
         root.getChildren().remove(extra_nodes);
 
-        if (listaMantenimientosProgrmados.size() == 0 && listaMantenimientoHistorial.size() == 0) {
+        unidad = con.getUnitByID(id_unidad.get());
+
+       ultimo_mantenimiento_programado = con.getNextMaintenanceDateByUnit(id_unidad.get());
+       ultimo_mantenimiento_realizado = con.getLastMaintenanceDateByUnit(id_unidad.get());
+
+        System.out.println(ultimo_mantenimiento_programado);
+        System.out.println(ultimo_mantenimiento_realizado);
+
+        getDataFromDataBase();
+
+        if (ultimo_mantenimiento_programado.equals(Constants.UNIDAD_SIN_MANTENIMIENTO_PROGRAMADO) && ultimo_mantenimiento_realizado.equals(Constants.UNIDAD_SIN_MANTENIMIENTO)) {
             setCenterContent(empty_view);
         } else if (listaMantenimientosProgrmados.size() > 0 || listaMantenimientoHistorial.size() > 0) {
-            //no hacer nada... de momento
+            main_menu_id_label.setText(id_unidad.get());
+            main_menu_unit_photo.setImage(new Image(new ByteArrayInputStream(unidad.getPhotoUnidad())));
+            Circle clip = new Circle();
+            clip.setCenterX(main_menu_unit_photo.getFitWidth() / 2);
+            clip.setCenterY(main_menu_unit_photo.getFitHeight() / 2);
+            clip.setRadius(Math.min(main_menu_unit_photo.getFitWidth(), main_menu_unit_photo.getFitHeight()) / 2);
+            main_menu_unit_photo.setClip(clip);
+            main_menu_inicio_unidad_label.setText(id_unidad.get());
+            setCenterContent(main_menu_view);
+            crearGraficaUltimosMantenimientos();
+
         }
 
     }
 
     public void setIdUnidad(String id) {
         System.out.println("uid unidad: " + id);
-        this.id_unidad = id;
+        this.id_unidad.set(id);
     }
 
     public void setCenterContent(Node content) {
@@ -121,6 +174,106 @@ public class AlternativeMaintenanceController implements Initializable {
         }
     }
 
+    //############################# metodos para el menu principal ##############################
+    private void rellenarGraficaPastel(int numeroDeUltimosMeses) {
+        XYChart.Series<String, Number> seriePreventivo = new XYChart.Series<>();
+        XYChart.Series<String, Number> serieCorrectivo = new XYChart.Series<>();
+
+        seriePreventivo.setName("Preventivo");
+        serieCorrectivo.setName("Correctivo");
+
+
+        List<String> ultimosMeses = getLastMonths(numeroDeUltimosMeses);
+
+        int count_preventivo =0;
+        int count_correctivo =0;
+
+        getMaintenanceCountForLastMonthChart(count_preventivo, count_correctivo, ultimosMeses);
+
+        for (String mes: ultimosMeses) {
+            serieCorrectivo.getData().add(new XYChart.Data<>(mes,  count_correctivo));
+            seriePreventivo.getData().add(new XYChart.Data<>(mes, count_preventivo));
+        };
+
+        bc_main_menu_inicio_ultmimos_meses.getData().clear();
+        bc_main_menu_inicio_ultmimos_meses.getData().addAll(seriePreventivo, serieCorrectivo);
+    }
+
+    private void getMaintenanceCountForLastMonthChart(int preventivo, int correctivo, List<String> listaMeses){
+
+      List<MantenimientoHistorial> listaFiltrada = listaMantenimientoHistorial.stream().filter(item -> {
+          String mesDelMantenimiento = LocalDate.parse(item.getFecha_inicio_mantenimiento(), DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)).toString();
+          if(listaMeses.contains(mesDelMantenimiento)){
+           return true;
+          }else{
+              return false;
+          }
+      }).toList();
+
+      listaFiltrada.forEach(item -> {
+        //  if(item.)
+      });
+
+    }
+    public List<String> getLastMonths(int numberMonths) {
+        String[] monthNames = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
+                "Octubre", "Noviembre", "Diciembre"};
+        List<String> lastMonths = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+
+        // Obtener la fecha actual
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentYear = calendar.get(Calendar.YEAR);
+// Retroceder en el tiempo para obtener los últimos meses
+        for (int i = 0; i < numberMonths; i++) {
+            // Agregar el mes al resultado
+            lastMonths.add(monthNames[currentMonth]);
+
+            // Retroceder un mes
+            currentMonth--;
+            if (currentMonth < 0) {
+                // Retroceder un año y volver al mes de diciembre
+                currentMonth = 11;
+                currentYear--;
+            }
+        }
+
+        return lastMonths;
+    }
+
+    private void crearGraficaUltimosMantenimientos() {
+        cbx_main_menu_inicio_tiempo_ultimos_meses.getItems().addAll("1 mes", "3 meses", "6 meses", "Año");
+        cbx_main_menu_inicio_tiempo_ultimos_meses.setOnAction(optionSelected -> {
+            String title = "";
+            int noMeses =0;
+
+            switch (cbx_main_menu_inicio_tiempo_ultimos_meses.getSelectionModel().getSelectedItem()) {
+                case "1 mes":
+                    title += "Ultimo mes";
+                    noMeses = 1;
+                    break;
+                case "3 meses":
+                    title += "Ultimos 3 meses";
+                    noMeses = 3;
+                    break;
+
+                case "6 meses":
+                    title += "Ultimos 6 meses";
+                    noMeses = 6;
+                    break;
+
+                case "Año":
+                    title += "Ultimo año";
+                    noMeses = 12;
+                    break;
+            }
+            lbl_main_menu_title_ultimos_meses.setText(title);
+            rellenarGraficaPastel(noMeses);
+        });
+        cbx_main_menu_inicio_tiempo_ultimos_meses.getSelectionModel().select(0);
+    }
+
 
     //############################# metodos para añadir una nueva fecha de mantenimiento ##############################
 
@@ -131,6 +284,7 @@ public class AlternativeMaintenanceController implements Initializable {
             if (temp != null && !temp.isBefore(LocalDate.now())) {
                 lbl_fecha_establecida.setText("Fecha del mantenimiento: " + temp.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
                 mantenimientoTemporal.setMaintenanceDate(temp.toString());
+                System.out.println(temp.toString());
 
             } else {
                 lbl_fecha_establecida.setText("dd/mm/aaaa");
@@ -159,9 +313,9 @@ public class AlternativeMaintenanceController implements Initializable {
     public void handleShowAddNewDateMaintenanceForm() {
 
         //se crea una instancia nueva de la clase mantenimiento
-        idUnit_add_new_date.setText(id_unidad);
+        idUnit_add_new_date.setText(id_unidad.getValue());
         mantenimientoTemporal = new Mantenimiento();
-        mantenimientoTemporal.setIdUnit(id_unidad);
+        mantenimientoTemporal.setIdUnit(id_unidad.getValue());
         btn_next_1_add_new_date.setVisible(false);
 
         //date filter para el datePicker
@@ -414,9 +568,8 @@ public class AlternativeMaintenanceController implements Initializable {
         mantenimientoTemporal.getMaintenanceImagesPaths().remove(path);
     }
 
-    public void handleSaveMaintenanceData(){
-
-        if(con.saveMantenimientoProgramado(id_unidad, mantenimientoTemporal.getMaintenanceDate(), mantenimientoTemporal.getMaintenanceNotes())){
+    public void handleSaveMaintenanceData() {
+        if (con.saveMantenimientoProgramado(id_unidad.getValue(), mantenimientoTemporal.getMaintenanceDate(), mantenimientoTemporal.getMaintenanceNotes())) {
             img_result_add_new_date.setImage(new Image(getClass().getResourceAsStream("/icons/saveOk.gif")));
             lblResultMensaje.setText("Mantenimiento programado correctamente.");
             lblResultMensaje.setStyle("-fx-text-fill: green;");
@@ -428,9 +581,45 @@ public class AlternativeMaintenanceController implements Initializable {
 
         setAddNewDateFormToMainView(result_add_new_date);
     }
+
+    public void handleGotoMainView() {
+        content_pane.getChildren().clear();
+        initContent();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initContent();
+        listaMantenimientosProgrmados.addListener(new ListChangeListener<Mantenimiento>() {
+            @Override
+            public void onChanged(Change<? extends Mantenimiento> change) {
+                lbl_main_menu_counter_programados.setText(Integer.toString(listaMantenimientosProgrmados.size()));
+            }
+        });
 
+        listaMantenimientoHistorial.addListener(new ListChangeListener<MantenimientoHistorial>() {
+            @Override
+            public void onChanged(Change<? extends MantenimientoHistorial> change) {
+                int total_terminado = 0;
+                int total_progreso = 0;
+
+                for (MantenimientoHistorial m : listaMantenimientoHistorial) {
+                    if (m.getEstado().equals(Constants.ESTADO_MANTENIMIENTO_OK)) {
+                        total_terminado++;
+                    } else if (m.getEstado().equals(Constants.UNIDAD_EN_MANTENIMIENTO)) {
+                        total_progreso++;
+                    }
+
+                    lbl_main_menu_counter_terminados.setText(Integer.toString(total_terminado));
+                    lbl_main_menu_counter_en_progreso.setText(Integer.toString(total_progreso));
+                }
+
+            }
+        });
+        id_unidad.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                initContent();
+            }
+        });
     }
 }

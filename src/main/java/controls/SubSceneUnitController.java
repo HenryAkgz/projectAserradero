@@ -2,6 +2,7 @@ package controls;
 
 import clases.*;
 import conexión.Conexión;
+import conexión.Conexión_old;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,9 @@ import javafx.stage.StageStyle;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -114,20 +118,21 @@ public class SubSceneUnitController implements Initializable {
      * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        con = new Conexión();
+        con = Conexión.getInstancia();
         root.getChildren().remove(layoutBox_container);
         getAllUnitsFromDB();
 
-        listAllModels = con.getModelosFromDB();
+       /* listAllModels = con.getModelosFromDB();
         listAllModels.forEach(item -> comboBoxModeloUpdate.getItems().add(item.getIdModelo()));
-        comboBoxEstadoUpdate.getItems().addAll(Constants.ESTADO_UNIDAD_INACTIVO, Constants.ESTADO_UNIDAD_ACTIVO);
+        comboBoxEstadoUpdate.getItems().addAll(Constants.ESTADO_UNIDAD_INACTIVO, Constants.ESTADO_UNIDAD_ACTIVO); */
     }
 
     //Trae todas las unidades guardadas de la base de datos.
     private void getAllUnitsFromDB() {
-        listAllUnits = con.getALLUnitsFromDB();
+        listAllUnits = con.obtenerTodasLasUnidades();
         showUnitInUI(listAllUnits);
     }
+
 
     //Carga en la interfaz los datos de las unidades de listAllUnits.
     private void showUnitInUI(List<Unidad> elementos) {
@@ -152,7 +157,6 @@ public class SubSceneUnitController implements Initializable {
                 unitUI.setOnMouseClicked(action -> mostrarInfoUnidad(item));
                 aside_list_units.getChildren().add(unitUI);
             });
-
 
         } else {
             if (listAllUnits.size() == 0 && !root.getChildren().contains(empty_data_container)) {
@@ -221,7 +225,7 @@ public class SubSceneUnitController implements Initializable {
      * Muestra u oculta la ventana lateral en la interfaz, al mostrar la ventana
      * la rellena con el formulario node
      * */
-    private void mostrarForm(Node node) {
+   private void mostrarForm(Node node) {
         if (isVisibleFormContainer()) {
             if (form_aside_container.getChildren().contains(node)) {
                 pn_part_content.getChildren().remove(form_aside_container);
@@ -245,15 +249,32 @@ public class SubSceneUnitController implements Initializable {
     /* ****************************************** Métodos details Unit ******************************* */
 
     //muestra el form en la ventana lateral izquierda con toda la información sobre la unidad.
-    public void showDetails() {
+   public void showDetails() {
         mostrarForm(pn_showDetails);
         foto_imv_showDetails.setImage(new Image(new ByteArrayInputStream(currentUnidad.getPhotoUnidad())));
         name_label_showDetails.setText(currentUnidad.getId_unidad());
         modelo_label_showDetails.setText(currentUnidad.getId_modelo());
         estado_label_showDetails.setText(currentUnidad.getEstado());
         estado_label_showDetails.setStyle(Util.getStyleByState(currentUnidad.getEstado()));
-        próximoMantenimiento_label_showDetails.setText(con.getNextMaintenanceDateByUnit(currentUnidad.getId_unidad()));
-        ultimoMantenimiento_label_showDetails.setText(con.getLastMaintenanceDateByUnit(currentUnidad.getId_unidad()));
+        //próximoMantenimiento_label_showDetails.setText(con.obtenerFechaProximoMantenimiento(currentUnidad.getId_unidad()).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+
+       LocalDate proximoMantenimientoProgramado = con.obtenerFechaProximoMantenimiento(currentUnidad.getId_unidad());
+
+       if(proximoMantenimientoProgramado == null){
+           próximoMantenimiento_label_showDetails.setText(Constants.UNIDAD_SIN_MANTENIMIENTO_PROGRAMADO);
+       }else{
+           próximoMantenimiento_label_showDetails.setText(proximoMantenimientoProgramado.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+       }
+
+       LocalDate ultimoMantenimientoRealizado = con.obtenerFechaDelUltimoMantenimientoRealizado(currentUnidad.getId_unidad());
+
+       if(ultimoMantenimientoRealizado == null){
+           ultimoMantenimiento_label_showDetails.setText(Constants.UNIDAD_SIN_MANTENIMIENTO);
+       }else{
+           ultimoMantenimiento_label_showDetails.setText(ultimoMantenimientoRealizado.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+       }
+
+
         if (currentUnidad.getNotas_de_la_unidad().isBlank()) {
             notasUnidad_label_showDetail.setText("Sin descripción");
         } else {
@@ -356,7 +377,7 @@ public class SubSceneUnitController implements Initializable {
     /* ****************************************** Métodos ventana lateral izquierda ***************************** */
 
     //Abre el formulario para añadir una nueva unidad a la BD.
-    public void handleNewUnit() throws IOException {
+   public void handleNewUnit() throws IOException {
         Runnable threadAddUnit = new Runnable() {
             @Override
             public void run() {
@@ -399,8 +420,8 @@ public class SubSceneUnitController implements Initializable {
     /* ****************************************** Métodos delete unit ***************************** */
 
     //Borra la unidad seleccionada de la base de datos.
-    public void handleDeleteOk() {
-        String textResult;
+   public void handleDeleteOk() {
+    /*    String textResult;
         if (con.deleteUnitFromDB(currentUnidad.getId_unidad())) {
             textResult = "Modelo actualizado correctamente!";
             imvMensaje.setImage(new Image(getClass().getResourceAsStream("/icons/deleteOk.gif")));
@@ -415,7 +436,7 @@ public class SubSceneUnitController implements Initializable {
         mostrarForm(formMensaje);
         getAllUnitsFromDB();
         pn_part_content.getChildren().remove(pane_infoUnidad);
-        pn_part_content.setCenter(pane_waiting_clic);
+        pn_part_content.setCenter(pane_waiting_clic); */
     }
 
     // cierra el formulario de confirmación de eliminación de la unidad seleccionada.
@@ -433,7 +454,7 @@ public class SubSceneUnitController implements Initializable {
     /* ****************************************** Métodos Update Model ******************************* */
 
     //carga una nueva foto al objeto modelo que se mandara para actualizar el modelo en la BD.
-    public void handleChangeUnitPhoto() {
+   public void handleChangeUnitPhoto() {
         String pathFoto = Util.getPhotoFromStorage("Actualizar foto de la unidad");
 
         if (pathFoto != null) {
@@ -446,7 +467,7 @@ public class SubSceneUnitController implements Initializable {
 
     //manda los datos a la BD para actualizar la Unidad.
     public void handleUpdateUnit() {
-        unidadUpdateUnit.setId_unidad(currentUnidad.getId_unidad());
+       /* unidadUpdateUnit.setId_unidad(currentUnidad.getId_unidad());
         unidadUpdateUnit.setId_modelo(comboBoxModeloUpdate.getSelectionModel().getSelectedItem());
         unidadUpdateUnit.setEstado(comboBoxEstadoUpdate.getSelectionModel().getSelectedItem());
         unidadUpdateUnit.setNotas_de_la_unidad(textAreaNotasUpdate.getText());
@@ -468,7 +489,9 @@ public class SubSceneUnitController implements Initializable {
 
         lblMensaje.setText(textResult);
         mostrarForm(formMensaje);
-        updateUI();
+        updateUI(); */
     }
+
+
 
 }

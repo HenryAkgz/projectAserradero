@@ -1,7 +1,7 @@
 package controls;
 
 import clases.*;
-import conexión.Conexión;
+import conexión.Conexión_old;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +31,7 @@ public class AdminMaintenanceController implements Initializable, DraggedScene {
     //variables
     String idUnidad;
     Unidad unidad;
-    Conexión con = new Conexión();
+    Conexión_old con = new Conexión_old();
     Mantenimiento currentMantenimiento;
     MantenimientoHistorial currentMantenimientoHistorial;
     ArrayList<Mantenimiento> listAllMaintenance;
