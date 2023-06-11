@@ -3,6 +3,7 @@ package controls;
 import clases.DraggedScene;
 import clases.Pieza;
 import clases.Util;
+import conexión.Conexión;
 import conexión.Conexión_old;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,7 +43,7 @@ public class AddNewPartController implements Initializable, DraggedScene {
 
     //variables del stage
     String pathPhoto;
-    Conexión_old con;
+    Conexión con = Conexión.getInstancia();
 
     /*
      * Estos métodos controlan el estado de la aplicación
@@ -78,15 +79,13 @@ public class AddNewPartController implements Initializable, DraggedScene {
 
     //agrega la pieza a la base de datos
     public void handleSavePartInBD() {
-        con = new Conexión_old();
-        con.connectWidthDB();
 
         Pieza nuevaPieza = new Pieza();
         nuevaPieza.setNombrePieza(nombrePieza_textField.getText());
         nuevaPieza.setPhotoPieza(Util.readFile(pathPhoto));
         nuevaPieza.setCantidadEnInvetario((int) piezasInventario_spinner.getValue());
 
-        if (con.savePartInBD(nuevaPieza)) {
+        if (con.agregarPieza(nuevaPieza)) {
             mensaje_result_label.setText("La pieza se agrego correctamente");
            result_imageView.setImage(new Image(getClass().getResourceAsStream("/icons/saveOk.gif")));
             mensaje_result_label.setStyle("-fx-text-fill: #4B21C3;");

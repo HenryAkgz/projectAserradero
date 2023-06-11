@@ -241,11 +241,10 @@ public class AddNewUnitController implements Initializable, DraggedScene {
             lblFechaEstablecida.setText("Próximo mantenimiento: \n" + picker_programarMantenimiento.getValue().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
         });
 
-       /* ArrayList<Modelo> listaModelos = con.getModelosFromDB();
+       ArrayList<Modelo> listaModelos = con.obtenerTodosLosModelos();
         listaModelos.forEach(item -> {
-            cbxModelo.getItems().add(item.getIdModelo());
-        });*/
+            cbxModelo.getItems().add(item.getId_modelo());
+        });
 
-        cbxModelo.getItems().addAll("UNIDI", "SORO");
     }
 }

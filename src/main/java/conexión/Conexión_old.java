@@ -142,7 +142,7 @@ public class Conexión_old {
 
     //guarda en la BD los datos de un nuevo modelo.
     public boolean saveModeloInDB(Modelo e) {
-        try {
+       /* try {
             Connection con = connectWidthDB();
             String query = "INSERT INTO modelo (id_modelo, peso, motor, maxLogDiameter, maxBoardWidth, maxBoardThickness, bladeSize, trackLength, trackWidth, trackHeightAdjustability, foto_modelo) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
@@ -165,11 +165,12 @@ public class Conexión_old {
             return true;
         } catch (SQLException ex) {
             return false;
-        }
+        }*/
+            return true;
     }
 
     //obtiene todas las unidades almacenadas en la BD
-    public ArrayList<Modelo> getModelosFromDB() {
+  /*  public ArrayList<Modelo> getModelosFromDB() {
         try {
             Connection con = connectWidthDB();
 
@@ -202,7 +203,7 @@ public class Conexión_old {
             return null;
         }
 
-    }
+    }*/
 
     //Borra un elemento de la base de datos
     public boolean deleteModelFromDB(String idModelo) {
@@ -306,7 +307,7 @@ public class Conexión_old {
     }
 
     //actualiza en la BD los datos del modelo.
-    public boolean updateModel(Modelo modelo) {
+  /*  public boolean updateModel(Modelo modelo) {
         try {
             Connection con = connectWidthDB();
             String query = "UPDATE modelo SET peso = ?, motor = ?, maxLogDiameter = ?, maxBoardWidth = ?, maxBoardThickness = ?, bladeSize = ?, trackLength = ?, trackWidth = ?, trackHeightAdjustability = ?, foto_modelo = ? WHERE id_modelo = ?";
@@ -333,7 +334,7 @@ public class Conexión_old {
             e.printStackTrace();
             return false;
         }
-    }
+    }*/
 
     //Obtiene todas piezas que conforman el modelo.
     public ArrayList<Pieza> getAllPiecesByModel(String idModel) {

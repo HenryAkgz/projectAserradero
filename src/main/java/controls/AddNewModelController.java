@@ -1,6 +1,7 @@
 package controls;
 
 import clases.*;
+import conexión.Conexión;
 import conexión.Conexión_old;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -43,17 +44,17 @@ public class AddNewModelController implements Initializable, DraggedScene {
     @FXML
     private TextField peso_textField;
     @FXML
-    private TextField diametroMaximo_textField;
+    private TextField altura_textField;
     @FXML
-    private TextField anchoTablero_textField;
+    private TextField ancho_textField;
     @FXML
-    private TextField grosorPlaca_textField;
+    private TextField profundidad_textField;
     @FXML
-    private TextField tamanoHoja_textField;
+    private TextField capacidad_textField;
     @FXML
-    private TextField anchoPista_textField;
+    private TextField marca_textField;
     @FXML
-    private TextField ajustabilidad_textField;
+    private TextField tamaño_rueda_textField;
     @FXML
     private ComboBox tipoCombustible_comboBox;
     @FXML
@@ -74,7 +75,7 @@ public class AddNewModelController implements Initializable, DraggedScene {
 
     //Variables del stage
     String pathPhoto;
-    Conexión_old con;
+    Conexión con = Conexión.getInstancia();
     ArrayList<Pieza> listaPiezasFromDB;
     ArrayList<Pieza> listaPiezasDelModelo;
     boolean idExist = true;
@@ -113,7 +114,7 @@ public class AddNewModelController implements Initializable, DraggedScene {
     //handleValidarCampos: si todos los campos del formulario están rellenos entonces muestra el botón de continuar, de no ser asi lo oculta
     public void handleValidarCampos() {
         if (pn_data_general.isVisible()) {
-            next_button.setVisible(!(modelo_textField.getText().isBlank() || motor_textField.getText().isBlank() || peso_textField.getText().isBlank() || diametroMaximo_textField.getText().isBlank() || anchoTablero_textField.getText().isBlank() || grosorPlaca_textField.getText().isBlank() || tamanoHoja_textField.getText().isBlank() || anchoPista_textField.getText().isBlank() || ajustabilidad_textField.getText().isBlank() || pathPhoto == null || tipoCombustible_comboBox.getSelectionModel().isEmpty() || idExist));
+            next_button.setVisible(!(modelo_textField.getText().isBlank() || marca_textField.getText().isBlank() || peso_textField.getText().isBlank() || motor_textField.getText().isBlank() || altura_textField.getText().isBlank() || ancho_textField.getText().isBlank() || profundidad_textField.getText().isBlank() || capacidad_textField.getText().isBlank() || tamaño_rueda_textField.getText().isBlank() || pathPhoto == null || tipoCombustible_comboBox.getSelectionModel().isEmpty() || idExist));
         }
     }
 
@@ -129,22 +130,22 @@ public class AddNewModelController implements Initializable, DraggedScene {
         } else if (pnPieces.isVisible()) {
 
             Modelo modelo = new Modelo();
-            modelo.setIdModelo(modelo_textField.getText());
+            modelo.setId_modelo(modelo_textField.getText());
             modelo.setPeso(peso_textField.getText()+ " kg");
             modelo.setMotor(motor_textField.getText());
-            modelo.setMaxLogDiameter(diametroMaximo_textField.getText());
-            modelo.setMaxBoardWidth(anchoTablero_textField.getText());
-            modelo.setMaxBoardThickness(grosorPlaca_textField.getText());
-            modelo.setBladeSize(tamanoHoja_textField.getText());
-            modelo.setTrackLength("disable");
-            modelo.setTrackWidth(anchoPista_textField.getText());
-            modelo.setTrackHeightAdjustability(ajustabilidad_textField.getText());
+            modelo.setAltura(altura_textField.getText());
+            modelo.setAncho(ancho_textField.getText());
+            modelo.setProfundidad(profundidad_textField.getText());
+            modelo.setCapacidad_pasajeros(capacidad_textField.getText());
+            modelo.setMarca(marca_textField.getText());
+            modelo.setNo_ruedas(tamaño_rueda_textField.getText());
             modelo.setFoto_modelo(Util.readFile(pathPhoto));
+            modelo.setTipo_combustible(tipoCombustible_comboBox.getSelectionModel().getSelectedItem().toString());
 
-            boolean isSaveModelo = con.saveModeloInDB(modelo);
+            boolean isSaveModelo = con.agregarModelo(modelo);
 
             if (isSaveModelo && listaPiezasDelModelo.size() > 0) {
-                con.addPiecesToModel(listaPiezasDelModelo, modelo.getIdModelo());
+                con.agregarPiezasModelo(listaPiezasDelModelo, modelo.getId_modelo());
             }
 
             pnPieces.setVisible(false);
@@ -179,7 +180,7 @@ public class AddNewModelController implements Initializable, DraggedScene {
     //muestra todas las piezas disponibles en la base de datos
     private void loadPiecesFromDB() {
         vbListaAllPieces.getChildren().clear();
-        listaPiezasFromDB = con.getAllPiecesFromDB();
+        listaPiezasFromDB = con.obtenerTodasLasPiezas();
         listaPiezasDelModelo = new ArrayList<>();
 
         for (Pieza item : listaPiezasFromDB) {
@@ -229,10 +230,8 @@ public class AddNewModelController implements Initializable, DraggedScene {
 
     public void handleValidarID() {
         if (!modelo_textField.getText().isBlank()) {
-            idExist = con.existModel(modelo_textField.getText());
-
+            idExist = con.verificarExistenciaModelo(modelo_textField.getText());
             model_exist_label.setVisible(idExist);
-
         }
         handleValidarCampos();
     }
@@ -240,9 +239,7 @@ public class AddNewModelController implements Initializable, DraggedScene {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        con = new Conexión_old();
        this.onDraggedScene(this.root);
-
         tipoCombustible_comboBox.getItems().addAll("Diésel" , "Gasolina", "Híbridos", "Eléctrico");
     }
 }

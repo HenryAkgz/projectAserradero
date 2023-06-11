@@ -2,28 +2,35 @@ package clases;
 
 
 public class Modelo {
-    private String idModelo;
-    private String peso;
-    private String motor;
-    private String maxLogDiameter;
-    private String maxBoardWidth;
-    private String maxBoardThickness;
-    private String bladeSize;
-    private String trackLength;
-    private String trackWidth;
-    private String trackHeightAdjustability;
-
-    private byte[] foto_modelo;
+  private String id_modelo;
+  private String marca;
+  private String peso;
+  private String tipo_combustible;
+  private String motor;
+  private String altura;
+  private String ancho;
+  private String profundidad;
+  private String capacidad_pasajeros;
+  private String no_ruedas;
+  private byte[] foto_modelo;
 
     public Modelo() {
     }
 
-    public String getIdModelo() {
-        return idModelo;
+    public String getId_modelo() {
+        return id_modelo;
     }
 
-    public void setIdModelo(String idModelo) {
-        this.idModelo = idModelo;
+    public void setId_modelo(String id_modelo) {
+        this.id_modelo = id_modelo;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
     public String getPeso() {
@@ -34,6 +41,14 @@ public class Modelo {
         this.peso = peso;
     }
 
+    public String getTipo_combustible() {
+        return tipo_combustible;
+    }
+
+    public void setTipo_combustible(String tipo_combustible) {
+        this.tipo_combustible = tipo_combustible;
+    }
+
     public String getMotor() {
         return motor;
     }
@@ -42,60 +57,44 @@ public class Modelo {
         this.motor = motor;
     }
 
-    public String getMaxLogDiameter() {
-        return maxLogDiameter;
+    public String getAltura() {
+        return altura;
     }
 
-    public void setMaxLogDiameter(String maxLogDiameter) {
-        this.maxLogDiameter = maxLogDiameter;
+    public void setAltura(String altura) {
+        this.altura = altura;
     }
 
-    public String getMaxBoardWidth() {
-        return maxBoardWidth;
+    public String getAncho() {
+        return ancho;
     }
 
-    public void setMaxBoardWidth(String maxBoardWidth) {
-        this.maxBoardWidth = maxBoardWidth;
+    public void setAncho(String ancho) {
+        this.ancho = ancho;
     }
 
-    public String getMaxBoardThickness() {
-        return maxBoardThickness;
+    public String getProfundidad() {
+        return profundidad;
     }
 
-    public void setMaxBoardThickness(String maxBoardThickness) {
-        this.maxBoardThickness = maxBoardThickness;
+    public void setProfundidad(String profundidad) {
+        this.profundidad = profundidad;
     }
 
-    public String getBladeSize() {
-        return bladeSize;
+    public String getCapacidad_pasajeros() {
+        return capacidad_pasajeros;
     }
 
-    public void setBladeSize(String bladeSize) {
-        this.bladeSize = bladeSize;
+    public void setCapacidad_pasajeros(String capacidad_pasajeros) {
+        this.capacidad_pasajeros = capacidad_pasajeros;
     }
 
-    public String getTrackLength() {
-        return trackLength;
+    public String getNo_ruedas() {
+        return no_ruedas;
     }
 
-    public void setTrackLength(String trackLength) {
-        this.trackLength = trackLength;
-    }
-
-    public String getTrackWidth() {
-        return trackWidth;
-    }
-
-    public void setTrackWidth(String trackWidth) {
-        this.trackWidth = trackWidth;
-    }
-
-    public String getTrackHeightAdjustability() {
-        return trackHeightAdjustability;
-    }
-
-    public void setTrackHeightAdjustability(String trackHeightAdjustability) {
-        this.trackHeightAdjustability = trackHeightAdjustability;
+    public void setNo_ruedas(String no_ruedas) {
+        this.no_ruedas = no_ruedas;
     }
 
     public byte[] getFoto_modelo() {

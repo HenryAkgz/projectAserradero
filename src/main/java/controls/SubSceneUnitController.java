@@ -122,9 +122,9 @@ public class SubSceneUnitController implements Initializable {
         root.getChildren().remove(layoutBox_container);
         getAllUnitsFromDB();
 
-       /* listAllModels = con.getModelosFromDB();
-        listAllModels.forEach(item -> comboBoxModeloUpdate.getItems().add(item.getIdModelo()));
-        comboBoxEstadoUpdate.getItems().addAll(Constants.ESTADO_UNIDAD_INACTIVO, Constants.ESTADO_UNIDAD_ACTIVO); */
+        listAllModels = con.obtenerTodosLosModelos();
+        listAllModels.forEach(item -> comboBoxModeloUpdate.getItems().add(item.getId_modelo()));
+        comboBoxEstadoUpdate.getItems().addAll(Constants.ESTADO_UNIDAD_INACTIVO, Constants.ESTADO_UNIDAD_ACTIVO);
     }
 
     //Trae todas las unidades guardadas de la base de datos.
@@ -132,7 +132,6 @@ public class SubSceneUnitController implements Initializable {
         listAllUnits = con.obtenerTodasLasUnidades();
         showUnitInUI(listAllUnits);
     }
-
 
     //Carga en la interfaz los datos de las unidades de listAllUnits.
     private void showUnitInUI(List<Unidad> elementos) {
@@ -256,7 +255,6 @@ public class SubSceneUnitController implements Initializable {
         modelo_label_showDetails.setText(currentUnidad.getId_modelo());
         estado_label_showDetails.setText(currentUnidad.getEstado());
         estado_label_showDetails.setStyle(Util.getStyleByState(currentUnidad.getEstado()));
-        //próximoMantenimiento_label_showDetails.setText(con.obtenerFechaProximoMantenimiento(currentUnidad.getId_unidad()).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
 
        LocalDate proximoMantenimientoProgramado = con.obtenerFechaProximoMantenimiento(currentUnidad.getId_unidad());
 
@@ -273,7 +271,6 @@ public class SubSceneUnitController implements Initializable {
        }else{
            ultimoMantenimiento_label_showDetails.setText(ultimoMantenimientoRealizado.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
        }
-
 
         if (currentUnidad.getNotas_de_la_unidad().isBlank()) {
             notasUnidad_label_showDetail.setText("Sin descripción");
@@ -421,8 +418,8 @@ public class SubSceneUnitController implements Initializable {
 
     //Borra la unidad seleccionada de la base de datos.
    public void handleDeleteOk() {
-    /*    String textResult;
-        if (con.deleteUnitFromDB(currentUnidad.getId_unidad())) {
+       String textResult;
+        if (con.eliminarUnidad(currentUnidad.getId_unidad())) {
             textResult = "Modelo actualizado correctamente!";
             imvMensaje.setImage(new Image(getClass().getResourceAsStream("/icons/deleteOk.gif")));
             lblMensaje.setStyle("-fx-text-fill: green;");
@@ -436,7 +433,7 @@ public class SubSceneUnitController implements Initializable {
         mostrarForm(formMensaje);
         getAllUnitsFromDB();
         pn_part_content.getChildren().remove(pane_infoUnidad);
-        pn_part_content.setCenter(pane_waiting_clic); */
+        pn_part_content.setCenter(pane_waiting_clic);
     }
 
     // cierra el formulario de confirmación de eliminación de la unidad seleccionada.
@@ -467,7 +464,7 @@ public class SubSceneUnitController implements Initializable {
 
     //manda los datos a la BD para actualizar la Unidad.
     public void handleUpdateUnit() {
-       /* unidadUpdateUnit.setId_unidad(currentUnidad.getId_unidad());
+        unidadUpdateUnit.setId_unidad(currentUnidad.getId_unidad());
         unidadUpdateUnit.setId_modelo(comboBoxModeloUpdate.getSelectionModel().getSelectedItem());
         unidadUpdateUnit.setEstado(comboBoxEstadoUpdate.getSelectionModel().getSelectedItem());
         unidadUpdateUnit.setNotas_de_la_unidad(textAreaNotasUpdate.getText());
@@ -477,7 +474,7 @@ public class SubSceneUnitController implements Initializable {
 
         String textResult;
 
-        if (con.updateUnit(unidadUpdateUnit)) {
+        if (con.actualizarUnidad(unidadUpdateUnit)) {
             textResult = "Modelo actualizado correctamente!";
             imvMensaje.setImage(new Image(getClass().getResourceAsStream("/icons/saveOk.gif")));
             lblMensaje.setStyle("-fx-text-fill: green;");
@@ -489,7 +486,7 @@ public class SubSceneUnitController implements Initializable {
 
         lblMensaje.setText(textResult);
         mostrarForm(formMensaje);
-        updateUI(); */
+        updateUI();
     }
 
 

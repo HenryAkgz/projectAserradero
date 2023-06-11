@@ -1,14 +1,9 @@
 package conexión;
 
-import clases.Constants;
-import clases.Mantenimiento;
-import clases.Unidad;
-
+import clases.*;
 import java.io.File;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +56,8 @@ public class Conexión {
                         "CREATE TABLE IF NOT EXISTS mantenimiento_historial (" +
                         "id_mantenimiento_historial varchar," +
                         "id_unit varchar," +
-                        "fecha_mantenimiento varchar," +
+                        "fecha_mantenimiento datetime," +
+                        "fecha_finalización_mantenimiento datetime,"+
                         "encargado_mantenimiento varchar," +
                         "estado_mantenimiento varchar," +
                         "notas_mantenimiento varchar," +
@@ -117,9 +113,375 @@ public class Conexión {
 
     /* #############################################  Métodos de piezas  ############################################# */
 
+    public boolean agregarPieza(Pieza p) {
+        boolean agregada = false;
 
-    /* #############################################  Métodos de Modelo  ############################################# */
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("INSERT INTO piezas (nombre_pieza, piezas_inventario, foto_pieza) VALUES (?, ?, ?)");
 
+            stmt.setString(1, p.getNombrePieza());
+            stmt.setInt(2, p.getCantidadEnInvetario());
+            stmt.setBytes(3, p.getPhotoPieza());
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                agregada = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al agregar la pieza: " + e.getMessage());
+        }
+
+        return agregada;
+    }
+
+    public ArrayList<Pieza> obtenerTodasLasPiezas() {
+        ArrayList<Pieza> piezas = new ArrayList<>();
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM piezas");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Pieza pieza = new Pieza();
+                pieza.setId_Pieza(rs.getInt("id_pieza"));
+                pieza.setNombrePieza(rs.getString("nombre_pieza"));
+                pieza.setPhotoPieza(rs.getBytes("foto_pieza"));
+                pieza.setCantidadEnInvetario(rs.getInt("piezas_inventario"));
+                piezas.add(pieza);
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las piezas de la base de datos: " + e.getMessage());
+        }
+
+        return piezas;
+    }
+
+    public void agregarPiezasModelo(List<Pieza> piezas, String idModelo) {
+        try {
+
+            String sql = "INSERT INTO piezas_modelo (id_modelo, id_pieza, cantidad) VALUES (?, ?, ?)";
+
+            for (Pieza pieza : piezas) {
+                PreparedStatement stmt = conexion.prepareStatement(sql);
+                    stmt.setString(1, idModelo);
+                    stmt.setInt(2, pieza.getId_Pieza());
+                    stmt.setInt(3, pieza.getCantidadEnInvetario());
+                    stmt.executeUpdate();
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al agregar las piezas al modelo en la base de datos: " + e.getMessage());
+        }
+    }
+
+    public ArrayList<Pieza> obtenerPiezasPorModelo(String idModelo) {
+        ArrayList<Pieza> piezas = new ArrayList<>();
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT p.id_pieza, p.nombre_pieza, p.foto_pieza, pm.cantidad FROM piezas p INNER JOIN piezas_modelo pm ON p.id_pieza = pm.id_pieza WHERE pm.id_modelo = ?");
+
+            stmt.setString(1, idModelo);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Pieza pieza = new Pieza();
+                pieza.setId_Pieza(rs.getInt("id_pieza"));
+                pieza.setNombrePieza(rs.getString("nombre_pieza"));
+                pieza.setPhotoPieza(rs.getBytes("foto_pieza"));
+                pieza.setCantidadEnInvetario(rs.getInt("cantidad"));
+                piezas.add(pieza);
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las piezas por modelo: " + e.getMessage());
+        }
+
+        return piezas;
+    }
+
+    public boolean existeRelacionModeloPieza(String idModelo, int idPieza) {
+        boolean existeRelacion = false;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT 1 FROM piezas_modelo WHERE id_modelo = ? AND id_pieza = ?");
+
+            stmt.setString(1, idModelo);
+            stmt.setInt(2, idPieza);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                existeRelacion = true;
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error al verificar la existencia de la relación en la tabla piezas_modelo: " + e.getMessage());
+        }
+
+        return existeRelacion;
+    }
+
+    public boolean actualizarPieza(Pieza p) {
+        boolean actualizada = false;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("UPDATE piezas SET nombre_pieza = ?, piezas_inventario = ? WHERE id_pieza = ?");
+
+            stmt.setString(1, p.getNombrePieza());
+            stmt.setInt(2, p.getCantidadEnInvetario());
+            stmt.setInt(3, p.getId_Pieza());
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                actualizada = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar la pieza: " + e.getMessage());
+        }
+
+        return actualizada;
+    }
+
+    public boolean eliminarPieza(int idPieza) {
+        boolean eliminada = false;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("DELETE FROM piezas WHERE id_pieza = ?");
+
+            stmt.setInt(1, idPieza);
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                eliminada = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar la pieza: " + e.getMessage());
+        }
+
+        return eliminada;
+    }
+
+    public boolean eliminarRelacionModeloPieza(String idModelo, int idPieza) {
+        boolean eliminado = false;
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("DELETE FROM piezas_modelo WHERE id_modelo = ? AND id_pieza = ?");
+
+            stmt.setString(1, idModelo);
+            stmt.setInt(2, idPieza);
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                eliminado = true;
+            }
+
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar la relación en la tabla piezas_modelo: " + e.getMessage());
+        }
+        return eliminado;
+    }
+
+    public boolean agregarRelacionModeloPieza(String idModelo, int idPieza, int cantidad) {
+        boolean agregado = false;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("INSERT INTO piezas_modelo (id_modelo, id_pieza, cantidad) VALUES (?, ?, ?)");
+
+            stmt.setString(1, idModelo);
+            stmt.setInt(2, idPieza);
+            stmt.setInt(3, cantidad);
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                agregado = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al agregar la relación en la tabla piezas_modelo: " + e.getMessage());
+        }
+
+        return agregado;
+    }
+
+    public boolean actualizarCantidadRelacionPiezasModelo(String idModelo, int idPieza, int nuevaCantidad) {
+        boolean actualizado = false;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("UPDATE piezas_modelo SET cantidad = ? WHERE id_modelo = ? AND id_pieza = ?");
+
+            stmt.setInt(1, nuevaCantidad);
+            stmt.setString(2, idModelo);
+            stmt.setInt(3, idPieza);
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                actualizado = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar la cantidad en la tabla piezas_modelo: " + e.getMessage());
+        }
+
+        return actualizado;
+    }
+
+        /* #############################################  Métodos de Modelo  ############################################# */
+
+    public ArrayList<Modelo> obtenerTodosLosModelos() {
+        ArrayList<Modelo> modelos = new ArrayList<>();
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM modelo");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Modelo m = new Modelo();
+                m.setId_modelo(rs.getString("id_modelo"));
+                m.setMarca(rs.getString("marca"));
+                m.setPeso(rs.getString("peso"));
+                m.setTipo_combustible(rs.getString("tipo_combustible"));
+                m.setMotor(rs.getString("motor"));
+                m.setAltura(rs.getString("altura"));
+                m.setAncho(rs.getString("ancho"));
+                m.setProfundidad(rs.getString("profundidad"));
+                m.setCapacidad_pasajeros(rs.getString("capacidad_pasajeros"));
+                m.setNo_ruedas(rs.getString("no_ruedos"));
+                m.setFoto_modelo(rs.getBytes("foto_modelo"));
+                modelos.add(m);
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los modelos de la base de datos: " + e.getMessage());
+        }
+
+        return modelos;
+    }
+
+    public boolean verificarExistenciaModelo(String idModelo) {
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT COUNT(*) FROM modelo WHERE id_modelo = ?");
+
+            stmt.setString(1, idModelo);
+            ResultSet rs = stmt.executeQuery();
+
+            int count = rs.getInt(1);
+            rs.close();
+
+            return count > 0;
+        } catch (SQLException e) {
+            System.out.println("Error al verificar la existencia del modelo en la base de datos: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean agregarModelo(Modelo modelo) {
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("INSERT INTO modelo (id_modelo, marca, peso, tipo_combustible, motor, altura, ancho, profundidad, capacidad_pasajeros, no_ruedos, foto_modelo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            stmt.setString(1, modelo.getId_modelo());
+            stmt.setString(2, modelo.getMarca());
+            stmt.setString(3, modelo.getPeso());
+            stmt.setString(4, modelo.getTipo_combustible());
+            stmt.setString(5, modelo.getMotor());
+            stmt.setString(6, modelo.getAltura());
+            stmt.setString(7, modelo.getAncho());
+            stmt.setString(8, modelo.getProfundidad());
+            stmt.setString(9, modelo.getCapacidad_pasajeros());
+            stmt.setString(10, modelo.getNo_ruedas());
+            stmt.setBytes(11, modelo.getFoto_modelo());
+
+            stmt.executeUpdate();
+            stmt.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al agregar el modelo a la base de datos: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public int obtenerTotalUnidadesPorModelo(String idModelo) {
+        int totalUnidades = 0;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT COUNT(*) AS total FROM unidades WHERE id_modelo = ?");
+
+            stmt.setString(1, idModelo);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                totalUnidades = rs.getInt("total");
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el total de unidades por modelo: " + e.getMessage());
+        }
+
+        return totalUnidades;
+    }
+
+    public boolean actualizarModelo(Modelo m) {
+        boolean actualizado = false;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("UPDATE modelo SET marca = ?, peso = ?, tipo_combustible = ?, motor = ?, altura = ?, ancho = ?, profundidad = ?, capacidad_pasajeros = ?, no_ruedos = ?, foto_modelo = ? WHERE id_modelo = ?");
+
+            stmt.setString(1, m.getMarca());
+            stmt.setString(2, m.getPeso());
+            stmt.setString(3, m.getTipo_combustible());
+            stmt.setString(4, m.getMotor());
+            stmt.setString(5, m.getAltura());
+            stmt.setString(6, m.getAncho());
+            stmt.setString(7, m.getProfundidad());
+            stmt.setString(8, m.getCapacidad_pasajeros());
+            stmt.setString(9, m.getNo_ruedas());
+            stmt.setBytes(10, m.getFoto_modelo());
+            stmt.setString(11, m.getId_modelo());
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                actualizado = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar los datos del modelo: " + e.getMessage());
+        }
+
+        return actualizado;
+    }
+
+    public boolean eliminarModelo(String idModelo) {
+        boolean eliminado = false;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("DELETE FROM modelo WHERE id_modelo = ?");
+
+            stmt.setString(1, idModelo);
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                eliminado = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar el modelo: " + e.getMessage());
+        }
+
+        return eliminado;
+    }
 
     /* #############################################  Métodos de Unidades  ############################################# */
     public boolean existeUnidad(String idUnidad) {
@@ -184,6 +546,41 @@ public class Conexión {
         return unidades;
     }
 
+    public boolean eliminarUnidad(String idUnit) {
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("DELETE FROM unidades WHERE id_unit = ?");
+
+            stmt.setString(1, idUnit);
+            stmt.executeUpdate();
+
+            System.out.println("Unidad eliminada de la base de datos.");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar la unidad de la base de datos: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean actualizarUnidad(Unidad u) {
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("UPDATE unidades SET id_modelo = ?, estado = ?, notas_unidad = ?, foto_unidad = ? WHERE id_unit = ?");
+
+            stmt.setString(1, u.getId_modelo());
+            stmt.setString(2, u.getEstado());
+            stmt.setString(3, u.getNotas_de_la_unidad());
+            stmt.setBytes(4,  u.getPhotoUnidad());
+            stmt.setString(5, u.getId_unidad());
+
+            stmt.executeUpdate();
+
+            System.out.println("Datos de la unidad actualizados en la base de datos.");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar los datos de la unidad en la base de datos: " + e.getMessage());
+        }
+        return false;
+    }
+
     /* #############################################  Métodos de Mantenimiento ########################################## */
     public boolean agregarMantenimientoProgramado(Mantenimiento m) {
         String consulta = "INSERT INTO mantenimiento_programado (id_unit, fecha_mantenimiento, nota_mantenimiento, tipo_mantenimiento, fotos_evidencia) VALUES (?, ?, ?, ?, ?)";
@@ -233,7 +630,7 @@ public class Conexión {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String fechaMantenimientoStr = rs.getString("fecha_mantenimiento");
+                String fechaMantenimientoStr = rs.getDate("fecha_mantenimiento").toString();
                 fechaMantenimientoReciente = LocalDate.parse(fechaMantenimientoStr);
             }
 

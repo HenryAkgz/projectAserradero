@@ -1,7 +1,7 @@
 package controls;
 
 import clases.*;
-import conexión.Conexión_old;
+import conexión.Conexión;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,37 +59,37 @@ public class SubSceneModelController implements Initializable {
     @FXML
     private Label motor_label_showdetails;
     @FXML
-    private Label diametroMaximoTronco_label_showdetails;
+    private Label altura_label_showdetails;
     @FXML
-    private Label anchoMáximoTablero_label_showDetails;
+    private Label marca_label_showDetails;
     @FXML
-    private Label grosorPlaca_label_showDetails;
+    private Label profundidad_label_showDetails;
     @FXML
-    private Label tamañoHoja_label_showDetails;
+    private Label capacidad_label_showDetails;
     @FXML
-    private Label anchoPista_label_showDetails;
+    private Label tipo_combustible_label_showDetails;
     @FXML
-    private Label ajustabilidadAltura_label_showDetails;
+    private Label ancho_label_showDetails;
+    @FXML
+    private Label tamaño_ruedas_label_showDetails;
     @FXML
     private TextField peso_textField_update;
     @FXML
     private TextField motor_textField_update;
     @FXML
-    private TextField diámetroMáximoTronco_textField_update;
+    private TextField altura_textField_update;
     @FXML
-    private TextField anchoMáximoTablero_textField_update;
+    private TextField ancho_textField_update;
     @FXML
-    private TextField grosorPlaca_textField_update;
+    private TextField profundidad_textField_update;
     @FXML
-    private TextField tamañoHoja_textField_update;
+    private TextField capacidad_textField_update;
     @FXML
-    private TextField longitudPista_textField_update;
+    private TextField no_ruedas_textField_update;
     @FXML
-    private TextField anchoPista_textField_update;
+    private TextField marca_textField_update;
     @FXML
-    private TextField ajustabilidadAltura_textField_update;
-    @FXML
-    private ComboBox peso_comboBox_update;
+    private ComboBox<String> combustible_comboBox_update;
     @FXML
     private ImageView fotoModelo_imv_update;
     @FXML
@@ -103,18 +103,26 @@ public class SubSceneModelController implements Initializable {
     private VBox piecesGlobalContainerUpdate;
     @FXML
     private Label cantidadUnidades_label;
-    @FXML private BorderPane formDataUpdateModel;
-    @FXML private BorderPane formShowDetails;
-    @FXML private BorderPane formDeleteModel;
-    @FXML private BorderPane formMensaje;
-    @FXML private ImageView imvMensaje;
-    @FXML private Label lblMensaje;
-    @FXML private Label nombreDeleteLabel;
-    @FXML private TextField txtSearchUpdatePieces;
+    @FXML
+    private BorderPane formDataUpdateModel;
+    @FXML
+    private BorderPane formShowDetails;
+    @FXML
+    private BorderPane formDeleteModel;
+    @FXML
+    private BorderPane formMensaje;
+    @FXML
+    private ImageView imvMensaje;
+    @FXML
+    private Label lblMensaje;
+    @FXML
+    private Label nombreDeleteLabel;
+    @FXML
+    private TextField txtSearchUpdatePieces;
 
 
     //variables de la subScene
-    Conexión_old con;
+    Conexión con = Conexión.getInstancia();
     ArrayList<Modelo> listAllModelsFromDB;
     Modelo currentModelo;
     Modelo currentModeloUpdate;
@@ -132,15 +140,14 @@ public class SubSceneModelController implements Initializable {
      * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        con = new Conexión_old();
         root.getChildren().remove(layoutBox_container);
         getAllModelsFromDB();
-        peso_comboBox_update.getItems().addAll("lb", "kg", "ton");
+        combustible_comboBox_update.getItems().addAll("Diésel", "Gasolina", "Híbridos", "Eléctrico");
     }
 
     //Trae todos los modelos guardadas de la base de datos.
     public void getAllModelsFromDB() {
-        listAllModelsFromDB = con.getModelosFromDB();
+        listAllModelsFromDB = con.obtenerTodosLosModelos();
         showModelsInUI(listAllModelsFromDB);
     }
 
@@ -164,7 +171,7 @@ public class SubSceneModelController implements Initializable {
 
             lista.forEach(item -> {
                 //se crea el item grafico
-                ItemModelo modeloUI = new ItemModelo(item.getIdModelo(), item.getMotor());
+                ItemModelo modeloUI = new ItemModelo(item.getId_modelo(), item.getMotor());
                 //se le asigna una función
                 modeloUI.setOnMouseClicked(mouseEvent -> mostrarInfoModelo(item));
                 //se añada a la interfaz grafica
@@ -172,12 +179,11 @@ public class SubSceneModelController implements Initializable {
             });
 
         } else {
-            if (listAllModelsFromDB.size() ==0 && !root.getChildren().contains(empty_data_container)) {
+            if (listAllModelsFromDB.size() == 0 && !root.getChildren().contains(empty_data_container)) {
                 root.getChildren().clear();
                 root.getChildren().add(empty_data_container);
             }
         }
-
 
     }
 
@@ -213,9 +219,9 @@ public class SubSceneModelController implements Initializable {
             pn_part_content.setCenter(pane_infoPieza);
         }
         photoModel_imageView.setImage(new Image(new ByteArrayInputStream(item.getFoto_modelo())));
-        nombreModel_label.setText(item.getIdModelo());
+        nombreModel_label.setText(item.getId_modelo());
         currentModelo = item;
-        cantidadUnidades_label.setText(con.getCountUnitsFromModels(item.getIdModelo()) + " Unidades");
+        cantidadUnidades_label.setText(con.obtenerTotalUnidadesPorModelo(item.getId_modelo()) + " Unidades");
     }
 
     /*
@@ -250,24 +256,26 @@ public class SubSceneModelController implements Initializable {
         mostrarForm(formShowDetails);
 
         name_imv_showdetails.setImage(new Image(new ByteArrayInputStream(currentModelo.getFoto_modelo())));
-        name_label_showdetails.setText(currentModelo.getIdModelo());
-        unidadesactivas_label_showdetais.setText(con.getCountUnitsFromModels(currentModelo.getIdModelo()) + " Unidades");
-        peso_label_showdetails.setText(currentModelo.getPeso());
+        name_label_showdetails.setText(currentModelo.getId_modelo());
+        unidadesactivas_label_showdetais.setText(con.obtenerTotalUnidadesPorModelo(currentModelo.getId_modelo()) + " Unidades");
+        marca_label_showDetails.setText(currentModelo.getMarca());
+        tipo_combustible_label_showDetails.setText(currentModelo.getTipo_combustible());
         motor_label_showdetails.setText(currentModelo.getMotor());
-        diametroMaximoTronco_label_showdetails.setText(currentModelo.getMaxLogDiameter());
-        anchoMáximoTablero_label_showDetails.setText(currentModelo.getMaxBoardWidth());
-        grosorPlaca_label_showDetails.setText(currentModelo.getMaxBoardThickness());
-        tamañoHoja_label_showDetails.setText(currentModelo.getBladeSize());
-        anchoPista_label_showDetails.setText(currentModelo.getTrackWidth());
-        ajustabilidadAltura_label_showDetails.setText(currentModelo.getTrackHeightAdjustability());
+        peso_label_showdetails.setText(currentModelo.getPeso());
+        altura_label_showdetails.setText(currentModelo.getAltura());
+        ancho_label_showDetails.setText(currentModelo.getAncho());
+        profundidad_label_showDetails.setText(currentModelo.getProfundidad());
+        capacidad_label_showDetails.setText(currentModelo.getCapacidad_pasajeros());
+        tamaño_ruedas_label_showDetails.setText(currentModelo.getNo_ruedas());
+
     }
 
     /* ****************************************** Métodos delete Model ******************************* */
 
     //muestra el formulario para eliminar el elemento modelo de la Base de datos.
-    private void showDelete(){
+    private void showDelete() {
         mostrarForm(formDeleteModel);
-        nombreDeleteLabel.setText(currentModelo.getIdModelo());
+        nombreDeleteLabel.setText(currentModelo.getId_modelo());
     }
 
     /* ****************************************** Métodos update Model ******************************* */
@@ -277,29 +285,19 @@ public class SubSceneModelController implements Initializable {
         mostrarForm(formDataUpdateModel);
         currentModeloUpdate = new Modelo();
         fotoModelo_imv_update.setImage(new Image(new ByteArrayInputStream(currentModelo.getFoto_modelo())));
-        nameModel_label_update.setText(currentModelo.getIdModelo());
-        showPesoUpdate(currentModelo.getPeso());
+        nameModel_label_update.setText(currentModelo.getId_modelo());
+        marca_textField_update.setText(currentModelo.getMarca());
+        peso_textField_update.setText(currentModelo.getPeso());
+        combustible_comboBox_update.getSelectionModel().select(currentModelo.getTipo_combustible());
         motor_textField_update.setText(currentModelo.getMotor());
-        diámetroMáximoTronco_textField_update.setText(currentModelo.getMaxLogDiameter());
-        anchoMáximoTablero_textField_update.setText(currentModelo.getMaxBoardWidth());
-        grosorPlaca_textField_update.setText(currentModelo.getMaxBoardThickness());
-        tamañoHoja_textField_update.setText(currentModelo.getBladeSize());
-        longitudPista_textField_update.setText(currentModelo.getTrackLength());
-        anchoPista_textField_update.setText(currentModelo.getTrackWidth());
-        ajustabilidadAltura_textField_update.setText(currentModelo.getTrackHeightAdjustability());
+        altura_textField_update.setText(currentModelo.getAltura());
+        ancho_textField_update.setText(currentModelo.getAncho());
+        profundidad_textField_update.setText(currentModelo.getProfundidad());
+        capacidad_textField_update.setText(currentModelo.getCapacidad_pasajeros());
+        no_ruedas_textField_update.setText(currentModelo.getNo_ruedas());
 
     }
 
-    /*
-     * divide en peso (número) y la unidad de peso (String),
-     * y lo asigna a los respetivos componentes de la interfaz.
-     * */
-    private void showPesoUpdate(String peso) {
-        String unidad = peso.substring(peso.length() - 3);
-        String pesoTemp = peso.substring(0, peso.length() - 3);
-        peso_textField_update.setText(pesoTemp);
-        peso_comboBox_update.setValue(unidad.trim());
-    }
 
     /*
      * Crea un Item gráfico en la interfaz que hace referencia a las piezas pertenecientes al modelo,
@@ -316,7 +314,7 @@ public class SubSceneModelController implements Initializable {
      * */
     private void showInUIModelsPieces(String idModelo) {
         piecesItemModelContainerUpdate.getChildren().clear();
-        piezaCurrentModelo = con.getAllPiecesByModel(idModelo);
+        piezaCurrentModelo = con.obtenerPiezasPorModelo(idModelo);
 
         piezaCurrentModelo.forEach(item -> {
             ItemPiezaContador i = new ItemPiezaContador(item, true, false);
@@ -325,13 +323,12 @@ public class SubSceneModelController implements Initializable {
             System.out.println(item.getId_Pieza());
         });
 
-        allGlobalPieces = con.getAllPiecesFromDB();
+        allGlobalPieces = con.obtenerTodasLasPiezas();
         showAllGlobalPiecesInFormUpdate(allGlobalPieces);
-
     }
 
     //muestra en el formulario update todas las piezas disponibles en la bd
-    private void showAllGlobalPiecesInFormUpdate(List<Pieza> lista){
+    private void showAllGlobalPiecesInFormUpdate(List<Pieza> lista) {
         piecesGlobalContainerUpdate.getChildren().clear();
         lista.forEach(item -> {
             actionItemGlobalPart(item);
@@ -359,7 +356,7 @@ public class SubSceneModelController implements Initializable {
     //elimina una pieza del modelo al instante en la base de datos
     private void actionItemModelPieces(ItemPiezaContador e, Pieza item) {
         e.setOnMouseClicked(mouseEvent1 -> {
-            if (!con.existPartInModel(currentModeloUpdate.getIdModelo(), item.getId_Pieza()) || con.deletePartFromModel(currentModeloUpdate.getIdModelo(), item.getId_Pieza())) {
+            if (!con.existeRelacionModeloPieza(currentModeloUpdate.getId_modelo(), item.getId_Pieza()) || con.eliminarRelacionModeloPieza(currentModeloUpdate.getId_modelo(), item.getId_Pieza())) {
                 piecesItemModelContainerUpdate.getChildren().remove(e);
                 piezaCurrentModelo.removeIf(elemento -> elemento.getId_Pieza() == item.getId_Pieza());
             }
@@ -368,21 +365,19 @@ public class SubSceneModelController implements Initializable {
 
     //manda los datos a la BD para actualizar el modelo.
     private void updateDataModel() {
-        if (con.updateModel(currentModeloUpdate)) {
+        if (con.actualizarModelo(currentModeloUpdate)) {
 
             if (piezaCurrentModelo.size() > 0) {
-                
+
                 //retorna true si todas las piezas de la lista del modelo se guardan o editan de manera correcta
                 //de lo contrario retorna false
                 boolean resultado = piezaCurrentModelo.stream().map(item -> {
-                    if (con.existPartInModel(currentModeloUpdate.getIdModelo(), item.getId_Pieza())) {
-                        return con.updatePartOfModel(currentModeloUpdate.getIdModelo(), item.getId_Pieza(), item.getCantidadEnInvetario());
+                    if (con.existeRelacionModeloPieza(currentModeloUpdate.getId_modelo(), item.getId_Pieza())) {
+                        return con.actualizarCantidadRelacionPiezasModelo(currentModeloUpdate.getId_modelo(), item.getId_Pieza(), item.getCantidadEnInvetario());
                     } else {
-                        return con.addPartToModel(currentModeloUpdate.getIdModelo(), item.getId_Pieza(), item.getCantidadEnInvetario());
+                        return con.agregarRelacionModeloPieza(currentModeloUpdate.getId_modelo(), item.getId_Pieza(), item.getCantidadEnInvetario());
                     }
                 }).noneMatch(item -> !item);
-
-
 
                 showUpdateResult(resultado);
 
@@ -398,9 +393,9 @@ public class SubSceneModelController implements Initializable {
     }
 
     /*
-    * muestra el formMensaje, con un mensaje positivo si la actualización fue exitosa,
-    * y un mensaje negativo si la actualización termino con errores.
-    * */
+     * muestra el formMensaje, con un mensaje positivo si la actualización fue exitosa,
+     * y un mensaje negativo si la actualización termino con errores.
+     * */
     private void showUpdateResult(Boolean result) {
 
         String textResult = "";
@@ -422,7 +417,7 @@ public class SubSceneModelController implements Initializable {
     private void updateUI() {
         getAllModelsFromDB();
 
-        mostrarInfoModelo(listAllModelsFromDB.stream().filter(item -> item.getIdModelo().equals(currentModelo.getIdModelo())).findFirst().get());
+        mostrarInfoModelo(listAllModelsFromDB.stream().filter(item -> item.getId_modelo().equals(currentModelo.getId_modelo())).findFirst().get());
     }
 
 
@@ -431,7 +426,7 @@ public class SubSceneModelController implements Initializable {
     /* ****************************************** Métodos ventana lateral izquierda ***************************** */
 
     //Abre el formulario para añadir un nuevo modelo a la BD.
-    public void handleAddNewModel(){
+    public void handleAddNewModel() {
         Runnable addNewModelThread = new Runnable() {
             @Override
             public void run() {
@@ -459,7 +454,7 @@ public class SubSceneModelController implements Initializable {
     //coincida con la búsqueda.
     public void handleSearch() {
         aside_list_models.getChildren().clear();
-        List<Modelo> listaFiltrada = listAllModelsFromDB.stream().filter(item -> item.getIdModelo().toLowerCase().contains(txtBúsqueda.getText().toLowerCase())).toList();
+        List<Modelo> listaFiltrada = listAllModelsFromDB.stream().filter(item -> item.getId_modelo().toLowerCase().contains(txtBúsqueda.getText().toLowerCase())).toList();
         showModelsInUI(listaFiltrada);
     }
 
@@ -469,7 +464,7 @@ public class SubSceneModelController implements Initializable {
     //Borra la pieza seleccionada de la base de datos.
     public void handleDeleteOk() {
         String textResult;
-        if (con.deleteModelFromDB(currentModelo.getIdModelo())) {
+        if (con.eliminarModelo(currentModelo.getId_modelo())) {
             textResult = "Pieza eliminada correctamente!";
             imvMensaje.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/deleteOk.gif"))));
             lblMensaje.setStyle("-fx-text-fill: green;");
@@ -513,41 +508,38 @@ public class SubSceneModelController implements Initializable {
     }
 
     //guarda los datos en una clase modelo
-    public void handleNextDataUpdateButton(){
+    public void handleNextDataUpdateButton() {
 
-        currentModeloUpdate.setIdModelo(currentModelo.getIdModelo());
-        currentModeloUpdate.setPeso(peso_textField_update.getText().trim() + " " + peso_comboBox_update.getSelectionModel().getSelectedItem().toString());
+        currentModeloUpdate.setId_modelo(currentModelo.getId_modelo());
+        currentModeloUpdate.setMarca(marca_textField_update.getText().trim());
+        currentModeloUpdate.setPeso(peso_textField_update.getText().trim());
+        currentModeloUpdate.setTipo_combustible(combustible_comboBox_update.getSelectionModel().getSelectedItem());
         currentModeloUpdate.setMotor(motor_textField_update.getText().trim());
-        currentModeloUpdate.setMaxLogDiameter(diámetroMáximoTronco_textField_update.getText().trim());
-        currentModeloUpdate.setMaxBoardWidth(anchoMáximoTablero_textField_update.getText().trim());
-        currentModeloUpdate.setMaxBoardThickness(grosorPlaca_textField_update.getText().trim());
-        currentModeloUpdate.setBladeSize(tamañoHoja_textField_update.getText().trim());
-        currentModeloUpdate.setTrackLength(longitudPista_textField_update.getText().trim());
-        currentModeloUpdate.setTrackWidth(anchoPista_textField_update.getText().trim());
-        currentModeloUpdate.setTrackHeightAdjustability(ajustabilidadAltura_textField_update.getText().trim());
+        currentModeloUpdate.setAltura(altura_textField_update.getText().trim());
+        currentModeloUpdate.setAncho(ancho_textField_update.getText().trim());
+        currentModeloUpdate.setProfundidad(profundidad_textField_update.getText().trim());
+        currentModeloUpdate.setCapacidad_pasajeros(capacidad_textField_update.getText().trim());
+        currentModeloUpdate.setNo_ruedas(no_ruedas_textField_update.getText().trim());
 
-       if(currentModeloUpdate.getFoto_modelo() == null){
-           currentModeloUpdate.setFoto_modelo(currentModelo.getFoto_modelo());
-       }
+        if (currentModeloUpdate.getFoto_modelo() == null) {
+            currentModeloUpdate.setFoto_modelo(currentModelo.getFoto_modelo());
+        }
 
         mostrarForm(formPiecesModelUpdate);
 
-        showInUIModelsPieces(currentModelo.getIdModelo());
+        showInUIModelsPieces(currentModelo.getId_modelo());
     }
 
     //ejecuta el método que actualiza los datos del modelo en la BD.
-    public void handleNextPiecesUpdateButton(){
+    public void handleNextPiecesUpdateButton() {
         updateDataModel();
     }
 
     //método de búsqueda, filtra de entre todas las piezas disponibles en la bd, las que coincidan con los terminus de búsqueda
-    public void handleSearchUpdate(){
+    public void handleSearchUpdate() {
         List<Pieza> listaFiltrada = allGlobalPieces.stream().filter(item -> item.getNombrePieza().toLowerCase().contains(txtSearchUpdatePieces.getText().toLowerCase())).toList();
         showAllGlobalPiecesInFormUpdate(listaFiltrada);
     }
-
-
-
 
 
 }

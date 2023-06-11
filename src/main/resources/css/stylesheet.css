@@ -96,9 +96,8 @@ amarillo_anaranjado: #fec701;
 -fx-padding: 10px;
 }
 
-#peso_comboBox_update .cell:selected {
+#combustible_comboBox_update .cell:selected {
 -fx-text-fill: white;
-
 }
 
 .textAreaUpdate {

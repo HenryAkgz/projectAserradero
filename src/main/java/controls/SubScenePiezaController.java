@@ -4,6 +4,7 @@ import clases.Button_with_icon;
 import clases.ItemPieza;
 import clases.Pieza;
 import clases.Util;
+import conexión.Conexión;
 import conexión.Conexión_old;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
 
 public class SubScenePiezaController implements Initializable {
     //variables de la subScene
-    Conexión_old con;
+    Conexión con = Conexión.getInstancia();
     ArrayList<Pieza> listAllPiecesFromDB;
     Pieza currentPieza;
     Pieza piezaActualizada;
@@ -91,14 +92,13 @@ public class SubScenePiezaController implements Initializable {
      * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        con = new Conexión_old();
         root.getChildren().remove(layoutBox_container);
         getAllPiecesFromDB();
     }
 
     //Trae todas las piezas guardadas de la base de datos.
     private void getAllPiecesFromDB() {
-        listAllPiecesFromDB = con.getAllPiecesFromDB();
+        listAllPiecesFromDB = con.obtenerTodasLasPiezas();
         showPiecesInUI(listAllPiecesFromDB);
     }
 
@@ -264,7 +264,7 @@ public class SubScenePiezaController implements Initializable {
     //Borra la pieza seleccionada de la base de datos.
     public void handleDeleteOk() {
         String textResult;
-        if (con.deletePartFromBD(currentPieza.getId_Pieza())) {
+        if (con.eliminarPieza(currentPieza.getId_Pieza())) {
             textResult = "Pieza eliminada correctamente!";
             imvMensaje.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/deleteOk.gif"))));
             lblMensaje.setStyle("-fx-text-fill: green;");
@@ -299,7 +299,7 @@ public class SubScenePiezaController implements Initializable {
             piezaActualizada.setPhotoPieza(currentPieza.getPhotoPieza());
         }
 
-        if (con.updatePart(piezaActualizada)) {
+        if (con.actualizarPieza(piezaActualizada)) {
             textResult = "Pieza actualizada correctamente!";
             imvMensaje.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/saveOk.gif"))));
             lblMensaje.setStyle("-fx-text-fill: green;");

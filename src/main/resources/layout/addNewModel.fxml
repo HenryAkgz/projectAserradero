@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="665.0" prefWidth="600.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddNewModelController">
+<AnchorPane fx:id="root" prefHeight="665.0" prefWidth="600.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddNewModelController">
     <children>
         <BorderPane prefHeight="665.0" prefWidth="600.0">
             <top>
@@ -113,12 +113,12 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="diametroMaximo_textField" layoutX="215.0" layoutY="380.0" onKeyTyped="#handleValidarCampos" prefHeight="25.0" prefWidth="181.0" promptText="Altura del vehículo" />
-                        <TextField fx:id="anchoTablero_textField" layoutX="414.0" layoutY="381.0" onKeyTyped="#handleValidarCampos" promptText="Ancho del vehículo" />
-                        <TextField fx:id="grosorPlaca_textField" layoutX="19.0" layoutY="459.0" onKeyTyped="#handleValidarCampos" promptText="Profundidad del vehículo" />
-                        <TextField fx:id="tamanoHoja_textField" layoutX="205.0" layoutY="460.0" onKeyTyped="#handleValidarCampos" prefHeight="25.0" prefWidth="169.0" promptText="Capacidad de pasajeros" />
-                        <TextField fx:id="anchoPista_textField" layoutX="215.0" layoutY="298.0" onKeyTyped="#handleValidarCampos" promptText="Marca" />
-                        <TextField fx:id="ajustabilidad_textField" layoutX="404.0" layoutY="463.0" onKeyTyped="#handleValidarCampos" promptText="No. de rueda de las llantas" />
+                        <TextField fx:id="altura_textField" layoutX="215.0" layoutY="380.0" onKeyTyped="#handleValidarCampos" prefHeight="25.0" prefWidth="181.0" promptText="Altura del vehículo" />
+                        <TextField fx:id="ancho_textField" layoutX="414.0" layoutY="381.0" onKeyTyped="#handleValidarCampos" promptText="Ancho del vehículo" />
+                        <TextField fx:id="profundidad_textField" layoutX="19.0" layoutY="459.0" onKeyTyped="#handleValidarCampos" promptText="Profundidad del vehículo" />
+                        <TextField fx:id="capacidad_textField" layoutX="205.0" layoutY="460.0" onKeyTyped="#handleValidarCampos" prefHeight="25.0" prefWidth="169.0" promptText="Capacidad de pasajeros" />
+                        <TextField fx:id="marca_textField" layoutX="215.0" layoutY="298.0" onKeyTyped="#handleValidarCampos" promptText="Marca" />
+                        <TextField fx:id="tamaño_rueda_textField" layoutX="404.0" layoutY="463.0" onKeyTyped="#handleValidarCampos" promptText="No. de rueda de las llantas" />
                             </children>
                         </Pane>
                         <Pane fx:id="pnPieces" prefHeight="559.0" prefWidth="600.0" visible="false">
