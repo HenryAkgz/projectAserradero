@@ -54,15 +54,18 @@ public class Conexión {
                         "notas_unidad varchar," +
                         "foto_unidad blob);" +
                         "CREATE TABLE IF NOT EXISTS mantenimiento_historial (" +
-                        "id_mantenimiento_historial varchar," +
+                        "id_mantenimiento_historial integer," +
                         "id_unit varchar," +
-                        "fecha_mantenimiento datetime," +
-                        "fecha_finalización_mantenimiento datetime,"+
+                        "fecha_mantenimiento_programada datetime," +
+                        "fecha_mantenimiento_iniciado datetime," +
+                        "tipo_mantenimiento varchar," +
                         "encargado_mantenimiento varchar," +
                         "estado_mantenimiento varchar," +
-                        "notas_mantenimiento varchar," +
-                        "tipo_mantenimiento varchar," +
-                        "fotos_evidencia varchar);" +
+                        "notas_mantenimiento_programado varchar," +
+                        "notas_mantenimiento_encargado varchar," +
+                        "fecha_finalización_mantenimiento datetime,"+
+                        "fotos_evidencia_programada varchar," +
+                        "PRIMARY KEY(id_mantenimiento_historial AUTOINCREMENT));" +
                         "CREATE TABLE IF NOT EXISTS mantenimiento_programado (" +
                         "id_mantenimiento_programado varchar," +
                         "id_unit varchar," +
@@ -503,6 +506,32 @@ public class Conexión {
         return existe;
     }
 
+    public Unidad obtenerUnidadPorId(String idUnit) {
+        Unidad unidad = null;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM unidades WHERE id_unit = ?");
+
+            stmt.setString(1, idUnit);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    unidad = new Unidad();
+                    unidad.setId_unidad(idUnit);
+                    unidad.setId_modelo(rs.getString("id_modelo"));
+                    unidad.setEstado(rs.getString("estado"));
+                    unidad.setNotas_de_la_unidad(rs.getString("notas_unidad"));
+                    unidad.setPhotoUnidad(rs.getBytes("foto_unidad"));
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los datos de la unidad desde la base de datos: " + e.getMessage());
+        }
+
+        return unidad;
+    }
+
     public boolean agregarUnidad(Unidad u) {
         String consulta = "INSERT INTO unidades (id_unit, id_modelo, estado, notas_unidad, foto_unidad) VALUES (?, ?, ?, ?, ?)";
         try {
@@ -640,6 +669,72 @@ public class Conexión {
         }
 
         return fechaMantenimientoReciente;
+    }
+
+    public ArrayList<Mantenimiento> obtenerFechasMantenimientoProgramadoDeLaUnidad(String idUnidad) {
+        ArrayList<Mantenimiento> mantenimientos  = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM mantenimiento_programado WHERE id_unit = ?");
+
+                stmt.setString(1, idUnidad);
+
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+
+                    Mantenimiento mantenimiento = new Mantenimiento();
+                    mantenimiento.setIdUnit(rs.getString("id_unit"));
+                    mantenimiento.setMaintenanceDate(rs.getDate("fecha_mantenimiento").toString());
+                    mantenimiento.setMaintenanceType(rs.getString("tipo_mantenimiento"));
+                    mantenimiento.setMaintenanceNotes(rs.getString("nota_mantenimiento"));
+                    mantenimiento.setJSONImagenes(rs.getString("fotos_evidencia"));
+
+
+                    mantenimientos.add(mantenimiento);
+                }
+
+            } catch (SQLException e) {
+            System.out.println("Error al obtener las fechas de mantenimiento programadas: " + e.getMessage());
+        }
+
+        return mantenimientos;
+    }
+
+    public List<MantenimientoHistorial> obtenerMantenimientoHistorialPorUnidad(String idUnit) {
+        List<MantenimientoHistorial> mantenimientos = new ArrayList<>();
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM mantenimiento_historial WHERE id_unit = ?");
+
+            stmt.setString(1, idUnit);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+
+
+                    MantenimientoHistorial m = new MantenimientoHistorial();
+                    m.setIdMantenimiento(rs.getInt("id_mantenimiento_historial"));
+                    m.setIdUnidad(rs.getNString("id_unit"));
+                    m.setFecha_programada(rs.getDate("fecha_mantenimiento_programada").toString());
+                    m.setFecha_inicio_mantenimiento(rs.getDate("fecha_mantenimiento_iniciado").toString());
+                    m.setTipoMantenimiento(rs.getString("tipo_mantenimiento"));
+                    m.setEncargado(rs.getString("encargado_mantenimiento"));
+                    m.setEstado(rs.getString("estado_mantenimiento"));
+                    m.setNotas_mantenimiento_programado(rs.getNString("notas_mantenimiento_programado"));
+                    m.setNotas_mantenimiento_programado(rs.getString("notas_mantenimiento_encargado"));
+                    m.setFecha_finalizacion_mantenimiento(rs.getDate("fecha_finalización_mantenimiento").toString());
+                    m.setImagenesJSONEvidencia(rs.getString("fotos_evidencia_programada"));
+
+                    mantenimientos.add(m);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los registros de mantenimiento de la tabla mantenimiento_historial: " + e.getMessage());
+        }
+
+        return mantenimientos;
     }
 
 }

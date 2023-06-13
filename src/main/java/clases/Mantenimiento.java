@@ -67,6 +67,7 @@ public class Mantenimiento {
     public String getJSONArrayImagenes(){
         if(this.maintenanceImagesPaths.size()>0 && this.JSONImagenes == null){
             this.JSONImagenes = generarJSONImagenes();
+            System.out.println(this.JSONImagenes);
             return JSONImagenes;
         }else{
             return "";
@@ -87,5 +88,9 @@ public class Mantenimiento {
             }
         }
         return jsonArray.toString();
+    }
+
+    public void setJSONImagenes(String jsonImagenes){
+        this.JSONImagenes = jsonImagenes;
     }
 }

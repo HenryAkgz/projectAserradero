@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class Util {
 
@@ -114,5 +118,10 @@ public class Util {
                 break;
         }
         return style;
+    }
+
+    public static String getMonthOfDateString(String fecha){
+        LocalDate tempDate = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+       return tempDate.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
 }

@@ -1,14 +1,25 @@
 package clases;
 
 public class MantenimientoHistorial {
+    private int idMantenimiento;
     private String idUnidad;
     private String fecha_programada;
     private String fecha_inicio_mantenimiento;
+    private String tipoMantenimiento;
     private String encargado;
     private String estado;
     private String notas_mantenimiento_programado;
     private String notas_mantenimiento_encargado;
     private String fecha_finalizacion_mantenimiento;
+    private String imagenesJSONEvidencia;
+
+    public int getIdMantenimiento() {
+        return idMantenimiento;
+    }
+
+    public void setIdMantenimiento(int idMantenimiento) {
+        this.idMantenimiento = idMantenimiento;
+    }
 
     public String getIdUnidad() {
         return idUnidad;
@@ -32,6 +43,14 @@ public class MantenimientoHistorial {
 
     public void setFecha_inicio_mantenimiento(String fecha_inicio_mantenimiento) {
         this.fecha_inicio_mantenimiento = fecha_inicio_mantenimiento;
+    }
+
+    public String getTipoMantenimiento() {
+        return tipoMantenimiento;
+    }
+
+    public void setTipoMantenimiento(String tipoMantenimiento) {
+        this.tipoMantenimiento = tipoMantenimiento;
     }
 
     public String getEncargado() {
@@ -72,5 +91,13 @@ public class MantenimientoHistorial {
 
     public void setFecha_finalizacion_mantenimiento(String fecha_finalizacion_mantenimiento) {
         this.fecha_finalizacion_mantenimiento = fecha_finalizacion_mantenimiento;
+    }
+
+    public String getImagenesJSONEvidencia() {
+        return imagenesJSONEvidencia;
+    }
+
+    public void setImagenesJSONEvidencia(String imagenesJSONEvidencia) {
+        this.imagenesJSONEvidencia = imagenesJSONEvidencia;
     }
 }

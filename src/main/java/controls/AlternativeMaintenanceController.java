@@ -1,6 +1,7 @@
 package controls;
 
 import clases.*;
+import conexión.Conexión;
 import conexión.Conexión_old;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -32,8 +33,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.format.TextStyle;
 import java.util.*;
 
 public class AlternativeMaintenanceController implements Initializable {
@@ -101,15 +104,19 @@ public class AlternativeMaintenanceController implements Initializable {
     private CategoryAxis ultimos_meses_category_axis;
     @FXML
     private NumberAxis ultimos_meses_values_axis;
-    Conexión_old con = new Conexión_old();
+    @FXML
+    private ComboBox<String> cbx_main_menu_mes, cbx_main_menu_tipo, cbx_main_menu_estado;
+    @FXML
+    private VBox vb_main_menu_table_item_container;
+    Conexión con = Conexión.getInstancia();
 
     //ArrayList<Mantenimiento> listaMantenimientosProgrmados = new ArrayList<Mantenimiento>();
     //ArrayList<MantenimientoHistorial> listaMantenimientoHistorial = new ArrayList<MantenimientoHistorial>();
 
     ObservableList<Mantenimiento> listaMantenimientosProgrmados = FXCollections.observableArrayList();
     ObservableList<MantenimientoHistorial> listaMantenimientoHistorial = FXCollections.observableArrayList();
-    String ultimo_mantenimiento_programado;
-    String ultimo_mantenimiento_realizado;
+    String ultimo_mantenimiento_programado = Constants.UNIDAD_SIN_MANTENIMIENTO_PROGRAMADO;
+    String ultimo_mantenimiento_realizado = Constants.UNIDAD_SIN_MANTENIMIENTO;
 
 
     // variables para añadir una nueva fecha de mantenimiento
@@ -121,20 +128,29 @@ public class AlternativeMaintenanceController implements Initializable {
 
     private void getDataFromDataBase() {
         System.out.println("buscando datos de la unidad:" + id_unidad.get());
-        listaMantenimientosProgrmados.addAll(con.getAllNextMaintenanceData(id_unidad.get()));
-        listaMantenimientoHistorial.addAll(con.getAllMaintenanceHistoryDataByUnit(id_unidad.get()));
+        listaMantenimientosProgrmados.addAll(con.obtenerFechasMantenimientoProgramadoDeLaUnidad(id_unidad.get()));
+        listaMantenimientoHistorial.addAll(con.obtenerMantenimientoHistorialPorUnidad(id_unidad.get()));
         System.out.println("Resultados..... programmados: " + listaMantenimientosProgrmados.size() + " elementos encontrados    \n historial: " + listaMantenimientoHistorial.size());
     }
 
     public void initContent() {
         //elimina de la ventana los contenedor de los forms extras
-        System.out.println("entrando en init unit");
+        System.out.println("entrando en init " + id_unidad.get());
         root.getChildren().remove(extra_nodes);
 
-        unidad = con.getUnitByID(id_unidad.get());
+        unidad = con.obtenerUnidadPorId(id_unidad.get());
 
-       ultimo_mantenimiento_programado = con.getNextMaintenanceDateByUnit(id_unidad.get());
-       ultimo_mantenimiento_realizado = con.getLastMaintenanceDateByUnit(id_unidad.get());
+        LocalDate fecha_programada_temp = con.obtenerFechaProximoMantenimiento(id_unidad.get());
+
+        if(fecha_programada_temp != null ){
+            ultimo_mantenimiento_programado = fecha_programada_temp.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        }
+
+        LocalDate fecha_realizada_temp = con.obtenerFechaDelUltimoMantenimientoRealizado(id_unidad.get());
+
+        if(fecha_realizada_temp != null ) {
+            ultimo_mantenimiento_realizado = fecha_programada_temp.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        }
 
         System.out.println(ultimo_mantenimiento_programado);
         System.out.println(ultimo_mantenimiento_realizado);
@@ -152,10 +168,66 @@ public class AlternativeMaintenanceController implements Initializable {
             clip.setRadius(Math.min(main_menu_unit_photo.getFitWidth(), main_menu_unit_photo.getFitHeight()) / 2);
             main_menu_unit_photo.setClip(clip);
             main_menu_inicio_unidad_label.setText(id_unidad.get());
-            setCenterContent(main_menu_view);
             crearGraficaUltimosMantenimientos();
-
+            rellenarTablaMainMenu();
+            setCenterContent(main_menu_view);
         }
+
+    }
+
+    public void initComponents(){
+
+        listaMantenimientosProgrmados.addListener(new ListChangeListener<Mantenimiento>() {
+            @Override
+            public void onChanged(Change<? extends Mantenimiento> change) {
+                lbl_main_menu_counter_programados.setText(Integer.toString(listaMantenimientosProgrmados.size()));
+            }
+        });
+
+        listaMantenimientoHistorial.addListener(new ListChangeListener<MantenimientoHistorial>() {
+            @Override
+            public void onChanged(Change<? extends MantenimientoHistorial> change) {
+                int total_terminado = 0;
+                int total_progreso = 0;
+
+                for (MantenimientoHistorial m : listaMantenimientoHistorial) {
+                    if (m.getEstado().equals(Constants.ESTADO_MANTENIMIENTO_OK)) {
+                        total_terminado++;
+                    } else if (m.getEstado().equals(Constants.UNIDAD_EN_MANTENIMIENTO)) {
+                        total_progreso++;
+                    }
+
+                    lbl_main_menu_counter_terminados.setText(Integer.toString(total_terminado));
+                    lbl_main_menu_counter_en_progreso.setText(Integer.toString(total_progreso));
+                }
+
+            }
+        });
+        id_unidad.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                initContent();
+            }
+        });
+
+        cbx_main_menu_mes.getItems().addAll("Cualquier mes", Month.JANUARY.getDisplayName(TextStyle.FULL, Locale.getDefault()),
+                Month.FEBRUARY.getDisplayName(TextStyle.FULL, Locale.getDefault()), Month.MARCH.getDisplayName(TextStyle.FULL, Locale.getDefault()),
+                Month.APRIL.getDisplayName(TextStyle.FULL, Locale.getDefault()), Month.MAY.getDisplayName(TextStyle.FULL, Locale.getDefault()),
+                Month.JUNE.getDisplayName(TextStyle.FULL, Locale.getDefault()), Month.JULY.getDisplayName(TextStyle.FULL, Locale.getDefault()),
+                Month.AUGUST.getDisplayName(TextStyle.FULL, Locale.getDefault()), Month.SEPTEMBER.getDisplayName(TextStyle.FULL, Locale.getDefault()),
+                Month.OCTOBER.getDisplayName(TextStyle.FULL, Locale.getDefault()), Month.NOVEMBER.getDisplayName(TextStyle.FULL, Locale.getDefault()),
+                Month.DECEMBER.getDisplayName(TextStyle.FULL, Locale.getDefault()));
+
+        cbx_main_menu_tipo.getItems().addAll("Cualquier tipo", Constants.TIPO_DE_MANTENIMIENTO_PREVENTIVO, Constants.TIPO_DE_MANTENIMIENTO_CORRECTIVO);
+        cbx_main_menu_estado.getItems().addAll("Cualquier estado", "Programado", Constants.ESTADO_MANTENIMIENTO_PENDIENTE, Constants.ESTADO_MANTENIMIENTO_OK,
+                Constants.ESTADO_MANTENIMIENTO_STOP, Constants.UNIDAD_EN_MANTENIMIENTO);
+
+        cbx_main_menu_estado.getSelectionModel().select(0);
+        cbx_main_menu_tipo.getSelectionModel().select(0);
+        cbx_main_menu_mes.getSelectionModel().select(0);
+        cbx_main_menu_mes.setOnAction(action -> rellenarTablaMainMenu());
+        cbx_main_menu_tipo.setOnAction(action -> rellenarTablaMainMenu());
+        cbx_main_menu_estado.setOnAction(action -> rellenarTablaMainMenu());
 
     }
 
@@ -183,42 +255,67 @@ public class AlternativeMaintenanceController implements Initializable {
         serieCorrectivo.setName("Correctivo");
 
 
-        List<String> ultimosMeses = getLastMonths(numeroDeUltimosMeses);
+        List<Month> ultimosMeses = getLastMonths(numeroDeUltimosMeses);
 
-        int count_preventivo =0;
-        int count_correctivo =0;
 
-        getMaintenanceCountForLastMonthChart(count_preventivo, count_correctivo, ultimosMeses);
-
-        for (String mes: ultimosMeses) {
-            serieCorrectivo.getData().add(new XYChart.Data<>(mes,  count_correctivo));
-            seriePreventivo.getData().add(new XYChart.Data<>(mes, count_preventivo));
+        for (Month mes: ultimosMeses) {
+            int[] contador= getMaintenanceCountForLastMonthChart(mes);
+            serieCorrectivo.getData().add(new XYChart.Data<>(mes.getDisplayName(TextStyle.FULL, Locale.getDefault()),  contador[0])); // contador[0] numero de preventivos
+            seriePreventivo.getData().add(new XYChart.Data<>(mes.getDisplayName(TextStyle.FULL, Locale.getDefault()), contador[1])); // contador[1] numero de correctivos
         };
 
         bc_main_menu_inicio_ultmimos_meses.getData().clear();
         bc_main_menu_inicio_ultmimos_meses.getData().addAll(seriePreventivo, serieCorrectivo);
     }
 
-    private void getMaintenanceCountForLastMonthChart(int preventivo, int correctivo, List<String> listaMeses){
+    private int[] getMaintenanceCountForLastMonthChart(Month mes){
+        int[] contador = new int[2];
 
-      List<MantenimientoHistorial> listaFiltrada = listaMantenimientoHistorial.stream().filter(item -> {
-          String mesDelMantenimiento = LocalDate.parse(item.getFecha_inicio_mantenimiento(), DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)).toString();
-          if(listaMeses.contains(mesDelMantenimiento)){
-           return true;
-          }else{
-              return false;
-          }
-      }).toList();
+        contador[0] = 0; // contador[0] numero de preventivos
+        contador[1] = 0; //contador[1] numero de correctivos
 
-      listaFiltrada.forEach(item -> {
-        //  if(item.)
-      });
+     List<Mantenimiento> mantenimientosProgramadosFiltrados = listaMantenimientosProgrmados.stream().filter(
+              item -> {
+                  LocalDate fecha_item = LocalDate.parse(item.getMaintenanceDate());
+                  System.out.println(fecha_item.getMonth());
+                  return fecha_item.getMonth().equals(mes);
+              }
+      ).toList();
 
+        for (Mantenimiento item: mantenimientosProgramadosFiltrados ) {
+            if(item.getMaintenanceType().equals(Constants.TIPO_DE_MANTENIMIENTO_PREVENTIVO)){
+                contador[0]++;
+            }else if (item.getMaintenanceType().equals(Constants.TIPO_DE_MANTENIMIENTO_CORRECTIVO)){
+                contador[1]++;
+            }
+        }
+
+        List<MantenimientoHistorial> mantenimientosEnHistorialFiltrados = listaMantenimientoHistorial.stream().filter(
+                item -> {
+                    LocalDate fecha_item = LocalDate.parse(item.getFecha_inicio_mantenimiento(), DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+                    System.out.println(fecha_item.getMonth());
+                    return fecha_item.getMonth().equals(mes);
+                }
+        ).toList();
+
+        for (MantenimientoHistorial item: mantenimientosEnHistorialFiltrados ) {
+            if(item.getTipoMantenimiento().equals(Constants.TIPO_DE_MANTENIMIENTO_PREVENTIVO)){
+                contador[0]++;
+            }else if (item.getTipoMantenimiento().equals(Constants.TIPO_DE_MANTENIMIENTO_CORRECTIVO)){
+                contador[1]++;
+            }
+        }
+
+        System.out.println("resultados del contadpr");
+        System.out.println("preventivos "+contador[0]);
+        System.out.println("correctivos "+ contador[1]);
+
+        return contador;
     }
-    public List<String> getLastMonths(int numberMonths) {
-        String[] monthNames = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
-                "Octubre", "Noviembre", "Diciembre"};
-        List<String> lastMonths = new ArrayList<>();
+    public List<Month> getLastMonths(int numberMonths) {
+        Month[] monthNames = {Month.JANUARY, Month.FEBRUARY, Month.MARCH, Month.APRIL, Month.MAY, Month.JUNE,
+                Month.JULY, Month.AUGUST, Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER, Month.DECEMBER};
+        List<Month> lastMonths = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
 
@@ -272,6 +369,47 @@ public class AlternativeMaintenanceController implements Initializable {
             rellenarGraficaPastel(noMeses);
         });
         cbx_main_menu_inicio_tiempo_ultimos_meses.getSelectionModel().select(0);
+    }
+
+    private void rellenarTablaMainMenu(){
+      vb_main_menu_table_item_container.getChildren().clear();
+
+        for (Mantenimiento item : listaMantenimientosProgrmados) {
+            if (cbx_main_menu_estado.getSelectionModel().isSelected(0) || cbx_main_menu_estado.getSelectionModel().getSelectedItem().equals("Programado")) {
+                if (cbx_main_menu_mes.getSelectionModel().isSelected(0) || cbx_main_menu_mes.getSelectionModel().getSelectedItem().equals(Util.getMonthOfDateString(item.getMaintenanceDate()))) {
+                    if (cbx_main_menu_tipo.getSelectionModel().isSelected(0) || cbx_main_menu_tipo.getSelectionModel().getSelectedItem().equals(item.getMaintenanceType())) {
+                        agregarItemALaTablaMainMenu(item.getIdUnit(), "Programado", item.getMaintenanceDate(), item.getMaintenanceType(), item.getMaintenanceNotes());
+                    }
+                }
+            }
+        }
+
+        for (MantenimientoHistorial item : listaMantenimientoHistorial) {
+            if (cbx_main_menu_estado.getSelectionModel().isSelected(0) || cbx_main_menu_estado.getSelectionModel().getSelectedItem().equals(item.getEstado())) {
+                if (cbx_main_menu_mes.getSelectionModel().isSelected(0) || cbx_main_menu_mes.getSelectionModel().getSelectedItem().equals(Util.getMonthOfDateString(item.getFecha_programada()))) {
+                    if (cbx_main_menu_tipo.getSelectionModel().isSelected(0) || cbx_main_menu_tipo.getSelectionModel().getSelectedItem().equals(item.getTipoMantenimiento())) {
+                        agregarItemALaTablaMainMenu(item.getIdUnidad(), item.getEstado(), item.getFecha_programada(), item.getTipoMantenimiento(), item.getNotas_mantenimiento_programado());
+                    }
+                }
+            }
+        }
+
+    }
+
+
+
+    private void agregarItemALaTablaMainMenu(String id, String estado, String fecha, String tipo, String descripcion){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/layout/maintenance_item_large.fxml"));
+            AnchorPane itemUi = loader.load();
+            MaintenanceItemLargeController itemController = loader.getController();
+            itemController.setInfo(id, estado, fecha, tipo, descripcion);
+            vb_main_menu_table_item_container.getChildren().add(itemUi);
+        }catch (Exception e){
+           // System.out.println("Error al agregar mantenimiento a la interfaz: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
@@ -569,7 +707,8 @@ public class AlternativeMaintenanceController implements Initializable {
     }
 
     public void handleSaveMaintenanceData() {
-        if (con.saveMantenimientoProgramado(id_unidad.getValue(), mantenimientoTemporal.getMaintenanceDate(), mantenimientoTemporal.getMaintenanceNotes())) {
+
+        if (con.agregarMantenimientoProgramado(mantenimientoTemporal)) {
             img_result_add_new_date.setImage(new Image(getClass().getResourceAsStream("/icons/saveOk.gif")));
             lblResultMensaje.setText("Mantenimiento programado correctamente.");
             lblResultMensaje.setStyle("-fx-text-fill: green;");
@@ -583,43 +722,11 @@ public class AlternativeMaintenanceController implements Initializable {
     }
 
     public void handleGotoMainView() {
-        content_pane.getChildren().clear();
         initContent();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listaMantenimientosProgrmados.addListener(new ListChangeListener<Mantenimiento>() {
-            @Override
-            public void onChanged(Change<? extends Mantenimiento> change) {
-                lbl_main_menu_counter_programados.setText(Integer.toString(listaMantenimientosProgrmados.size()));
-            }
-        });
-
-        listaMantenimientoHistorial.addListener(new ListChangeListener<MantenimientoHistorial>() {
-            @Override
-            public void onChanged(Change<? extends MantenimientoHistorial> change) {
-                int total_terminado = 0;
-                int total_progreso = 0;
-
-                for (MantenimientoHistorial m : listaMantenimientoHistorial) {
-                    if (m.getEstado().equals(Constants.ESTADO_MANTENIMIENTO_OK)) {
-                        total_terminado++;
-                    } else if (m.getEstado().equals(Constants.UNIDAD_EN_MANTENIMIENTO)) {
-                        total_progreso++;
-                    }
-
-                    lbl_main_menu_counter_terminados.setText(Integer.toString(total_terminado));
-                    lbl_main_menu_counter_en_progreso.setText(Integer.toString(total_progreso));
-                }
-
-            }
-        });
-        id_unidad.addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                initContent();
-            }
-        });
+        initComponents();
     }
 }
