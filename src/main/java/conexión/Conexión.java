@@ -67,12 +67,13 @@ public class Conexión {
                         "fotos_evidencia_programada varchar," +
                         "PRIMARY KEY(id_mantenimiento_historial AUTOINCREMENT));" +
                         "CREATE TABLE IF NOT EXISTS mantenimiento_programado (" +
-                        "id_mantenimiento_programado varchar," +
+                        "id_mantenimiento_programado integer," +
                         "id_unit varchar," +
                         "fecha_mantenimiento datetime," +
                         "nota_mantenimiento varchar," +
                         "tipo_mantenimiento varchar," +
-                        "fotos_evidencia varchar);" +
+                        "fotos_evidencia varchar," +
+                        "PRIMARY KEY(id_mantenimiento_programado AUTOINCREMENT));" +
                         "CREATE TABLE IF NOT EXISTS piezas (" +
                         "id_pieza integer," +
                         "nombre_pieza varchar," +
@@ -653,13 +654,13 @@ public class Conexión {
         LocalDate fechaMantenimientoReciente = null;
 
         try {
-            PreparedStatement stmt = conexion.prepareStatement("SELECT fecha_mantenimiento FROM mantenimiento_historial WHERE id_unit = ? AND estado_mantenimiento = '"+ Constants.ESTADO_MANTENIMIENTO_OK +"' ORDER BY fecha_mantenimiento DESC LIMIT 1");
+            PreparedStatement stmt = conexion.prepareStatement("SELECT fecha_finalización_mantenimiento FROM mantenimiento_historial WHERE id_unit = ? AND estado_mantenimiento = '"+ Constants.ESTADO_MANTENIMIENTO_OK +"' ORDER BY fecha_finalización_mantenimiento DESC LIMIT 1");
 
             stmt.setString(1, idUnit);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String fechaMantenimientoStr = rs.getDate("fecha_mantenimiento").toString();
+                String fechaMantenimientoStr = rs.getDate("fecha_finalización_mantenimiento").toString();
                 fechaMantenimientoReciente = LocalDate.parse(fechaMantenimientoStr);
             }
 
@@ -684,11 +685,13 @@ public class Conexión {
                 while (rs.next()) {
 
                     Mantenimiento mantenimiento = new Mantenimiento();
+                    mantenimiento.setId_mantenimiento_programado(rs.getInt("id_mantenimiento_programado"));
                     mantenimiento.setIdUnit(rs.getString("id_unit"));
                     mantenimiento.setMaintenanceDate(rs.getDate("fecha_mantenimiento").toString());
                     mantenimiento.setMaintenanceType(rs.getString("tipo_mantenimiento"));
                     mantenimiento.setMaintenanceNotes(rs.getString("nota_mantenimiento"));
                     mantenimiento.setJSONImagenes(rs.getString("fotos_evidencia"));
+
 
 
                     mantenimientos.add(mantenimiento);
@@ -737,4 +740,57 @@ public class Conexión {
         return mantenimientos;
     }
 
+    public Mantenimiento obtenerMantenimientoProgramadoPorId(int idMantenimiento) {
+        Mantenimiento mantenimiento = null;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM mantenimiento_programado WHERE id_mantenimiento_programado = ?");
+
+            stmt.setInt(1, idMantenimiento);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+
+                    mantenimiento = new Mantenimiento();
+                    mantenimiento.setId_mantenimiento_programado(rs.getInt("id_mantenimiento_programado"));
+                    mantenimiento.setIdUnit(rs.getString("id_unit"));
+                    mantenimiento.setMaintenanceDate(rs.getDate("fecha_mantenimiento").toString());
+                    mantenimiento.setMaintenanceType(rs.getString("tipo_mantenimiento"));
+                    mantenimiento.setMaintenanceNotes(rs.getString("nota_mantenimiento"));
+                    mantenimiento.setJSONImagenes(rs.getString("fotos_evidencia"));
+
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los datos del mantenimiento desde la base de datos: " + e.getMessage());
+        }
+
+        return mantenimiento;
+    }
+
+    public boolean actualizarMantenimientoProgramado(Mantenimiento mantenimientoProgramado) {
+        boolean actualizado = false;
+
+        try {
+             PreparedStatement stmt = conexion.prepareStatement("UPDATE mantenimiento_programado SET fecha_mantenimiento = ?, nota_mantenimiento = ?, tipo_mantenimiento = ?, fotos_evidencia = ? WHERE id_mantenimiento_programado = ?");
+
+            stmt.setDate(1, Date.valueOf(mantenimientoProgramado.getMaintenanceDate()));
+            stmt.setString(2, mantenimientoProgramado.getMaintenanceNotes());
+            stmt.setString(3, mantenimientoProgramado.getMaintenanceType());
+            stmt.setString(4, mantenimientoProgramado.getJSONArrayImagenes());
+            stmt.setInt(5, mantenimientoProgramado.getId_mantenimiento_programado());
+
+            int filasActualizadas = stmt.executeUpdate();
+
+            if (filasActualizadas > 0) {
+                actualizado = true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar los datos del mantenimiento programado en la base de datos: " + e.getMessage());
+        }
+
+        return actualizado;
+    }
 }

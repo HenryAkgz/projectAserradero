@@ -11,6 +11,7 @@ public class Constants {
     public static final String UNIDAD_SIN_MANTENIMIENTO_PROGRAMADO = "No hay fechas programadas";
     public static final String UNIDAD_EN_MANTENIMIENTO = "En mantenimiento";
     public static final String ESTADO_MANTENIMIENTO_OK = "Terminado";
+    public static final String ESTADO_MANTENIMIENTO_PROGRAMADO = "Programado";
     public static final String ESTADO_MANTENIMIENTO_STOP = "No se termino";
     public static final String ESTADO_MANTENIMIENTO_PENDIENTE = "Pendiente";
     public static final String TIPO_DE_MANTENIMIENTO_PREVENTIVO = "Preventivo";

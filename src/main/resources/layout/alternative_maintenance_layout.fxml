@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -27,221 +20,85 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.chart.NumberAxis?>
 <AnchorPane fx:id="root" minHeight="720.0" minWidth="1280.0" style="-fx-background-color: #161925;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AlternativeMaintenanceController">
-   <children>
-      <BorderPane fx:id="content_pane" layoutX="14.0" layoutY="14.0" prefHeight="700.0" prefWidth="1254.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <center>
-            <AnchorPane fx:id="main_menu_view" BorderPane.alignment="CENTER">
-               <children>
-                  <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <left>
-                        <AnchorPane prefHeight="3320.0" prefWidth="246.0" BorderPane.alignment="CENTER">
-                           <padding>
-                              <Insets bottom="5.0" right="10.0" top="5.0" />
-                           </padding>
-                           <children>
-                              <BorderPane style="-fx-background-color: #1f2233; -fx-background-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <top>
-                                    <VBox alignment="CENTER" fillWidth="false" BorderPane.alignment="CENTER">
-                                       <children>
-                                          <ImageView fx:id="main_menu_unit_photo" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true">
-                                             <image>
-                                                <Image url="@../icons/imagen.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label fx:id="main_menu_id_label" text="Label" textFill="WHITE">
-                                             <font>
-                                                <Font name="System Bold" size="20.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets top="10.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                       </children>
-                                       <BorderPane.margin>
-                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                       </BorderPane.margin>
-                                    </VBox>
-                                 </top>
-                                 <center>
-                                    <VBox spacing="40.0" BorderPane.alignment="CENTER">
-                                       <BorderPane.margin>
-                                          <Insets bottom="15.0" left="15.0" right="15.0" top="40.0" />
-                                       </BorderPane.margin>
-                                       <children>
-                                          <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                             <children>
-                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../icons/casa.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label text="Inicio" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="System Bold" size="20.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER_LEFT" onMouseClicked="#handleShowAddNewDateMaintenanceForm" spacing="10.0">
-                                             <children>
-                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../icons/gestion-del-tiempo.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label text="Añadir mantenimiento" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="System Bold" size="20.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                             <children>
-                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../icons/proximos.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label text="Proximos" textFill="WHITE">
-                                                   <font>
-                                                      <Font name="System Bold" size="20.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                 </center></BorderPane>
-                           </children>
-                        </AnchorPane>
-                     </left>
-                     <center>
-                        <AnchorPane fx:id="main_menu_inicio_view" BorderPane.alignment="CENTER">
-                           <children>
-                              <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <top>
-                                    <TextFlow BorderPane.alignment="CENTER">
-                                       <children>
-                                          <Label style="-fx-font-weight: 900;" text="Unidad " textFill="#d7d6d2">
-                                             <font>
-                                                <Font size="27.0" />
-                                             </font></Label>
-                                          <Label fx:id="main_menu_inicio_unidad_label" style="-fx-font-weight: 900;" text="Label" textFill="#fffffd">
-                                             <font>
-                                                <Font size="27.0" />
-                                             </font></Label>
-                                       </children>
-                                       <BorderPane.margin>
-                                          <Insets left="10.0" top="10.0" />
-                                       </BorderPane.margin>
-                                    </TextFlow>
-                                 </top>
-                                 <center>
-                                    <AnchorPane BorderPane.alignment="CENTER">
-                                       <children>
-                                          <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <children>
+        <BorderPane fx:id="content_pane" layoutX="14.0" layoutY="14.0" prefHeight="700.0" prefWidth="1254.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <center>
+                <AnchorPane fx:id="showMaintenanceData_view" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <bottom>
+                                <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                    <children>
+                                        <HBox fx:id="btn_container_showMaintenanceData" alignment="CENTER" style="-fx-background-color: white; -fx-background-radius: 10;">
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                            </padding>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                            </bottom>
+                            <center>
+                                <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+                                    <content>
+                                        <VBox alignment="TOP_CENTER">
+                                            <children>
+                                                <BorderPane maxWidth="600.0">
+                                                    <center>
+                                                        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+                                                            <children>
+                                                                <Label text="Mantenimiento programado" textFill="#70c9b9">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="32.0" />
+                                                                    </font>
+                                                                    <VBox.margin>
+                                                                        <Insets bottom="5.0" />
+                                                                    </VBox.margin>
+                                                                </Label>
+                                                                <Label text="Actualmente este mantenimiento se encuentra esperando que se inicie el mantenimiento" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </VBox>
+                                                    </center>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                    <padding>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                    </padding>
+                                                    <left>
+                                                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                                            <image>
+                                                                <Image url="@../icons/fecha_programada.gif" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </left>
+                                                </BorderPane>
+                                    <BorderPane>
+                                       <center>
+                                          <GridPane BorderPane.alignment="CENTER">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints vgrow="SOMETIMES" />
+                                              <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <BorderPane style="-fx-background-color: white; -fx-background-radius: 5;" GridPane.rowIndex="1">
-                                                   <top>
-                                                      <BorderPane BorderPane.alignment="CENTER">
-                                                         <left>
-                                                            <Label text="Mantenimientos Recientes" textFill="#6f6e6e" BorderPane.alignment="CENTER">
-                                                               <font>
-                                                                  <Font name="System Bold" size="15.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </left>
-                                                         <right>
-                                                            <Button mnemonicParsing="false" text="Ver todo" BorderPane.alignment="CENTER" />
-                                                         </right>
-                                                         <center>
-                                                            <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-                                                               <children>
-                                                                  <ComboBox fx:id="cbx_main_menu_tipo" prefWidth="150.0" />
-                                                                  <ComboBox fx:id="cbx_main_menu_estado" prefWidth="150.0" />
-                                                                  <ComboBox fx:id="cbx_main_menu_mes" prefWidth="150.0" />
-                                                                  <HBox alignment="CENTER" spacing="5.0">
-                                                                     <children>
-                                                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../icons/buscar.png" />
-                                                                           </image>
-                                                                        </ImageView>
-                                                                        <TextField />
-                                                                     </children>
-                                                                     <HBox.margin>
-                                                                        <Insets left="5.0" />
-                                                                     </HBox.margin></HBox>
-                                                               </children>
-                                                            </HBox>
-                                                         </center>
-                                                      </BorderPane>
-                                                   </top>
-                                                   <padding>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                   </padding>
-                                                   <center>
-                                                      <BorderPane BorderPane.alignment="CENTER">
-                                                         <top>
-                                                            <GridPane alignment="CENTER" style="-fx-background-color: #E5E5E5; -fx-background-radius: 5;" BorderPane.alignment="CENTER">
-                                                              <columnConstraints>
-                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                              </columnConstraints>
-                                                              <rowConstraints>
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                              </rowConstraints>
-                                                               <children>
-                                                                  <HBox alignment="CENTER">
-                                                                     <children>
-                                                                        <CheckBox mnemonicParsing="false" text="Estado" textFill="#615f5f">
-                                                                           <font>
-                                                                              <Font name="System Bold" size="13.0" />
-                                                                           </font></CheckBox>
-                                                                     </children></HBox>
-                                                                  <HBox alignment="CENTER" GridPane.columnIndex="1">
-                                                                     <children>
-                                                                        <CheckBox mnemonicParsing="false" text="Fecha" textFill="#615f5f">
-                                                                           <font>
-                                                                              <Font name="System Bold" size="13.0" />
-                                                                           </font></CheckBox>
-                                                                     </children></HBox>
-                                                                  <HBox alignment="CENTER" GridPane.columnIndex="2">
-                                                                     <children>
-                                                                        <CheckBox mnemonicParsing="false" text="Descripción" textFill="#615f5f">
-                                                                           <font>
-                                                                              <Font name="System Bold" size="13.0" />
-                                                                           </font>
-                                                                        </CheckBox>
-                                                                     </children></HBox>
-                                                               </children>
-                                                            </GridPane>
-                                                         </top>
-                                                         <BorderPane.margin>
-                                                            <Insets top="10.0" />
-                                                         </BorderPane.margin>
-                                                         <center>
-                                                            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                                                               <content>
-                                                                  <VBox fx:id="vb_main_menu_table_item_container" prefHeight="200.0" prefWidth="100.0" />
-                                                               </content>
-                                                            </ScrollPane>
-                                                         </center>
-                                                      </BorderPane>
-                                                   </center>
-                                                   <GridPane.margin>
-                                                      <Insets bottom="5.0" left="5.0" right="5.0" />
-                                                   </GridPane.margin></BorderPane>
                                                 <GridPane>
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -251,588 +108,1188 @@
                                                     <RowConstraints vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <BorderPane prefHeight="300.0" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10;" GridPane.columnIndex="1">
+                                                      <VBox fx:id="showData_container_fecha" alignment="CENTER">
+                                                         <children>
+                                                            <Label text="Fecha del mantenimiento:" textFill="#70c9b9">
+                                                               <font>
+                                                                  <Font name="System Bold" size="22.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="lbl_showData_fecha" text="Label" textFill="WHITE">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <DatePicker fx:id="dtp_showData_fecha" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox fx:id="showData_container_tipo" alignment="CENTER" GridPane.columnIndex="1">
+                                                         <children>
+                                                            <Label text="Tipo del mantenimiento:" textFill="#70c9b9">
+                                                               <font>
+                                                                  <Font name="System Bold" size="22.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="lbl_showData_tipo" text="Label" textFill="WHITE">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <ChoiceBox fx:id="cbx_showData_tipo" prefWidth="150.0" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                   <GridPane.margin>
+                                                      <Insets />
+                                                   </GridPane.margin>
+                                                </GridPane>
+                                                <VBox fx:id="showData_container_notas" alignment="CENTER" GridPane.rowIndex="1">
+                                                   <children>
+                                                      <Label text="Notas del mantenimiento:" textFill="#70c9b9">
+                                                         <font>
+                                                            <Font name="System Bold" size="22.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="lbl_showData_descripcion" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <TextArea fx:id="txt_showData_descripcion" maxHeight="300.0" maxWidth="800.0" wrapText="true" />
+                                                   </children>
+                                                   <GridPane.margin>
+                                                      <Insets top="20.0" />
+                                                   </GridPane.margin>
+                                                </VBox>
+                                                <VBox fx:id="showData_container_evidence" alignment="CENTER" GridPane.rowIndex="2">
+                                                   <children>
+                                                      <Label text="Imagenes adjuntas:" textFill="#70c9b9">
+                                                         <font>
+                                                            <Font name="System Bold" size="22.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="lbl_showData_evidence" text="Sin fotos adjuntas..." textFill="WHITE">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font></Label>
+                                                      <BorderPane fx:id="showData_container_imagenes_evidence" maxWidth="850.0">
                                                          <top>
                                                             <BorderPane BorderPane.alignment="CENTER">
-                                                               <left>
-                                                                  <HBox BorderPane.alignment="CENTER">
-                                                                     <children>
-                                                                        <Label fx:id="lbl_main_menu_title_ultimos_meses" text="Ultimos 3 meses" textFill="#d3cdcd">
-                                                                           <font>
-                                                                              <Font size="19.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children></HBox>
-                                                               </left>
                                                                <right>
-                                                                  <HBox BorderPane.alignment="CENTER">
-                                                                     <children>
-                                                                        <ChoiceBox fx:id="cbx_main_menu_inicio_tiempo_ultimos_meses" prefWidth="100.0" />
-                                                                     </children></HBox>
+                                                                  <Button fx:id="add_more_image_showData" mnemonicParsing="false" styleClass="whiteButtons" text="Añadir imagen(es)" BorderPane.alignment="CENTER" />
                                                                </right>
+                                                               <center>
+                                                                  <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+                                                                     <children>
+                                                                        <TextFlow>
+                                                                           <children>
+                                                                              <Label fx:id="lbl_contador_imagenes_showData" text="Label" textFill="#fffdfd">
+                                                                                 <font>
+                                                                                    <Font size="14.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                              <Label text=" Imagenes adjuntas" textFill="#70c9b9">
+                                                                                 <font>
+                                                                                    <Font size="14.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </children>
+                                                                        </TextFlow>
+                                                                     </children>
+                                                                  </HBox>
+                                                               </center>
                                                             </BorderPane>
                                                          </top>
                                                          <padding>
                                                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                          </padding>
-                                                         <GridPane.margin>
-                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                         </GridPane.margin>
                                                          <center>
-                                                            <BarChart fx:id="bc_main_menu_inicio_ultmimos_meses" style="-fx-background-color: transparent;" styleClass="chart-bar" BorderPane.alignment="CENTER">
-                                                              <xAxis>
-                                                                <CategoryAxis fx:id="ultimos_meses_category_axis" side="BOTTOM" tickLabelFill="#d3cdcd" />
-                                                              </xAxis>
-                                                              <yAxis>
-                                                                <NumberAxis fx:id="ultimos_meses_values_axis" side="LEFT" tickLabelFill="#d3cdcd" />
-                                                              </yAxis>
-                                                            </BarChart>
+                                                            <HBox fx:id="showData_list_imageItem" alignment="CENTER" BorderPane.alignment="CENTER" />
                                                          </center>
                                                       </BorderPane>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <top>
-                                                            <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-                                                               <children>
-                                                                  <VBox alignment="CENTER" fillWidth="false" spacing="5.0" style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
-                                                                     <children>
-                                                                        <Label fx:id="lbl_main_menu_counter_programados" text="0" textFill="#d3cdcd">
-                                                                           <font>
-                                                                              <Font name="System Bold" size="29.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                        <Label text="Programados" textFill="#bfbdbd">
-                                                                           <font>
-                                                                              <Font size="20.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                     <padding>
-                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                                     </padding>
-                                                                  </VBox>
-                                                                  <VBox alignment="CENTER" fillWidth="false" spacing="5.0" style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
-                                                                     <children>
-                                                                        <Label fx:id="lbl_main_menu_counter_en_progreso" text="0" textFill="#d3cdcd">
-                                                                           <font>
-                                                                              <Font name="System Bold" size="29.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                        <Label text="En progreso" textFill="#bfbdbd">
-                                                                           <font>
-                                                                              <Font size="20.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                     <padding>
-                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                                     </padding>
-                                                                  </VBox>
-                                                                  <VBox alignment="CENTER" fillWidth="false" spacing="5.0" style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
-                                                                     <children>
-                                                                        <Label fx:id="lbl_main_menu_counter_terminados" text="0" textFill="#d3cdcd">
-                                                                           <font>
-                                                                              <Font name="System Bold" size="29.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                        <Label text="Terminados" textFill="#bfbdbd">
-                                                                           <font>
-                                                                              <Font size="20.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                     <padding>
-                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                                     </padding>
-                                                                  </VBox>
-                                                               </children>
-                                                               <BorderPane.margin>
-                                                                  <Insets top="10.0" />
-                                                               </BorderPane.margin>
-                                                            </HBox>
-                                                         </top>
-                                                         <center>
-                                                            <VBox alignment="CENTER" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10;" BorderPane.alignment="CENTER">
-                                                               <BorderPane.margin>
-                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                               </BorderPane.margin>
-                                                               <children>
-                                                                  <Label alignment="CENTER" text="¿Tienes algun problema con esta unidad?" textFill="#9ee8d3">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="22.0" />
-                                                                     </font>
-                                                                     <VBox.margin>
-                                                                        <Insets bottom="5.0" />
-                                                                     </VBox.margin>
-                                                                  </Label>
-                                                                  <Label alignment="CENTER" maxWidth="400.0" text="Clic en 'Programar mantenimiento' para agregar una nueva fecha para esta unidad." textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                                                                     <VBox.margin>
-                                                                        <Insets bottom="10.0" />
-                                                                     </VBox.margin>
-                                                                  </Label>
-                                                                  <Button mnemonicParsing="false" styleClass="whiteButtons" text="Programar manteniento" />
-                                                               </children>
-                                                            </VBox>
-                                                         </center></BorderPane>
                                                    </children>
-                                                </GridPane>
+                                                   <GridPane.margin>
+                                                      <Insets top="20.0" />
+                                                   </GridPane.margin>
+                                                </VBox>
                                              </children>
                                           </GridPane>
-                                       </children>
-                                    </AnchorPane>
-                                 </center></BorderPane>
-                           </children></AnchorPane>
-                     </center></BorderPane>
-               </children></AnchorPane>
-         </center>
-      </BorderPane>
-      <VBox fx:id="extra_nodes" prefHeight="200.0" prefWidth="100.0" visible="false">
-         <children>
-            <VBox fx:id="empty_view" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
-               <children>
-                  <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/maintenace_signals.gif" />
-                     </image>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label text="Esta unidad no tiene registros de mantenimiento" textFill="#1fedff">
-                     <font>
-                        <Font name="System Bold" size="27.0" />
-                     </font>
-                  </Label>
-                  <Label text="Clic en &quot;Programar mantenimiento&quot; para programar una nueva fecha de mantenimiento de esta unidad " textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Button mnemonicParsing="false" onAction="#handleShowAddNewDateMaintenanceForm" styleClass="whiteButtons" text="Programar mantenimiento">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox fx:id="form_step_1_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/calendar.gif" />
-                     </image>
-                  </ImageView>
-                  <Label text="Comencemos añadiendo la fecha para realizar el mantenimiento" textFill="#34e7ff">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Label>
-                  <Label text="Programa el siguiente mantenimiento" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl_fecha_establecida" text="dd/mm/aaaa" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="add_new_date_picker" promptText="Seleccione una fecha">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </DatePicker>
-                  <Label layoutX="185.0" layoutY="456.0" text="¿Que tipo de mantenimiento necesita la unidad?" textFill="#34e7ff">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="40.0" />
-                     </VBox.margin>
-                  </Label>
-                  <ChoiceBox fx:id="add_new_date_type_cbx" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </ChoiceBox>
-                  <Button fx:id="btn_next_1_add_new_date" mnemonicParsing="false" styleClass="whiteButtons" text="continuar">
-                     <VBox.margin>
-                        <Insets top="50.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox fx:id="form_step_2_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/notes.gif" />
-                     </image>
-                  </ImageView>
-                  <Label text="Si lo deseas, puedes agregar informacion extra para darte un mejor servicio" textFill="#34e7ff">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Label>
-                  <Label prefWidth="783.0" text="Agrega informacion, notas, problemas u observaciones relacionadas con la unidad, que ayuden al encargado del mantenimiento a resolver su problema. (Opcional)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="text_area_detalles_mantenimiento" maxHeight="200.0" maxWidth="900.0">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextArea>
-                  <Button fx:id="btn_next_2_add_new_date" mnemonicParsing="false" styleClass="whiteButtons" text="Continuar">
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-            <HBox fx:id="contenodr_imagenes" alignment="CENTER" spacing="10.0" />
-            <VBox fx:id="form_step_3_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/selectPhoto.gif" />
-                     </image>
-                  </ImageView>
-                  <Label text="Una foto puede ayudarnos a solucionar mas rapido tu problema." textFill="#34e7ff">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Label>
-                  <Label text="Agrega una o mas fotos, que consideres que podrian ayudarnos entender y resolver tu problema. (Opcional)" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <BorderPane maxWidth="800.0">
-                     <top>
-                        <AnchorPane prefHeight="41.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Button fx:id="add_more_photos" mnemonicParsing="false" onAction="#handleGetPhotoPathsFromHDSK" styleClass="whiteButtons" text="Añadir mas fotos" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" />
-                              <TextFlow layoutY="16.0" prefWidth="132.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0">
-                                 <children>
-                                    <Label fx:id="lbl_counter_fotos" text="0" textFill="WHITE">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text=" fotos seleccionadas" textFill="#34e7ff">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </TextFlow>
-                           </children>
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                        </AnchorPane>
-                     </top>
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
-                     <center>
-                        <VBox fx:id="card_añadir_fotos" alignment="CENTER" maxWidth="800.0" style="-fx-border-radius: 10; -fx-border-color: #1fedff; -fx-background-color: rgba(255, 255, 255, 0.1);" BorderPane.alignment="CENTER">
-                           <children>
-                              <VBox fx:id="add_foto_info_container" alignment="CENTER">
-                                 <children>
-                                    <Label text="Arrastra tus fotos aquí, o clic en  &quot;Añadir fotos&quot; para seleccionar las fotos que deseas añadir." textAlignment="CENTER" textFill="#ebebeb">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Button mnemonicParsing="false" onAction="#handleGetPhotoPathsFromHDSK" styleClass="whiteButtons" text="Añadir fotos">
+                                       </center>
                                        <VBox.margin>
-                                          <Insets top="15.0" />
+                                          <Insets top="40.0" />
                                        </VBox.margin>
-                                    </Button>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </VBox>
-                     </center>
-                  </BorderPane>
-                  <Button fx:id="btn_next_3_add_new_date" mnemonicParsing="false" styleClass="whiteButtons" text="Continuar">
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Button>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-               </children>
-            </VBox>
-            <HBox fx:id="contenodr_imagenes_result" alignment="CENTER" layoutX="10.0" layoutY="1896.0" spacing="10.0" />
-            <AnchorPane fx:id="form_step_4_add_new_date" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <bottom>
-                        <Button fx:id="btn_next_4_add_new_date" mnemonicParsing="false" styleClass="whiteButtons" text="Terminar" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </BorderPane.margin>
-                        </Button>
-                     </bottom>
-                     <top>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <left>
-                              <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                                 <image>
-                                    <Image url="@../icons/check_data.gif" />
-                                 </image>
-                              </ImageView>
-                           </left>
-                           <center>
-                              <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Label text="Antes de terminar, por favor revisa tu información" textFill="#34e7ff">
-                                       <font>
-                                          <Font name="System Bold" size="22.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Si lo deseas, puedes cambiar los datos del mantenimiento más tarde." textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </center>
+                                    </BorderPane>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="btn_showData_saveUpdate" mnemonicParsing="false" styleClass="whiteButtons" text="Actualizar datos" />
+                                       </children>
+                                    </HBox>
+                                            </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </center>
                         </BorderPane>
-                     </top>
-                     <center>
-                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" BorderPane.alignment="CENTER">
-                           <content>
-                              <VBox>
-                                 <children>
-                                    <HBox alignment="CENTER" fillHeight="false" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
-                                       <children>
-                                          <VBox alignment="TOP_CENTER">
-                                             <children>
-                                                <Label text="Fecha programada:" textAlignment="CENTER" textFill="#34e7ff">
-                                                   <font>
-                                                      <Font name="System Bold" size="21.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="add_newDate_lbl_fecha_programada_value" text="lunes, 5 de junio" textFill="#ebebeb">
-                                                   <font>
-                                                      <Font name="System Bold" size="17.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <VBox alignment="TOP_CENTER" layoutX="422.0" layoutY="32.0">
-                                             <children>
-                                                <Label text="Tipo de mantenimiento:" textAlignment="CENTER" textFill="#34e7ff">
-                                                   <font>
-                                                      <Font name="System Bold" size="21.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="add_newDate_lbl_maintenance_type_value" text="Preventivo" textFill="#ebebeb">
-                                                   <font>
-                                                      <Font name="System Bold" size="17.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER" fillHeight="false" layoutX="10.0" layoutY="10.0" minHeight="100.0" prefWidth="200.0" spacing="50.0">
-                                       <children>
-                                          <VBox alignment="TOP_CENTER">
-                                             <children>
-                                                <Label text="Informacion extra:" textAlignment="CENTER" textFill="#34e7ff">
-                                                   <font>
-                                                      <Font name="System Bold" size="21.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="add_new_label_comments_value" alignment="CENTER" maxWidth="800.0" text="sin comentarios..." textAlignment="CENTER" textFill="#ebebeb" wrapText="true">
-                                                   <font>
-                                                      <Font name="System Bold" size="17.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER" fillHeight="false" layoutX="10.0" layoutY="110.0" minHeight="100.0" prefWidth="200.0" spacing="50.0">
-                                       <children>
-                                          <VBox fx:id="evidence_result_container" alignment="TOP_CENTER">
-                                             <children>
-                                                <Label text="Evidencias:" textAlignment="CENTER" textFill="#34e7ff">
-                                                   <font>
-                                                      <Font name="System Bold" size="21.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="label_no_fotos_add_new" text="0 fotos añadidas" textFill="#ebebeb">
-                                                   <font>
-                                                      <Font name="System Bold" size="17.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </content>
-                        </ScrollPane>
-                     </center>
-                  </BorderPane>
-               </children>
-            </AnchorPane>
-            <VBox fx:id="result_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fx:id="img_result_add_new_date" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/saveOk.gif" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="lblResultMensaje" text="Mantenimiento programado correctamente." textAlignment="CENTER" textFill="#1dae83">
-                     <font>
-                        <Font name="System Bold" size="28.0" />
-                     </font>
-                  </Label>
-                  <Label text="Presiona &quot;Regresar al Inicio&quot; para ir al menu principal del administrador de mantenimienrto" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Button mnemonicParsing="false" onAction="#handleGotoMainView" styleClass="whiteButtons" text="Regresar al Inicio">
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-            <AnchorPane fx:id="add_new_date_view">
-               <children>
-                  <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <left>
-                        <VBox prefHeight="258.0" prefWidth="246.0" BorderPane.alignment="TOP_CENTER">
-                           <BorderPane.margin>
-                              <Insets />
-                           </BorderPane.margin>
-                           <padding>
-                              <Insets top="20.0" />
-                           </padding>
-                           <children>
-                              <AnchorPane prefHeight="484.0" prefWidth="246.0">
-                                 <children>
-                                    <ProgressBar fx:id="progres_bar_new_date" layoutX="-162.0" layoutY="213.0" prefWidth="400.0" progress="0.71" rotate="90.0" style="-fx-accent: #8367C7;" AnchorPane.leftAnchor="-162.0" AnchorPane.topAnchor="207.0">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets></ProgressBar>
-                                    <Label fx:id="lbl_counter_1" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="12.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #8367C7; -fx-background-radius: 100;" text="1" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_counter_2" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="96.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="2" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_counter_4" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="281.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="4" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_1" layoutX="71.0" layoutY="19.0" text="Informacón general" textFill="#8367c7">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_2" layoutX="72.0" layoutY="103.0" text="Detalles" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_counter_3" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="189.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="3" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_3" layoutX="70.0" layoutY="194.0" text="Evidencias" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_4" layoutX="67.0" layoutY="288.0" text="Confirmación" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_counter_5" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="381.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: gray; -fx-background-radius: 100;" text="5" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lbl_step_5" layoutX="67.0" layoutY="388.0" text="Terminado" textFill="WHITE">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </VBox>
-                     </left>
-                     <center>
-                        <AnchorPane fx:id="add_new_date_content_container" BorderPane.alignment="CENTER" />
-                     </center>
-                     <top>
-                        <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
-                           <children>
-                              <Label text="Añadir una fecha de mantenimiento:" textFill="WHITE">
-                                 <HBox.margin>
-                                    <Insets right="5.0" top="5.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                              <Label fx:id="idUnit_add_new_date" text="Label" textFill="#fec701">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                           </children>
-                        </HBox>
-                     </top>
-                  </BorderPane>
-                  <AnchorPane fx:id="btn_back_setp_addNewData" style="-fx-border-radius: 10;" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="35.0">
-                     <children>
-                        <Pane fx:id="icon_btn_back" layoutX="2.0" layoutY="7.0" prefHeight="22.0" prefWidth="22.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                        <Label fx:id="lbl_back_button" layoutX="50.0" layoutY="34.0" text="Atras" textFill="#e4d9d9" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="4.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
+                        <AnchorPane fx:id="btn_back_showMaintenanceData" onMouseClicked="#initContent" style="-fx-border-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                            <children>
+                                <Pane fx:id="icon_btn_back_showMaintenanceData" layoutX="2.0" layoutY="7.0" prefHeight="15.0" prefWidth="15.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                                <Label fx:id="lbl_back_button_showMaintenanceData" layoutX="50.0" layoutY="34.0" text="Regresar al inicio" textFill="#e4d9d9" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="4.0">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </center>
+        </BorderPane>
+        <VBox fx:id="extra_nodes" prefHeight="200.0" prefWidth="100.0" visible="false">
+            <children>
+                <VBox fx:id="empty_view" alignment="CENTER" prefHeight="200.0" prefWidth="100.0"
+                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                      AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/maintenace_signals.gif"/>
+                            </image>
+                            <VBox.margin>
+                                <Insets bottom="20.0"/>
+                            </VBox.margin>
+                        </ImageView>
+                        <Label text="Esta unidad no tiene registros de mantenimiento" textFill="#1fedff">
+                            <font>
+                                <Font name="System Bold" size="27.0"/>
+                            </font>
                         </Label>
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
-   </children>
+                        <Label text="Clic en &quot;Programar mantenimiento&quot; para programar una nueva fecha de mantenimiento de esta unidad "
+                               textFill="WHITE">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#handleShowAddNewDateMaintenanceForm"
+                                styleClass="whiteButtons" text="Programar mantenimiento">
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets top="10.0"/>
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <VBox fx:id="form_step_1_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/calendar.gif"/>
+                            </image>
+                        </ImageView>
+                        <Label text="Comencemos añadiendo la fecha para realizar el mantenimiento" textFill="#34e7ff">
+                            <font>
+                                <Font name="System Bold" size="22.0"/>
+                            </font>
+                        </Label>
+                        <Label text="Programa el siguiente mantenimiento" textFill="WHITE">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="lbl_fecha_establecida" text="dd/mm/aaaa" textFill="WHITE">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
+                        <DatePicker fx:id="add_new_date_picker" promptText="Seleccione una fecha">
+                            <VBox.margin>
+                                <Insets top="5.0"/>
+                            </VBox.margin>
+                        </DatePicker>
+                        <Label layoutX="185.0" layoutY="456.0" text="¿Que tipo de mantenimiento necesita la unidad?"
+                               textFill="#34e7ff">
+                            <font>
+                                <Font name="System Bold" size="22.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets top="40.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <ChoiceBox fx:id="add_new_date_type_cbx" prefWidth="150.0">
+                            <VBox.margin>
+                                <Insets top="5.0"/>
+                            </VBox.margin>
+                        </ChoiceBox>
+                        <Button fx:id="btn_next_1_add_new_date" mnemonicParsing="false" styleClass="whiteButtons"
+                                text="continuar">
+                            <VBox.margin>
+                                <Insets top="50.0"/>
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <VBox fx:id="form_step_2_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/notes.gif"/>
+                            </image>
+                        </ImageView>
+                        <Label text="Si lo deseas, puedes agregar informacion extra para darte un mejor servicio"
+                               textFill="#34e7ff">
+                            <font>
+                                <Font name="System Bold" size="22.0"/>
+                            </font>
+                        </Label>
+                        <Label prefWidth="783.0"
+                               text="Agrega informacion, notas, problemas u observaciones relacionadas con la unidad, que ayuden al encargado del mantenimiento a resolver su problema. (Opcional)"
+                               textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <TextArea fx:id="text_area_detalles_mantenimiento" maxHeight="200.0" maxWidth="900.0">
+                            <VBox.margin>
+                                <Insets top="10.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </TextArea>
+                        <Button fx:id="btn_next_2_add_new_date" mnemonicParsing="false" styleClass="whiteButtons"
+                                text="Continuar">
+                            <VBox.margin>
+                                <Insets top="30.0"/>
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <HBox fx:id="contenodr_imagenes" alignment="CENTER" spacing="10.0"/>
+                <VBox fx:id="form_step_3_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/selectPhoto.gif"/>
+                            </image>
+                        </ImageView>
+                        <Label text="Una foto puede ayudarnos a solucionar mas rapido tu problema." textFill="#34e7ff">
+                            <font>
+                                <Font name="System Bold" size="22.0"/>
+                            </font>
+                        </Label>
+                        <Label text="Agrega una o mas fotos, que consideres que podrian ayudarnos entender y resolver tu problema. (Opcional)"
+                               textFill="WHITE">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <BorderPane maxWidth="800.0">
+                            <top>
+                                <AnchorPane prefHeight="41.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                                    <children>
+                                        <Button fx:id="add_more_photos" mnemonicParsing="false"
+                                                onAction="#handleGetPhotoPathsFromHDSK" styleClass="whiteButtons"
+                                                text="Añadir mas fotos" visible="false" AnchorPane.bottomAnchor="10.0"
+                                                AnchorPane.rightAnchor="0.0"/>
+                                        <TextFlow layoutY="16.0" prefWidth="132.0" AnchorPane.bottomAnchor="5.0"
+                                                  AnchorPane.leftAnchor="0.0">
+                                            <children>
+                                                <Label fx:id="lbl_counter_fotos" text="0" textFill="WHITE">
+                                                    <font>
+                                                        <Font size="14.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label text=" fotos seleccionadas" textFill="#34e7ff">
+                                                    <font>
+                                                        <Font size="14.0"/>
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </TextFlow>
+                                    </children>
+                                    <BorderPane.margin>
+                                        <Insets/>
+                                    </BorderPane.margin>
+                                </AnchorPane>
+                            </top>
+                            <VBox.margin>
+                                <Insets top="30.0"/>
+                            </VBox.margin>
+                            <center>
+                                <VBox fx:id="card_añadir_fotos" alignment="CENTER" maxWidth="800.0"
+                                      style="-fx-border-radius: 10; -fx-border-color: #1fedff; -fx-background-color: rgba(255, 255, 255, 0.1);"
+                                      BorderPane.alignment="CENTER">
+                                    <children>
+                                        <VBox fx:id="add_foto_info_container" alignment="CENTER">
+                                            <children>
+                                                <Label text="Arrastra tus fotos aquí, o clic en  &quot;Añadir fotos&quot; para seleccionar las fotos que deseas añadir."
+                                                       textAlignment="CENTER" textFill="#ebebeb">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Button mnemonicParsing="false" onAction="#handleGetPhotoPathsFromHDSK"
+                                                        styleClass="whiteButtons" text="Añadir fotos">
+                                                    <VBox.margin>
+                                                        <Insets top="15.0"/>
+                                                    </VBox.margin>
+                                                </Button>
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                                            </VBox.margin>
+                                        </VBox>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                    </padding>
+                                </VBox>
+                            </center>
+                        </BorderPane>
+                        <Button fx:id="btn_next_3_add_new_date" mnemonicParsing="false" styleClass="whiteButtons"
+                                text="Continuar">
+                            <VBox.margin>
+                                <Insets top="15.0"/>
+                            </VBox.margin>
+                        </Button>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0"/>
+                    </children>
+                </VBox>
+                <HBox fx:id="contenodr_imagenes_result" alignment="CENTER" layoutX="10.0" layoutY="1896.0"
+                      spacing="10.0"/>
+                <AnchorPane fx:id="form_step_4_add_new_date" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <bottom>
+                                <Button fx:id="btn_next_4_add_new_date" mnemonicParsing="false"
+                                        styleClass="whiteButtons" text="Terminar" BorderPane.alignment="CENTER">
+                                    <BorderPane.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                    </BorderPane.margin>
+                                </Button>
+                            </bottom>
+                            <top>
+                                <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                    <left>
+                                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true"
+                                                   preserveRatio="true" BorderPane.alignment="CENTER">
+                                            <image>
+                                                <Image url="@../icons/check_data.gif"/>
+                                            </image>
+                                        </ImageView>
+                                    </left>
+                                    <center>
+                                        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+                                            <children>
+                                                <Label text="Antes de terminar, por favor revisa tu información"
+                                                       textFill="#34e7ff">
+                                                    <font>
+                                                        <Font name="System Bold" size="22.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label text="Si lo deseas, puedes cambiar los datos del mantenimiento más tarde."
+                                                       textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="18.0"/>
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </center>
+                                </BorderPane>
+                            </top>
+                            <center>
+                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                                    <content>
+                                        <VBox>
+                                            <children>
+                                                <HBox alignment="CENTER" fillHeight="false" prefHeight="100.0"
+                                                      prefWidth="200.0" spacing="50.0">
+                                                    <children>
+                                                        <VBox alignment="TOP_CENTER">
+                                                            <children>
+                                                                <Label text="Fecha programada:" textAlignment="CENTER"
+                                                                       textFill="#34e7ff">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="21.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="add_newDate_lbl_fecha_programada_value"
+                                                                       text="lunes, 5 de junio" textFill="#ebebeb">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="17.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </VBox>
+                                                        <VBox alignment="TOP_CENTER" layoutX="422.0" layoutY="32.0">
+                                                            <children>
+                                                                <Label text="Tipo de mantenimiento:"
+                                                                       textAlignment="CENTER" textFill="#34e7ff">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="21.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="add_newDate_lbl_maintenance_type_value"
+                                                                       text="Preventivo" textFill="#ebebeb">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="17.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" fillHeight="false" layoutX="10.0"
+                                                      layoutY="10.0" minHeight="100.0" prefWidth="200.0" spacing="50.0">
+                                                    <children>
+                                                        <VBox alignment="TOP_CENTER">
+                                                            <children>
+                                                                <Label text="Informacion extra:" textAlignment="CENTER"
+                                                                       textFill="#34e7ff">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="21.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="add_new_label_comments_value"
+                                                                       alignment="CENTER" maxWidth="800.0"
+                                                                       text="sin comentarios..." textAlignment="CENTER"
+                                                                       textFill="#ebebeb" wrapText="true">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="17.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" fillHeight="false" layoutX="10.0"
+                                                      layoutY="110.0" minHeight="100.0" prefWidth="200.0"
+                                                      spacing="50.0">
+                                                    <children>
+                                                        <VBox fx:id="evidence_result_container" alignment="TOP_CENTER">
+                                                            <children>
+                                                                <Label text="Evidencias:" textAlignment="CENTER"
+                                                                       textFill="#34e7ff">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="21.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="label_no_fotos_add_new"
+                                                                       text="0 fotos añadidas" textFill="#ebebeb">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="17.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </center>
+                        </BorderPane>
+                    </children>
+                </AnchorPane>
+                <VBox fx:id="result_add_new_date" alignment="CENTER" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fx:id="img_result_add_new_date" fitHeight="300.0" fitWidth="300.0"
+                                   pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../icons/saveOk.gif"/>
+                            </image>
+                        </ImageView>
+                        <Label fx:id="lblResultMensaje" text="Mantenimiento programado correctamente."
+                               textAlignment="CENTER" textFill="#1dae83">
+                            <font>
+                                <Font name="System Bold" size="28.0"/>
+                            </font>
+                        </Label>
+                        <Label text="Presiona &quot;Regresar al Inicio&quot; para ir al menu principal del administrador de mantenimienrto"
+                               textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#handleGotoMainView" styleClass="whiteButtons"
+                                text="Regresar al Inicio">
+                            <VBox.margin>
+                                <Insets top="15.0"/>
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <AnchorPane fx:id="add_new_date_view">
+                    <children>
+                        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <left>
+                                <VBox prefHeight="258.0" prefWidth="246.0" BorderPane.alignment="TOP_CENTER">
+                                    <BorderPane.margin>
+                                        <Insets/>
+                                    </BorderPane.margin>
+                                    <padding>
+                                        <Insets top="20.0"/>
+                                    </padding>
+                                    <children>
+                                        <AnchorPane prefHeight="484.0" prefWidth="246.0">
+                                            <children>
+                                                <ProgressBar fx:id="progres_bar_new_date" layoutX="-162.0"
+                                                             layoutY="213.0" prefWidth="400.0" progress="0.71"
+                                                             rotate="90.0" style="-fx-accent: #8367C7;"
+                                                             AnchorPane.leftAnchor="-162.0"
+                                                             AnchorPane.topAnchor="207.0">
+                                                    <opaqueInsets>
+                                                        <Insets/>
+                                                    </opaqueInsets>
+                                                </ProgressBar>
+                                                <Label fx:id="lbl_counter_1" alignment="CENTER" contentDisplay="CENTER"
+                                                       layoutX="18.0" layoutY="12.0" prefHeight="40.0" prefWidth="40.0"
+                                                       style="-fx-background-color: #8367C7; -fx-background-radius: 100;"
+                                                       text="1" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="16.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_counter_2" alignment="CENTER" contentDisplay="CENTER"
+                                                       layoutX="18.0" layoutY="96.0" prefHeight="40.0" prefWidth="40.0"
+                                                       style="-fx-background-color: gray; -fx-background-radius: 100;"
+                                                       text="2" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="16.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_counter_4" alignment="CENTER" contentDisplay="CENTER"
+                                                       layoutX="18.0" layoutY="281.0" prefHeight="40.0" prefWidth="40.0"
+                                                       style="-fx-background-color: gray; -fx-background-radius: 100;"
+                                                       text="4" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="16.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_step_1" layoutX="71.0" layoutY="19.0"
+                                                       text="Informacón general" textFill="#8367c7">
+                                                    <font>
+                                                        <Font size="18.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_step_2" layoutX="72.0" layoutY="103.0" text="Detalles"
+                                                       textFill="WHITE">
+                                                    <font>
+                                                        <Font size="18.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_counter_3" alignment="CENTER" contentDisplay="CENTER"
+                                                       layoutX="18.0" layoutY="189.0" prefHeight="40.0" prefWidth="40.0"
+                                                       style="-fx-background-color: gray; -fx-background-radius: 100;"
+                                                       text="3" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="16.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_step_3" layoutX="70.0" layoutY="194.0"
+                                                       text="Evidencias" textFill="WHITE">
+                                                    <font>
+                                                        <Font size="18.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_step_4" layoutX="67.0" layoutY="288.0"
+                                                       text="Confirmación" textFill="WHITE">
+                                                    <font>
+                                                        <Font size="18.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_counter_5" alignment="CENTER" contentDisplay="CENTER"
+                                                       layoutX="18.0" layoutY="381.0" prefHeight="40.0" prefWidth="40.0"
+                                                       style="-fx-background-color: gray; -fx-background-radius: 100;"
+                                                       text="5" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="System Bold" size="16.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="lbl_step_5" layoutX="67.0" layoutY="388.0"
+                                                       text="Terminado" textFill="WHITE">
+                                                    <font>
+                                                        <Font size="18.0"/>
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </VBox>
+                            </left>
+                            <center>
+                                <AnchorPane fx:id="add_new_date_content_container" BorderPane.alignment="CENTER"/>
+                            </center>
+                            <top>
+                                <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+                                    <children>
+                                        <Label text="Añadir una fecha de mantenimiento:" textFill="WHITE">
+                                            <HBox.margin>
+                                                <Insets right="5.0" top="5.0"/>
+                                            </HBox.margin>
+                                            <font>
+                                                <Font size="14.0"/>
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="idUnit_add_new_date" text="Label" textFill="#fec701">
+                                            <font>
+                                                <Font size="14.0"/>
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                            </top>
+                        </BorderPane>
+                        <AnchorPane fx:id="btn_back_setp_addNewData" style="-fx-border-radius: 10;"
+                                    AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="35.0">
+                            <children>
+                                <Pane fx:id="icon_btn_back" layoutX="2.0" layoutY="7.0" prefHeight="22.0"
+                                      prefWidth="22.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                                      AnchorPane.topAnchor="5.0"/>
+                                <Label fx:id="lbl_back_button" layoutX="50.0" layoutY="34.0" text="Atras"
+                                       textFill="#e4d9d9" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="30.0"
+                                       AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="4.0">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </padding>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="main_menu_view">
+                    <children>
+                        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <left>
+                                <AnchorPane prefHeight="3320.0" prefWidth="246.0" BorderPane.alignment="CENTER">
+                                    <padding>
+                                        <Insets bottom="5.0" right="10.0" top="5.0"/>
+                                    </padding>
+                                    <children>
+                                        <BorderPane style="-fx-background-color: #1f2233; -fx-background-radius: 10;"
+                                                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <top>
+                                                <VBox alignment="CENTER" fillWidth="false"
+                                                      BorderPane.alignment="CENTER">
+                                                    <children>
+                                                        <ImageView fx:id="main_menu_unit_photo" fitHeight="130.0"
+                                                                   fitWidth="130.0" pickOnBounds="true">
+                                                            <image>
+                                                                <Image url="@../icons/imagen.png"/>
+                                                            </image>
+                                                        </ImageView>
+                                                        <Label fx:id="main_menu_id_label" text="Label" textFill="WHITE">
+                                                            <font>
+                                                                <Font name="System Bold" size="20.0"/>
+                                                            </font>
+                                                            <VBox.margin>
+                                                                <Insets top="10.0"/>
+                                                            </VBox.margin>
+                                                        </Label>
+                                                    </children>
+                                                    <BorderPane.margin>
+                                                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                                                    </BorderPane.margin>
+                                                </VBox>
+                                            </top>
+                                            <center>
+                                                <VBox spacing="40.0" BorderPane.alignment="CENTER">
+                                                    <BorderPane.margin>
+                                                        <Insets bottom="15.0" left="15.0" right="15.0" top="40.0"/>
+                                                    </BorderPane.margin>
+                                                    <children>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <children>
+                                                                <ImageView fitHeight="25.0" fitWidth="25.0"
+                                                                           pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@../icons/casa.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <Label text="Inicio" textFill="WHITE">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="20.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <children>
+                                                                <ImageView fitHeight="25.0" fitWidth="25.0"
+                                                                           pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@../icons/gestion-del-tiempo.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <Label text="Añadir mantenimiento" textFill="WHITE">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="20.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <children>
+                                                                <ImageView fitHeight="25.0" fitWidth="25.0"
+                                                                           pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@../icons/proximos.png"/>
+                                                                    </image>
+                                                                </ImageView>
+                                                                <Label text="Proximos" textFill="WHITE">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="20.0"/>
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </VBox>
+                                            </center>
+                                        </BorderPane>
+                                    </children>
+                                </AnchorPane>
+                            </left>
+                            <center>
+                                <AnchorPane fx:id="main_menu_inicio_view" BorderPane.alignment="CENTER">
+                                    <children>
+                                        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <top>
+                                                <TextFlow BorderPane.alignment="CENTER">
+                                                    <children>
+                                                        <Label style="-fx-font-weight: 900;" text="Unidad "
+                                                               textFill="#d7d6d2">
+                                                            <font>
+                                                                <Font size="27.0"/>
+                                                            </font>
+                                                        </Label>
+                                                        <Label fx:id="main_menu_inicio_unidad_label"
+                                                               style="-fx-font-weight: 900;" text="Label"
+                                                               textFill="#fffffd">
+                                                            <font>
+                                                                <Font size="27.0"/>
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                    <BorderPane.margin>
+                                                        <Insets left="10.0" top="10.0"/>
+                                                    </BorderPane.margin>
+                                                </TextFlow>
+                                            </top>
+                                            <center>
+                                                <AnchorPane BorderPane.alignment="CENTER">
+                                                    <children>
+                                                        <GridPane AnchorPane.bottomAnchor="0.0"
+                                                                  AnchorPane.leftAnchor="0.0"
+                                                                  AnchorPane.rightAnchor="0.0"
+                                                                  AnchorPane.topAnchor="0.0">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+                                                                                   prefWidth="100.0"/>
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                                vgrow="SOMETIMES"/>
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <BorderPane
+                                                                        style="-fx-background-color: white; -fx-background-radius: 5;"
+                                                                        GridPane.rowIndex="1">
+                                                                    <top>
+                                                                        <BorderPane BorderPane.alignment="CENTER">
+                                                                            <left>
+                                                                                <Label text="Mantenimientos Recientes"
+                                                                                       textFill="#6f6e6e"
+                                                                                       BorderPane.alignment="CENTER">
+                                                                                    <font>
+                                                                                        <Font name="System Bold"
+                                                                                              size="15.0"/>
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </left>
+                                                                            <right>
+                                                                                <Button mnemonicParsing="false"
+                                                                                        text="Ver todo"
+                                                                                        BorderPane.alignment="CENTER"/>
+                                                                            </right>
+                                                                            <center>
+                                                                                <HBox alignment="CENTER" spacing="10.0"
+                                                                                      BorderPane.alignment="CENTER">
+                                                                                    <children>
+                                                                                        <ComboBox
+                                                                                                fx:id="cbx_main_menu_tipo"
+                                                                                                prefWidth="150.0"/>
+                                                                                        <ComboBox
+                                                                                                fx:id="cbx_main_menu_estado"
+                                                                                                prefWidth="150.0"/>
+                                                                                        <ComboBox
+                                                                                                fx:id="cbx_main_menu_mes"
+                                                                                                prefWidth="150.0"/>
+                                                                                        <HBox alignment="CENTER"
+                                                                                              spacing="5.0">
+                                                                                            <children>
+                                                                                                <ImageView
+                                                                                                        fitHeight="25.0"
+                                                                                                        fitWidth="25.0"
+                                                                                                        pickOnBounds="true"
+                                                                                                        preserveRatio="true">
+                                                                                                    <image>
+                                                                                                        <Image url="@../icons/buscar.png"/>
+                                                                                                    </image>
+                                                                                                </ImageView>
+                                                                                                <TextField/>
+                                                                                            </children>
+                                                                                            <HBox.margin>
+                                                                                                <Insets left="5.0"/>
+                                                                                            </HBox.margin>
+                                                                                        </HBox>
+                                                                                    </children>
+                                                                                </HBox>
+                                                                            </center>
+                                                                        </BorderPane>
+                                                                    </top>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0"
+                                                                                top="10.0"/>
+                                                                    </padding>
+                                                                    <center>
+                                                                        <BorderPane BorderPane.alignment="CENTER">
+                                                                            <top>
+                                                                                <GridPane alignment="CENTER"
+                                                                                          style="-fx-background-color: #E5E5E5; -fx-background-radius: 5;"
+                                                                                          BorderPane.alignment="CENTER">
+                                                                                    <columnConstraints>
+                                                                                        <ColumnConstraints
+                                                                                                hgrow="SOMETIMES"
+                                                                                                minWidth="10.0"
+                                                                                                prefWidth="100.0"/>
+                                                                                        <ColumnConstraints
+                                                                                                hgrow="SOMETIMES"
+                                                                                                minWidth="10.0"
+                                                                                                prefWidth="100.0"/>
+                                                                                        <ColumnConstraints
+                                                                                                hgrow="SOMETIMES"
+                                                                                                minWidth="10.0"
+                                                                                                prefWidth="100.0"/>
+                                                                                    </columnConstraints>
+                                                                                    <rowConstraints>
+                                                                                        <RowConstraints minHeight="10.0"
+                                                                                                        prefHeight="30.0"
+                                                                                                        vgrow="SOMETIMES"/>
+                                                                                    </rowConstraints>
+                                                                                    <children>
+                                                                                        <HBox alignment="CENTER">
+                                                                                            <children>
+                                                                                                <CheckBox
+                                                                                                        mnemonicParsing="false"
+                                                                                                        text="Estado"
+                                                                                                        textFill="#615f5f">
+                                                                                                    <font>
+                                                                                                        <Font name="System Bold"
+                                                                                                              size="13.0"/>
+                                                                                                    </font>
+                                                                                                </CheckBox>
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                        <HBox alignment="CENTER"
+                                                                                              GridPane.columnIndex="1">
+                                                                                            <children>
+                                                                                                <CheckBox
+                                                                                                        mnemonicParsing="false"
+                                                                                                        text="Fecha"
+                                                                                                        textFill="#615f5f">
+                                                                                                    <font>
+                                                                                                        <Font name="System Bold"
+                                                                                                              size="13.0"/>
+                                                                                                    </font>
+                                                                                                </CheckBox>
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                        <HBox alignment="CENTER"
+                                                                                              GridPane.columnIndex="2">
+                                                                                            <children>
+                                                                                                <CheckBox
+                                                                                                        mnemonicParsing="false"
+                                                                                                        text="Descripción"
+                                                                                                        textFill="#615f5f">
+                                                                                                    <font>
+                                                                                                        <Font name="System Bold"
+                                                                                                              size="13.0"/>
+                                                                                                    </font>
+                                                                                                </CheckBox>
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                    </children>
+                                                                                </GridPane>
+                                                                            </top>
+                                                                            <BorderPane.margin>
+                                                                                <Insets top="10.0"/>
+                                                                            </BorderPane.margin>
+                                                                            <center>
+                                                                                <ScrollPane fitToHeight="true"
+                                                                                            fitToWidth="true"
+                                                                                            prefHeight="200.0"
+                                                                                            prefWidth="200.0"
+                                                                                            BorderPane.alignment="CENTER">
+                                                                                    <content>
+                                                                                        <VBox fx:id="vb_main_menu_table_item_container"
+                                                                                              prefHeight="200.0"
+                                                                                              prefWidth="100.0"/>
+                                                                                    </content>
+                                                                                </ScrollPane>
+                                                                            </center>
+                                                                        </BorderPane>
+                                                                    </center>
+                                                                    <GridPane.margin>
+                                                                        <Insets bottom="5.0" left="5.0" right="5.0"/>
+                                                                    </GridPane.margin>
+                                                                </BorderPane>
+                                                                <GridPane>
+                                                                    <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                    </columnConstraints>
+                                                                    <rowConstraints>
+                                                                        <RowConstraints vgrow="SOMETIMES"/>
+                                                                    </rowConstraints>
+                                                                    <children>
+                                                                        <BorderPane prefHeight="300.0"
+                                                                                    style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10;"
+                                                                                    GridPane.columnIndex="1">
+                                                                            <top>
+                                                                                <BorderPane
+                                                                                        BorderPane.alignment="CENTER">
+                                                                                    <left>
+                                                                                        <HBox BorderPane.alignment="CENTER">
+                                                                                            <children>
+                                                                                                <Label fx:id="lbl_main_menu_title_ultimos_meses"
+                                                                                                       text="Ultimos 3 meses"
+                                                                                                       textFill="#d3cdcd">
+                                                                                                    <font>
+                                                                                                        <Font size="19.0"/>
+                                                                                                    </font>
+                                                                                                </Label>
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                    </left>
+                                                                                    <right>
+                                                                                        <HBox BorderPane.alignment="CENTER">
+                                                                                            <children>
+                                                                                                <ChoiceBox
+                                                                                                        fx:id="cbx_main_menu_inicio_tiempo_ultimos_meses"
+                                                                                                        prefWidth="100.0"/>
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                    </right>
+                                                                                </BorderPane>
+                                                                            </top>
+                                                                            <padding>
+                                                                                <Insets bottom="10.0" left="10.0"
+                                                                                        right="10.0" top="10.0"/>
+                                                                            </padding>
+                                                                            <GridPane.margin>
+                                                                                <Insets bottom="10.0" left="10.0"
+                                                                                        right="10.0" top="10.0"/>
+                                                                            </GridPane.margin>
+                                                                            <center>
+                                                                                <BarChart
+                                                                                        fx:id="bc_main_menu_inicio_ultmimos_meses"
+                                                                                        style="-fx-background-color: transparent;"
+                                                                                        styleClass="chart-bar"
+                                                                                        BorderPane.alignment="CENTER">
+                                                                                    <xAxis>
+                                                                                        <CategoryAxis
+                                                                                                fx:id="ultimos_meses_category_axis"
+                                                                                                side="BOTTOM"
+                                                                                                tickLabelFill="#d3cdcd"/>
+                                                                                    </xAxis>
+                                                                                    <yAxis>
+                                                                                        <NumberAxis
+                                                                                                fx:id="ultimos_meses_values_axis"
+                                                                                                side="LEFT"
+                                                                                                tickLabelFill="#d3cdcd"/>
+                                                                                    </yAxis>
+                                                                                </BarChart>
+                                                                            </center>
+                                                                        </BorderPane>
+                                                                        <BorderPane prefHeight="200.0"
+                                                                                    prefWidth="200.0">
+                                                                            <top>
+                                                                                <HBox alignment="CENTER" spacing="10.0"
+                                                                                      BorderPane.alignment="CENTER">
+                                                                                    <children>
+                                                                                        <VBox alignment="CENTER"
+                                                                                              fillWidth="false"
+                                                                                              spacing="5.0"
+                                                                                              style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
+                                                                                            <children>
+                                                                                                <Label fx:id="lbl_main_menu_counter_programados"
+                                                                                                       text="0"
+                                                                                                       textFill="#d3cdcd">
+                                                                                                    <font>
+                                                                                                        <Font name="System Bold"
+                                                                                                              size="29.0"/>
+                                                                                                    </font>
+                                                                                                </Label>
+                                                                                                <Label text="Programados"
+                                                                                                       textFill="#bfbdbd">
+                                                                                                    <font>
+                                                                                                        <Font size="20.0"/>
+                                                                                                    </font>
+                                                                                                </Label>
+                                                                                            </children>
+                                                                                            <padding>
+                                                                                                <Insets bottom="10.0"
+                                                                                                        left="10.0"
+                                                                                                        right="10.0"
+                                                                                                        top="10.0"/>
+                                                                                            </padding>
+                                                                                        </VBox>
+                                                                                        <VBox alignment="CENTER"
+                                                                                              fillWidth="false"
+                                                                                              spacing="5.0"
+                                                                                              style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
+                                                                                            <children>
+                                                                                                <Label fx:id="lbl_main_menu_counter_en_progreso"
+                                                                                                       text="0"
+                                                                                                       textFill="#d3cdcd">
+                                                                                                    <font>
+                                                                                                        <Font name="System Bold"
+                                                                                                              size="29.0"/>
+                                                                                                    </font>
+                                                                                                </Label>
+                                                                                                <Label text="En progreso"
+                                                                                                       textFill="#bfbdbd">
+                                                                                                    <font>
+                                                                                                        <Font size="20.0"/>
+                                                                                                    </font>
+                                                                                                </Label>
+                                                                                            </children>
+                                                                                            <padding>
+                                                                                                <Insets bottom="10.0"
+                                                                                                        left="10.0"
+                                                                                                        right="10.0"
+                                                                                                        top="10.0"/>
+                                                                                            </padding>
+                                                                                        </VBox>
+                                                                                        <VBox alignment="CENTER"
+                                                                                              fillWidth="false"
+                                                                                              spacing="5.0"
+                                                                                              style="-fx-background-color: rgba(255, 255, 255, 0.2);; -fx-background-radius: 10;">
+                                                                                            <children>
+                                                                                                <Label fx:id="lbl_main_menu_counter_terminados"
+                                                                                                       text="0"
+                                                                                                       textFill="#d3cdcd">
+                                                                                                    <font>
+                                                                                                        <Font name="System Bold"
+                                                                                                              size="29.0"/>
+                                                                                                    </font>
+                                                                                                </Label>
+                                                                                                <Label text="Terminados"
+                                                                                                       textFill="#bfbdbd">
+                                                                                                    <font>
+                                                                                                        <Font size="20.0"/>
+                                                                                                    </font>
+                                                                                                </Label>
+                                                                                            </children>
+                                                                                            <padding>
+                                                                                                <Insets bottom="10.0"
+                                                                                                        left="10.0"
+                                                                                                        right="10.0"
+                                                                                                        top="10.0"/>
+                                                                                            </padding>
+                                                                                        </VBox>
+                                                                                    </children>
+                                                                                    <BorderPane.margin>
+                                                                                        <Insets top="10.0"/>
+                                                                                    </BorderPane.margin>
+                                                                                </HBox>
+                                                                            </top>
+                                                                            <center>
+                                                                                <VBox alignment="CENTER"
+                                                                                      style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-background-radius: 10;"
+                                                                                      BorderPane.alignment="CENTER">
+                                                                                    <BorderPane.margin>
+                                                                                        <Insets bottom="10.0"
+                                                                                                left="10.0" right="10.0"
+                                                                                                top="10.0"/>
+                                                                                    </BorderPane.margin>
+                                                                                    <children>
+                                                                                        <Label alignment="CENTER"
+                                                                                               text="¿Tienes algun problema con esta unidad?"
+                                                                                               textFill="#9ee8d3">
+                                                                                            <font>
+                                                                                                <Font name="System Bold"
+                                                                                                      size="22.0"/>
+                                                                                            </font>
+                                                                                            <VBox.margin>
+                                                                                                <Insets bottom="5.0"/>
+                                                                                            </VBox.margin>
+                                                                                        </Label>
+                                                                                        <Label alignment="CENTER"
+                                                                                               maxWidth="400.0"
+                                                                                               text="Clic en 'Programar mantenimiento' para agregar una nueva fecha para esta unidad."
+                                                                                               textAlignment="CENTER"
+                                                                                               textFill="WHITE"
+                                                                                               wrapText="true">
+                                                                                            <VBox.margin>
+                                                                                                <Insets bottom="10.0"/>
+                                                                                            </VBox.margin>
+                                                                                        </Label>
+                                                                                        <Button mnemonicParsing="false"
+                                                                                                onAction="#handleShowAddNewDateMaintenanceForm"
+                                                                                                styleClass="whiteButtons"
+                                                                                                text="Programar manteniento"/>
+                                                                                    </children>
+                                                                                </VBox>
+                                                                            </center>
+                                                                        </BorderPane>
+                                                                    </children>
+                                                                </GridPane>
+                                                            </children>
+                                                        </GridPane>
+                                                    </children>
+                                                </AnchorPane>
+                                            </center>
+                                        </BorderPane>
+                                    </children>
+                                </AnchorPane>
+                            </center>
+                        </BorderPane>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

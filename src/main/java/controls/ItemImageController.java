@@ -25,6 +25,11 @@ public class ItemImageController extends Node {
         imagen_imv.setImage(new Image(imagen.getAbsolutePath()));
     }
 
+    public void setImage(Image ima, String name){
+        imagen_imv.setImage(ima);
+        lbl_nombre_foto.setText(name);
+    }
+
     public AnchorPane getDeleteButton(){
         return this.btn_delete;
     }

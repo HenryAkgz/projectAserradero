@@ -72,8 +72,8 @@ public class MaintenanceItemLargeController {
         });
     }
 
-    public void setInfo(String id, String estado, String fecha, String tipo, String descripcion){
-    this.id.set(id);
+    public void setInfo(int id, String estado, String fecha, String tipo, String descripcion){
+    this.id.set(Integer.toString(id));
     this.estado.set(estado);
     this.fecha.set(LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
     this.tipo.set(tipo);
@@ -94,4 +94,5 @@ public class MaintenanceItemLargeController {
             lbl_descripcion.setStyle("-fx-text-fill: #373F51;");
         });
     }
+
 }
