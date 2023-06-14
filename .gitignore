@@ -65,5 +65,5 @@ nb-configuration.xml
 .DS_Store
 
 # BD
-datos_de_la_aplicación.db
+.datos_de_la_aplicación.db
 *.db

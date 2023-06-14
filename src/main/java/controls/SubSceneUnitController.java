@@ -272,7 +272,7 @@ public class SubSceneUnitController implements Initializable {
            ultimoMantenimiento_label_showDetails.setText(ultimoMantenimientoRealizado.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
        }
 
-        if (currentUnidad.getNotas_de_la_unidad().isBlank()) {
+        if (currentUnidad.getNotas_de_la_unidad() == null || currentUnidad.getNotas_de_la_unidad().isBlank()) {
             notasUnidad_label_showDetail.setText("Sin descripción");
         } else {
             notasUnidad_label_showDetail.setText(currentUnidad.getNotas_de_la_unidad());

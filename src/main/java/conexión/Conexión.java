@@ -793,4 +793,20 @@ public class Conexión {
 
         return actualizado;
     }
+
+    public boolean eliminarMantenimientoProgramado(int idMantenimiento) {
+        String sql = "DELETE FROM mantenimiento_programado WHERE id_mantenimiento_programado = ?";
+
+        try {
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            statement.setInt(1, idMantenimiento);
+            int filasAfectadas = statement.executeUpdate();
+            statement.close();
+
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

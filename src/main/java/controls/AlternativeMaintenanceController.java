@@ -83,7 +83,7 @@ public class AlternativeMaintenanceController implements Initializable {
     @FXML
     private VBox evidence_result_container;
     @FXML
-    private Label label_no_fotos_add_new, lblResultMensaje;
+    private Label label_no_fotos_add_new, lblResultMensaje, lblMensaje;
     @FXML
     private HBox contenodr_imagenes_result;
     @FXML
@@ -93,7 +93,7 @@ public class AlternativeMaintenanceController implements Initializable {
     @FXML
     private Label main_menu_id_label;
     @FXML
-    private ImageView main_menu_unit_photo;
+    private ImageView main_menu_unit_photo, imvMensaje;
     @FXML
     private Label main_menu_inicio_unidad_label, lbl_main_menu_counter_programados, lbl_main_menu_counter_en_progreso, lbl_main_menu_counter_terminados, lbl_main_menu_title_ultimos_meses;
     @FXML
@@ -113,7 +113,7 @@ public class AlternativeMaintenanceController implements Initializable {
     @FXML
     private HBox btn_container_showMaintenanceData;
     @FXML
-    private Label lbl_showData_fecha, lbl_showData_tipo, lbl_showData_descripcion, lbl_showData_evidence, lbl_contador_imagenes_showData;
+    private Label nombreDeleteLabel, lbl_showData_fecha, lbl_showData_tipo, lbl_showData_descripcion, lbl_showData_evidence, lbl_contador_imagenes_showData;
     @FXML
     private DatePicker dtp_showData_fecha;
     @FXML
@@ -126,6 +126,12 @@ public class AlternativeMaintenanceController implements Initializable {
     private BorderPane showData_container_imagenes_evidence;
     @FXML
     private Button btn_showData_saveUpdate, add_more_image_showData;
+    @FXML
+    private HBox main_container_showData_buttons;
+    @FXML
+    private BorderPane formChangeState, formDeleteUnit, formMensaje;
+    @FXML
+    private TextField txt_search_main_menu;
 
 
 
@@ -183,7 +189,7 @@ public class AlternativeMaintenanceController implements Initializable {
 
         getDataFromDataBase();
 
-        if (ultimo_mantenimiento_programado.equals(Constants.UNIDAD_SIN_MANTENIMIENTO_PROGRAMADO) && ultimo_mantenimiento_realizado.equals(Constants.UNIDAD_SIN_MANTENIMIENTO)) {
+        if ((ultimo_mantenimiento_programado.equals(Constants.UNIDAD_SIN_MANTENIMIENTO_PROGRAMADO) && ultimo_mantenimiento_realizado.equals(Constants.UNIDAD_SIN_MANTENIMIENTO)) || (listaMantenimientosProgrmados.size() ==0 && listaMantenimientoHistorial.size() == 0)) {
             setCenterContent(empty_view);
         } else if (listaMantenimientosProgrmados.size() > 0 || listaMantenimientoHistorial.size() > 0) {
             main_menu_id_label.setText(id_unidad.get());
@@ -205,6 +211,7 @@ public class AlternativeMaintenanceController implements Initializable {
 
         add_new_date_type_cbx.getItems().addAll("Selecciona un tipo", "Correctivo", "Preventivo");
         cbx_showData_tipo.getItems().addAll("Correctivo", "Preventivo");
+
         listaMantenimientosProgrmados.addListener(new ListChangeListener<Mantenimiento>() {
             @Override
             public void onChanged(Change<? extends Mantenimiento> change) {
@@ -262,7 +269,7 @@ public class AlternativeMaintenanceController implements Initializable {
         btnDelete.makeContentButton("icon_delete_model", 15.0, "#161925", "Eliminar mantenimiento");
         btnDelete.createButton();
         btnDelete.setOnMouseClicked(action -> {
-            //showDelete()
+            handleShowDelete();
         });
 
 
@@ -294,6 +301,23 @@ public class AlternativeMaintenanceController implements Initializable {
             content_pane.getChildren().remove(content_pane.getCenter());
 
             content_pane.setCenter(content);
+        }
+    }
+
+    private void seRightContent(Node node){
+        if(content_pane.getRight() != null){
+            if(content_pane.getRight() != node){
+                content_pane.getChildren().remove(content_pane.getRight());
+                content_pane.setRight(node);
+            }
+        }else{
+            content_pane.setRight(node);
+        }
+    }
+
+    private void closeRightContent(){
+        if(content_pane.getRight() != null){
+            content_pane.getChildren().remove(content_pane.getRight());
         }
     }
 
@@ -515,6 +539,14 @@ public class AlternativeMaintenanceController implements Initializable {
         btn_next_1_add_new_date.setVisible(false);
         text_area_detalles_mantenimiento.setText("");
         add_new_date_picker.setValue(null);
+        lbl_counter_2.setStyle("-fx-background-color: gray; -fx-background-radius: 100");
+        lbl_step_2.setStyle("-fx-text-fill: white;");
+        lbl_counter_3.setStyle("-fx-background-color: gray; -fx-background-radius: 100");
+        lbl_step_3.setStyle("-fx-text-fill: white;");
+        lbl_counter_4.setStyle("-fx-background-color: gray; -fx-background-radius: 100");
+        lbl_step_4.setStyle("-fx-text-fill: white;");
+        lbl_counter_5.setStyle("-fx-background-color: gray; -fx-background-radius: 100");
+        lbl_step_5.setStyle("-fx-text-fill: white;");
 
         //date filter para el datePicker
         Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell() {
@@ -796,6 +828,37 @@ public class AlternativeMaintenanceController implements Initializable {
         initContent();
     }
 
+    public void handleSearchTable(){
+
+        if(!cbx_main_menu_tipo.getSelectionModel().isSelected(0)){
+            cbx_main_menu_tipo.getSelectionModel().select(0);
+        }
+
+        if(!cbx_main_menu_mes.getSelectionModel().isSelected(0)){
+            cbx_main_menu_mes.getSelectionModel().select(0);
+        }
+
+        if(!cbx_main_menu_estado.getSelectionModel().isSelected(0)){
+            cbx_main_menu_estado.getSelectionModel().select(0);
+        }
+
+        vb_main_menu_table_item_container.getChildren().clear();
+
+        String search = txt_search_main_menu.getText();
+
+        for(Mantenimiento item : listaMantenimientosProgrmados){
+            if(Integer.toString(item.getId_mantenimiento_programado()).contains(search) || item.getIdUnit().contains(search) || item.getMaintenanceDate().contains(search) || LocalDate.parse(item.getMaintenanceDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).contains(search) || item.getMaintenanceNotes().contains(search)){
+                agregarItemALaTablaMainMenu(item.getId_mantenimiento_programado(), Constants.ESTADO_MANTENIMIENTO_PROGRAMADO, item.getMaintenanceDate(), item.getMaintenanceType(), item.getMaintenanceNotes());
+            }
+        }
+
+        for(MantenimientoHistorial item : listaMantenimientoHistorial){
+            if(Integer.toString(item.getIdMantenimiento()).contains(search) || item.getIdUnidad().contains(search) || item.getFecha_programada().contains(search) || LocalDate.parse(item.getFecha_programada(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).contains(search) || item.getNotas_mantenimiento_programado().contains(search)){
+                agregarItemALaTablaMainMenu(item.getIdMantenimiento(), item.getEstado(), item.getFecha_programada(), item.getTipoMantenimiento(), item.getNotas_mantenimiento_programado());
+            }
+        }
+    }
+
     //############################# metodos para ver datos de mantenimiento ##############################
 
     private void initShowData(int idMantenimiento){
@@ -813,15 +876,15 @@ public class AlternativeMaintenanceController implements Initializable {
        dtp_showData_fecha.setValue(dateTempUpdate);
        cbx_showData_tipo.getSelectionModel().select(mantenimientoUpdate.getMaintenanceType());
 
-        if(mantenimientoUpdate.getMaintenanceNotes().isBlank()){
+        if(mantenimientoUpdate.getMaintenanceNotes() == null || mantenimientoUpdate.getMaintenanceNotes().isBlank()){
             lbl_showData_descripcion.setText("No hay notas de mantenimiento...");
-            txt_showData_descripcion.setText("No hay notas de mantenimiento...");
+            txt_showData_descripcion.setPromptText("No hay notas de mantenimiento...");
         }else{
             lbl_showData_descripcion.setText(mantenimientoUpdate.getMaintenanceNotes());
             txt_showData_descripcion.setText(mantenimientoUpdate.getMaintenanceNotes());
         }
 
-        if(mantenimientoUpdate.getJSONArrayImagenes().isBlank()){
+        if(mantenimientoUpdate.getJSONArrayImagenes() == null || mantenimientoUpdate.getJSONArrayImagenes().isBlank()){
             showData_container_evidence.getChildren().remove(showData_container_imagenes_evidence);
             if(!showData_container_evidence.getChildren().contains(lbl_showData_evidence)){
                 showData_container_evidence.getChildren().add(lbl_showData_evidence);
@@ -888,6 +951,7 @@ public class AlternativeMaintenanceController implements Initializable {
             showData_container_fecha.getChildren().remove(lbl_showData_fecha);
             showData_container_tipo.getChildren().remove(lbl_showData_tipo);
             showData_container_notas.getChildren().remove(lbl_showData_descripcion);
+            main_container_showData_buttons.getChildren().remove(btn_container_showMaintenanceData);
 
             if(!showData_container_fecha.getChildren().contains(dtp_showData_fecha)){
                 showData_container_fecha.getChildren().add(dtp_showData_fecha);
@@ -901,20 +965,22 @@ public class AlternativeMaintenanceController implements Initializable {
                 showData_container_notas.getChildren().add(txt_showData_descripcion);
             }
 
-            rellenarImagenesContainerUpdate(true);
 
-            btn_container_showMaintenanceData.setVisible(false);
+            rellenarImagenesContainerUpdate(true);
             btn_showData_saveUpdate.setVisible(true);
             add_more_image_showData.setVisible(!(listaImagenesUpdate.size()==6 || listaImagenesUpdate.size() == 0));
 
         }else{
-            btn_container_showMaintenanceData.setVisible(true);
+
             showData_container_fecha.getChildren().remove(dtp_showData_fecha);
             showData_container_tipo.getChildren().remove(cbx_showData_tipo);
             showData_container_notas.getChildren().remove(txt_showData_descripcion);
             btn_showData_saveUpdate.setVisible(false);
             add_more_image_showData.setVisible(false);
 
+            if(!main_container_showData_buttons.getChildren().contains(btn_container_showMaintenanceData)){
+                main_container_showData_buttons.getChildren().add(btn_container_showMaintenanceData);
+            }
 
             if(!showData_container_fecha.getChildren().contains(lbl_showData_fecha)){
                 showData_container_fecha.getChildren().add(lbl_showData_fecha);
@@ -950,6 +1016,43 @@ public class AlternativeMaintenanceController implements Initializable {
        }else{
            System.out.println("Algo salio mal");
        }
+    }
+
+    //########################################## metodo delete mantenimiento #########################
+
+    private void handleShowDelete(){
+        seRightContent(formDeleteUnit);
+        nombreDeleteLabel.setText(mantenimientoUpdate.getMaintenanceDate());
+    }
+
+    public void handleDeleteCancel(){
+     closeRightContent();
+    }
+
+    public void handleDeleteOk(){
+        String textResult;
+
+        if (con.eliminarMantenimientoProgramado(mantenimientoUpdate.getId_mantenimiento_programado())) {
+            textResult = "Mantenimiento programado eliminado correctamente!";
+            imvMensaje.setImage(new Image(getClass().getResourceAsStream("/icons/deleteOk.gif")));
+            lblMensaje.setStyle("-fx-text-fill: green;");
+        } else {
+            textResult = "Ops! Algo salio mal...";
+            imvMensaje.setImage(new Image(getClass().getResourceAsStream("/icons/saveError.gif")));
+            lblMensaje.setStyle("-fx-text-fill: red;");
+        }
+
+        lblMensaje.setText(textResult);
+        seRightContent(formMensaje);
+        initContent();
+    }
+    public void handleChangeCancel(){}
+    public void handleChangeOk(){
+
+    }
+
+    public void handleCloseMessage(){
+     closeRightContent();
     }
 
     @Override

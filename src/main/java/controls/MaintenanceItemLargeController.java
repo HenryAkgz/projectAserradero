@@ -77,7 +77,12 @@ public class MaintenanceItemLargeController {
     this.estado.set(estado);
     this.fecha.set(LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
     this.tipo.set(tipo);
-    this.descripción.set(descripcion);
+    if(descripcion == null || descripcion.isBlank()){
+        this.descripción.set("Sin comentarios...");
+    }else{
+        this.descripción.set(descripcion);
+    }
+
         root.setOnMouseEntered(action -> {
             root.setStyle("-fx-background-color: #0D2C54; -fx-background-radius: 5px;");
             lbl_id.setStyle("-fx-text-fill: white;");
